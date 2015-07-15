@@ -17,19 +17,19 @@ Func CheckVersion()
 	If $ichkVersion = 1 Then
 		CheckVersionHTML()
 		If $lastversion = "" Then
-			SetLog("WE CANNOT OBTAIN PRODUCT VERSION AT THIS TIME", $COLOR_ORANGE)
+			SetLog(getLocaleString("logVerLatest"), $COLOR_ORANGE)
 		ElseIf VersionNumFromVersionTXT($sBotVersion) < VersionNumFromVersionTXT($lastversion) Then
-			SetLog("WARNING, YOUR BOT VERSION (" & $sBotVersion & ") IS OUT OF DATE.", $COLOR_RED)
-			SetLog("PLEASE DOWNLOAD THE LATEST(" & $lastversion & ") FROM https://GameBot.org               ", $COLOR_RED)
+			SetLog(getLocaleString("logVerWarning1") & $sBotVersion & getLocaleString("logVerWarning2"), $COLOR_RED)
+			SetLog(getLocaleString("logVerUpdate1") & $lastversion & getLocaleString("logVerUpdate2"), $COLOR_RED)
 			SetLog(" ")
 			_PrintLogVersion($oldversmessage)
 		ElseIf VersionNumFromVersionTXT($sBotVersion) > VersionNumFromVersionTXT($lastversion) Then
-			SetLog("YOU ARE USING A FUTURE VERSION OF CLASH GAMEBOT CHIEF!", $COLOR_GREEN)
-			SetLog("YOUR VERSION: " & $sBotVersion, $COLOR_GREEN)
-			SetLog("OFFICIAL VERSION: " & $lastversion, $COLOR_GREEN)
+			SetLog(getLocaleString("logVerFuture1"), $COLOR_GREEN)
+			SetLog(getLocaleString("logVerFuture2") & $sBotVersion, $COLOR_GREEN)
+			SetLog(getLocaleString("logVerFuture3") & $lastversion, $COLOR_GREEN)
 			SetLog(" ")
 		Else
-			SetLog("WELCOME CHIEF, YOU HAVE THE LATEST VERSION OF THE BOT", $COLOR_GREEN)
+			SetLog(getLocaleString("logVerCheck"), $COLOR_GREEN)
 			SetLog(" ")
 			_PrintLogVersion($lastmessage)
 		EndIf

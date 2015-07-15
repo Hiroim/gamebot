@@ -103,11 +103,11 @@ Global Enum $DB, $LB, $TS, $TB, $DT
 Global $iModeCount = 2
 Global $iMatchMode ; 0 Dead / 1 Live / 2 TH Snipe / 3 TH Bully / 4 Drop Trophy
 Global $sModeText[5]
-$sModeText[$DB] = "Dead Base"
-$sModeText[$LB] = "Live Base"
-$sModeText[$TS] = "TH Snipe"
-$sModeText[$TB] = "TH Bully"
-$sModeText[$DT] = "Drop Trophy"
+$sModeText[$DB] = getLocaleString("modeDB")
+$sModeText[$LB] = getLocaleString("modeLB")
+$sModeText[$TS] = getLocaleString("modeTS")
+$sModeText[$TB] = getLocaleString("modeTB")
+$sModeText[$DT] = getLocaleString("modeDT")
 
 ;PushBullet---------------------------------------------------------------
 Global $PBRemoteControlInterval = 60000 ; 60 secs

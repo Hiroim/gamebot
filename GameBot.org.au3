@@ -26,15 +26,16 @@
 $sBotVersion = "v4.0.1"
 $sBotTitle = "Clash Game Bot " & $sBotVersion
 Global $sBotDll = @ScriptDir & "\CGBPlugin.dll"
+Global $StartupLanguage = IniRead(@ScriptDir & "\COCBot\GUI\localization\lang.ini", "config", "language", "English")
 
 If _Singleton($sBotTitle, 1) = 0 Then
-	MsgBox(0, "", "Bot is already running.")
+	MsgBox(0, getLocaleString("msgboxWarningTitle"), getLocaleString("msgboxRun"))
 	Exit
- EndIf
+EndIf
 
 If @AutoItX64 = 1 Then
-	MsgBox(0, "", "Don't Run/Compile the Script as (x64)! try to Run/Compile the Script as (x86) to get the bot to work." & @CRLF & _
-				  "If this message still appears, try to re-install AutoIt.")
+	MsgBox(0, getLocaleString("msgboxWarningTitle"), getLocaleString("msgbox_x64_1") & @CRLF & _
+				  getLocaleString("msgbox_x64_2"))
 	Exit
 EndIf
 
@@ -83,8 +84,8 @@ While 1
 	Switch TrayGetMsg()
         Case $tiAbout
 			MsgBox(64 + $MB_APPLMODAL + $MB_TOPMOST, $sBotTitle, "Clash of Clans Bot" & @CRLF & @CRLF & _
-				"Version: " & $sBotVersion & @CRLF & _
-				"Released under the GNU GPLv3 license.", 0, $frmBot)
+				getLocaleString("msgboxVersion") & $sBotVersion & @CRLF & _
+				getLocaleString("msgboxLicense"), 0, $frmBot)
 		Case $tiExit
 			ExitLoop
 	EndSwitch
@@ -129,13 +130,13 @@ Func runBot() ;Bot that runs everything in order
 				checkMainScreen(False)
 				If $OutOfGold = 1  And ($GoldCount >= $itxtRestartGold) Then  ; check if enough gold to begin searching again
 					$OutOfGold = 0  ; reset out of gold flag
-					Setlog("Switching back to normal after no gold to search ...", $COLOR_RED)
+					Setlog(getLocaleString("logOutOfGold"), $COLOR_RED)
 					$ichkBotStop = 0  ; reset halt attack variable
 					;GUICtrlSetState($chkBotStop, $GUI_UNCHECKED)
 				EndIf
 				If $OutOfElixir = 1  And ($ElixirCount >= $itxtRestartElixir) And ($DarkCount >= $itxtRestartDark) Then  ; check if enough elixir to begin searching again
 					$OutOfElixir = 0  ; reset out of gold flag
-					Setlog("Switching back to normal setting after no elixir to train ...", $COLOR_RED)
+					Setlog(getLocaleString("logOutOfElixir"), $COLOR_RED)
 					$ichkBotStop = 0  ; reset halt attack variable
 					;GUICtrlSetState($chkBotStop, $GUI_UNCHECKED)
 				EndIf
@@ -186,7 +187,7 @@ Func runBot() ;Bot that runs everything in order
 			If $CommandStop <> 0 And $CommandStop <> 3 Then
 				AttackMain()
 				If $OutOfGold = 1  Then
-					Setlog("Switching to Halt Attack, Stay Online/Train/Collect/Donate...", $COLOR_RED)
+					Setlog(getLocaleString("logSwitchHaltAttack"), $COLOR_RED)
 					$ichkBotStop = 1  ; set halt attack variable
 					$icmbBotCond = 14  ; set stay online/train/collect/Donate mode
 					;GUICtrlSetState($chkBotStop, $GUI_CHECKED)
@@ -198,12 +199,12 @@ Func runBot() ;Bot that runs everything in order
 			EndIf
 				;
 		Else ;When error occours directly goes to attack
-			SetLog("Restarted after Out of Sync Error: Attack Now", $COLOR_RED)
+			SetLog(getLocaleString("logOOS"), $COLOR_RED)
 			PushMsg("OutOfSync")
 			checkMainScreen(False)
 			AttackMain()
 			If $OutOfGold = 1  Then
-				Setlog("Switching to Halt Attack, Stay Online/Train/Collect/Donate...", $COLOR_RED)
+				Setlog(getLocaleString("logReturnHaltAttack"), $COLOR_RED)
 				$ichkBotStop = 1  ; set halt attack variable
 				$icmbBotCond = 14  ; set stay online/train/collect/Donate mode
 				;GUICtrlSetState($chkBotStop, $GUI_CHECKED)
@@ -222,7 +223,7 @@ Func Idle() ;Sequence that runs until Full Army
 
 	While $fullArmy = False
 		if $RequestScreenshot = 1 then PushMsg("RequestScreenshot")
-		If $CommandStop = -1 Then SetLog("====== Waiting for full army ======", $COLOR_GREEN)
+		If $CommandStop = -1 Then SetLog(getLocaleString("logArmyWait"), $COLOR_GREEN)
 		Local $hTimer = TimerInit()
 		Local $iReHere = 0
 		While $iReHere < 10
@@ -264,7 +265,7 @@ Func Idle() ;Sequence that runs until Full Army
 			wend
 		endif
 		If $CommandStop = 0 And $fullArmy Then
-			SetLog("Army Camp and Barracks are full, stop Training...", $COLOR_ORANGE)
+			SetLog(getLocaleString("logArmyFull"), $COLOR_ORANGE)
 			$CommandStop = 3
 			$fullArmy = False
 		EndIf
@@ -277,7 +278,7 @@ Func Idle() ;Sequence that runs until Full Army
 		EndIf
 		If $Restart = True Then ExitLoop
 		$TimeIdle += Round(TimerDiff($hTimer) / 1000, 2) ;In Seconds
-		SetLog("Time Idle: " & StringFormat("%02i", Floor(Floor($TimeIdle / 60) / 60)) & ":" & StringFormat("%02i", Floor(Mod(Floor($TimeIdle / 60), 60))) & ":" & StringFormat("%02i", Floor(Mod($TimeIdle, 60))), $COLOR_GREEN)
+		SetLog(getLocaleString("logIdle") & StringFormat("%02i", Floor(Floor($TimeIdle / 60) / 60)) & ":" & StringFormat("%02i", Floor(Mod(Floor($TimeIdle / 60), 60))) & ":" & StringFormat("%02i", Floor(Mod($TimeIdle, 60))), $COLOR_GREEN)
 	WEnd
 EndFunc   ;==>Idle
 
@@ -308,6 +309,6 @@ Func AttackMain() ;Main control for attack functions
 EndFunc   ;==>AttackMain
 
 Func Attack() ;Selects which algorithm
-	SetLog(" ====== Start Attack ====== ", $COLOR_GREEN)
+	SetLog(getLocaleString("logAtkStart"), $COLOR_GREEN)
 	algorithm_AllTroops()
 EndFunc   ;==>Attack

@@ -82,6 +82,7 @@
 #include "functions\Other\debugCGBFunctions.au3"
 #include "functions\Other\FindPos.au3"
 #include "functions\Other\getBSPos.au3"
+#include "functions\Other\getLocaleString.au3"
 #include "functions\Other\ExtMsgBox.au3"
 #include "functions\Other\StringSize.au3"
 ;#include "functions\Other\GUICtrlGetBkColor.au3" ; included in CGB GUI Control

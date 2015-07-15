@@ -36,8 +36,8 @@ Local $x = 30, $y = 150
 			GUICtrlSetState (-1, $GUI_DISABLE)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-Local $x = 30, $y = 205
-	$grpControls = GUICtrlCreateGroup("Profiles", $x - 20, $y - 20, 450, 65)
+Local $x = 20, $y = 205
+	$grpControls = GUICtrlCreateGroup("Profiles", $x - 10, $y - 20, 235, 55)
 		$lblProfile = GUICtrlCreateLabel("Current Profile:", $x, $y, -1, -1)
 		$cmbProfile = GUICtrlCreateCombo("01", $x + 75, $y - 5, 40, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 		$txtTip = "Use this to switch to a different profile. Default: 01" & @CRLF & "Your profiles/configs can be found in:" & @CRLF &  $sProfilePath
@@ -50,6 +50,11 @@ Local $x = 30, $y = 205
 		GUICtrlSetTip(-1, "Your village's name")
 		GUICtrlSetOnEvent(-1, "txtVillageName")
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+	$grpLanguage = GUICtrlCreateGroup(getLocaleString("grpLanguage"), 250, 185, 210, 55)
+	$cmbLanguage = GUICtrlCreateCombo("", 260, 205, 190, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+	Populatelocalization()
+	_GUICtrlComboBox_SetCurSel($cmbLanguage, _GUICtrlComboBox_FindStringExact($cmbLanguage, $StartupLanguage))
 
 	Local $x = 30, $y = 275
 	$grpMisc = GUICtrlCreateGroup("Rearm, Collect, Clear", $x -20, $y - 20 , 225, 100)

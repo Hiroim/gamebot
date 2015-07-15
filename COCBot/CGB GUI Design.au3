@@ -29,8 +29,8 @@ $tabMain = GUICtrlCreateTab(5, 85, 461, 425, $TCS_MULTILINE)
 ;~ ------------------------------------------------------
 
 
-$DonateMenu = GUICtrlCreateMenu("&Paypal Donate?")
-$DonateConfig = GUICtrlCreateMenuItem("Support the development", $DonateMenu)
+$DonateMenu = GUICtrlCreateMenu(getLocaleString("menuDonate"))
+$DonateConfig = GUICtrlCreateMenuItem(getLocaleString("menuItemSupport"), $DonateMenu)
 GUICtrlSetOnEvent(-1, "")
 
 ;~ ------------------------------------------------------
@@ -53,12 +53,10 @@ GUICtrlSetOnEvent(-1, "")
 ;~ -------------------------------------------------------------
 ;~ About Us Tab
 ;~ -------------------------------------------------------------
-$tabAboutUs = GUICtrlCreateTabItem("About Us")
+$tabAboutUs = GUICtrlCreateTabItem(getLocaleString("tabAboutUs"))
 Local $x = 30, $y = 150
-	$grpCredits = GUICtrlCreateGroup("Credits", $x - 20, $y - 20, 450, 375)
-		$txtCredits = "Clash Game Bot is brought to you by a worldwide team of open source"  & @CRLF & _
-						"programmers and a vibrant community of forum members!"
-		$lblCredits1 = GUICtrlCreateLabel($txtCredits, $x - 5, $y, 400, 50)
+	$grpCredits = GUICtrlCreateGroup(getLocaleString("grpCredits"), $x - 20, $y - 20, 450, 375)
+		$lblCredits1 = GUICtrlCreateLabel(getLocaleString("txtCredits"), $x - 5, $y, 400, 50)
 			GUICtrlSetFont(-1, 9, $FW_BOLD)
 			GUICtrlSetColor(-1, $COLOR_NAVY)
 		$y += 35

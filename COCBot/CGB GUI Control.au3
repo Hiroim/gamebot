@@ -95,6 +95,8 @@ Func GUIControl($hWind, $iMsg, $wParam, $lParam)
 					If $RunState Then btnAttackNowTS()
 				Case $DonateConfig
 					ShellExecute("https://gamebot.org/forums/misc.php?action=mydonations")
+				Case $cmbLanguage
+					If $nNotifyCode = 1 Then cmbLanguage()
 				Case $btnDeletePBMessages
 					If $RunState Then
 						btnDeletePBMessages() ; call with flag when bot is running to execute on _sleep() idle
