@@ -1,4 +1,4 @@
-Func getLocaleString($Key)
+Func getLocaleString($Key,$Formetted = False)
 	$ReturnStr = ""
 	If IsDeclared("cmbLanguage") Then
 		$array = _GUICtrlComboBox_GetListArray($cmbLanguage)
@@ -13,28 +13,12 @@ Func getLocaleString($Key)
 			$ReturnStr = IniRead(@ScriptDir & "\COCBot\GUI\localization\languages\English.ini", "general", $Key, "")
 		EndIf
 	EndIf
-	Return $ReturnStr
+	If $Formetted = True Then
+		Return StringFormat($ReturnStr)
+	Else
+		Return $ReturnStr
+	EndIf
 EndFunc   ;==>getLocaleString
-
-;~ Func getLocaleStringFormatted($Key)
-;~ 	$ReturnStrFormatted = ""
-;~ 	If IsDeclared("cmbLanguage") Then
-;~ 		$array = _GUICtrlComboBox_GetListArray($cmbLanguage)
-;~ 		$CurrLangSel = $array[_GUICtrlComboBox_GetCurSel($cmbLanguage) + 1]
-;~ 		$ReturnStrFormatted = IniRead(@ScriptDir & "\COCBot\GUI\localization\languages\" & $CurrLangSel & ".ini", "general", $Key, "")
-;~ 		If $ReturnStrFormatted = "" Then
-;~ 			$ReturnStrFormatted = IniRead(@ScriptDir & "\COCBot\GUI\localization\languages\English.ini", "general", $Key, "")
-;~ 		EndIf
-;~ 	Else
-;~ 		$ReturnStrFormatted = IniRead(@ScriptDir & "\COCBot\GUI\localization\languages\" & $StartupLanguage & ".ini", "general", $Key, "")
-;~ 		If $ReturnStrFormatted = "" Then
-;~ 			$ReturnStrFormatted = IniRead(@ScriptDir & "\COCBot\GUI\localization\languages\English.ini", "general", $Key, "")
-;~ 		EndIf
-;~ 	EndIf
-;~ 	$ReturnStrFormatted = StringFormat($ReturnStrFormatted)
-;~ 	Return $ReturnStrFormatted
-;~ EndFunc   ;==>getLocaleStringFormatted
-
 
 Func Populatelocalization()
 	$searchfile = FileFindFirstFile(@ScriptDir & "\COCBot\GUI\localization\languages\*.ini")

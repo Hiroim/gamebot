@@ -15,7 +15,7 @@
 
 Func sldTrainITDelay()
 	$isldTrainITDelay = GUICtrlRead($sldTrainITDelay)
-	GUICtrlSetData($lbltxtTrainITDelay, "delay " & $isldTrainITDelay & " ms.")
+	GUICtrlSetData($lbltxtTrainITDelay, getLocaleString("trainItDelay") & $isldTrainITDelay & " ms.")
 EndFunc   ;==>sldTrainITDelay
 
 Func chkScreenshotType()

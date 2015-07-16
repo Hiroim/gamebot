@@ -57,7 +57,7 @@ EndFunc   ;==>cmbProfile
 Func cmbLanguage()
 	$array = _GUICtrlComboBox_GetListArray($cmbLanguage)
 	If $array[_GUICtrlComboBox_GetCurSel($cmbLanguage) + 1] <> $StartupLanguage Then
-		MsgBox(0, $array[_GUICtrlComboBox_GetCurSel($cmbLanguage) + 1], getLocaleString("msgRestartNeeded"))
+		MsgBox(0, $array[_GUICtrlComboBox_GetCurSel($cmbLanguage) + 1], getLocaleString("msgboxLangRestart"))
 		$StartupLanguage = $array[_GUICtrlComboBox_GetCurSel($cmbLanguage) + 1]
 		IniWrite(@ScriptDir & "\COCBot\GUI\localization\lang.ini", "config", "language", $StartupLanguage)
 	EndIf
@@ -65,7 +65,7 @@ EndFunc   ;==>cmbLanguage
 
 Func txtVillageName()
 	$iVillageName = GUICtrlRead($txtVillageName)
-	If $iVillageName = "" Then $iVillageName = "MyVillage"
+	If $iVillageName = "" Then $iVillageName = getLocaleString("txtVillageName")
 	GUICtrlSetData($grpVillage, "Village: " & $iVillageName)
 	GUICtrlSetData($OrigPushB, $iVillageName)
 	GUICtrlSetData($txtVillageName, $iVillageName)

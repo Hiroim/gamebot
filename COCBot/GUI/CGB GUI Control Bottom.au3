@@ -15,7 +15,7 @@
 
 Func Open()
 
-	SetLog("Starting BlueStacks", $COLOR_GREEN)
+	SetLog(getLocaleString("logBSLaunch"), $COLOR_GREEN)
 
 	If $64Bit Then ;If 64-Bit
 		ShellExecute("C:\Program Files (x86)\BlueStacks\HD-StartLauncher.exe")
@@ -29,7 +29,7 @@ Func Open()
 	WEnd
 
 	If IsArray(ControlGetPos($Title, "_ctl.Window", "[CLASS:BlueStacksApp; INSTANCE:1]")) Then
-		SetLog("BlueStacks Loaded, took " & Round(TimerDiff($hTimer) / 1000, 2) & " seconds to begin.", $COLOR_GREEN)
+		SetLog(getLocaleString("logBSLaunched") & Round(TimerDiff($hTimer) / 1000, 2) & "s.", $COLOR_GREEN)
 		DisableBS($HWnD, $SC_MINIMIZE)
 		DisableBS($HWnD, $SC_CLOSE)
 		Initiate()
@@ -71,9 +71,9 @@ Func Initiate()
 			RegWrite($REGISTRY_KEY_DIRECTORY, "GuestWidth", "REG_DWORD", $DEFAULT_WIDTH)
 			RegWrite($REGISTRY_KEY_DIRECTORY, "WindowHeight", "REG_DWORD", $DEFAULT_HEIGHT)
 			RegWrite($REGISTRY_KEY_DIRECTORY, "WindowWidth", "REG_DWORD", $DEFAULT_WIDTH)
-			SetLog("Please restart your computer for the applied changes to take effect.", $COLOR_ORANGE)
+			SetLog(getLocaleString("logBSWarnRestart"), $COLOR_ORANGE)
 			If _Sleep(3000) Then Return
-			$MsgRet = MsgBox(BitOR($MB_OKCANCEL, $MB_SYSTEMMODAL), "Restart Computer", "Restart your computer for the applied changes to take effect." & @CRLF & "If your BlueStacks is the correct size  (860 x 720), click OK.", 10)
+			$MsgRet = MsgBox(BitOR($MB_OKCANCEL, $MB_SYSTEMMODAL), getLocaleString("msgBSRestartTitle"), getLocaleString("msgBSRestart") & @CRLF & getLocaleString("msgBSRestartOK"), 10)
 			If $MsgRet <> $IDOK Then
 				btnStop()
 				Return
@@ -81,16 +81,16 @@ Func Initiate()
 		EndIf
 
 		WinActivate($Title)
-		SetLog(_PadStringCenter(" " & $sBotTitle & " Powered by GameBot.org ", 50, "~"), $COLOR_PURPLE)
-		SetLog($Compiled & " running on " & @OSVersion & " " & @OSServicePack & " " & @OSArch)
-		SetLog(_PadStringCenter(" Bot Start ", 50, "="), $COLOR_GREEN)
+		SetLog(_PadStringCenter(" " & $sBotTitle & getLocaleString("logPoweredBy"), 50, "~"), $COLOR_PURPLE)
+		SetLog($Compiled & getLocaleString("logRunningOn") & @OSVersion & " " & @OSServicePack & " " & @OSArch)
+		SetLog(_PadStringCenter(getLocaleString("logBotStart"), 50, "="), $COLOR_GREEN)
 		$AttackNow = False
 		$FirstStart = True
 		$Checkrearm = True
 
 		If $iDeleteAllPushes = 1 Then
 			_DeletePush($PushToken)
-			SetLog("Delete all previous PushBullet messages...", $COLOR_BLUE)
+			SetLog(getLocaleString("logDeletePush"), $COLOR_BLUE)
 		EndIf
 
 		$sTimer = TimerInit()
@@ -132,7 +132,7 @@ Func Initiate()
 
 		runBot()
 	Else
-		SetLog("Not in Game!", $COLOR_RED)
+		SetLog(getLocaleString("logNotInGame"), $COLOR_RED)
 ;		$RunState = True
 		btnStop()
 	EndIf
@@ -180,7 +180,7 @@ Func btnStart()
 		SaveConfig()
 		readConfig()
 		applyConfig()
-		_GUICtrlEdit_SetText($txtLog, _PadStringCenter(" BOT LOG ", 71, "="))
+		_GUICtrlEdit_SetText($txtLog, _PadStringCenter(getLocaleString("txtBotLog"), 71, "="))
 		_GUICtrlRichEdit_SetFont($txtLog, 6, "Lucida Console")
 		_GUICtrlRichEdit_AppendTextColor($txtLog, "" & @CRLF, _ColorConvert($Color_Black))
 
@@ -229,7 +229,7 @@ Func btnStop()
 		$Restart = True
 		FileClose($hLogFileHandle)
 		FileClose($hAttackLogFileHandle)
-		SetLog(_PadStringCenter(" Bot Stop ", 50, "="), $COLOR_ORANGE)
+		SetLog(_PadStringCenter(getLocaleString("logBotStop"), 50, "="), $COLOR_ORANGE)
 	EndIf
 EndFunc   ;==>btnStop
 
@@ -265,13 +265,13 @@ EndFunc   ;==>btnAttackNowTS
 
 Func btnHide()
 	If $Hide = False Then
-		GUICtrlSetData($btnHide, "Show BS")
+		GUICtrlSetData($btnHide, getLocaleString("btnShow"))
 		$botPos[0] = WinGetPos($Title)[0]
 		$botPos[1] = WinGetPos($Title)[1]
 		WinMove($Title, "", -32000, -32000)
 		$Hide = True
 	Else
-		GUICtrlSetData($btnHide, "Hide BS")
+		GUICtrlSetData($btnHide, getLocaleString("btnHide"))
 
 		If $botPos[0] = -32000 Then
 			WinMove($Title, "", 0, 0)

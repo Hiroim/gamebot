@@ -56,39 +56,27 @@ GUICtrlSetOnEvent(-1, "")
 $tabAboutUs = GUICtrlCreateTabItem(getLocaleString("tabAboutUs"))
 Local $x = 30, $y = 150
 	$grpCredits = GUICtrlCreateGroup(getLocaleString("grpCredits"), $x - 20, $y - 20, 450, 375)
-		$lblCredits1 = GUICtrlCreateLabel(getLocaleString("txtCredits"), $x - 5, $y, 400, 50)
+		$lblCredits1 = GUICtrlCreateLabel(getLocaleString("txtCredits", 1), $x - 5, $y, 400, 50)
 			GUICtrlSetFont(-1, 9, $FW_BOLD)
 			GUICtrlSetColor(-1, $COLOR_NAVY)
 		$y += 35
-		$txtCredits = "Please visit our web forums:"
-		$lblCredits2 = GUICtrlCreateLabel($txtCredits, $x - 5, $y, -1, -1)
+		$lblCredits2 = GUICtrlCreateLabel(getLocaleString("txtVisitForums"), $x - 5, $y, -1, -1)
 		$y += 20
 		$labelGameBotURL = GUICtrlCreateLabel("https://GameBot.org", $x - 5, $y, 150, 20)
 			GUICtrlSetFont(-1, 8.5, $FW_BOLD)
 			GUICtrlSetColor(-1, $COLOR_BLUE)
 		$y += 25
-		$lblCredits3 = GUICtrlCreateLabel("Credits go to the following coders for donating their time:", $x - 5, $y , 400, 20)
+		$lblCredits3 = GUICtrlCreateLabel(getLocaleString("txtCreditGoesTo"), $x - 5, $y , 400, 20)
 			GUICtrlSetFont(-1, 8.5, $FW_BOLD)
 		$y += 20
-		$txtCredits =	"Antidote, AtoZ, Didipe, Dinobot, DixonHill, DkEd, Envyus, GkevinOD, Hervidero,"  & @CRLF & _
-                        "HungLe, kaganus, KnowJack, ProMac, Safar46, Sardo, Saviart and others"  & @CRLF & _
-						"" & @CRLF & _
-						"And to all forum members contributing to make this great software!" & @CRLF & _
-						"" & @CRLF & _
-						"The latest release of the 'Clash Game Bot' can be found at:"
-		$lbltxtCredits = GUICtrlCreateEdit($txtCredits, $x - 5, $y, 400, 80, BITOR($WS_VISIBLE, $ES_AUTOVSCROLL, $ES_READONLY, $SS_LEFT),0)
+		$lbltxtCredits = GUICtrlCreateEdit(getLocaleString("txtCreditOwners", 1), $x - 5, $y, 400, 80, BITOR($WS_VISIBLE, $ES_AUTOVSCROLL, $ES_READONLY, $SS_LEFT),0)
 			GUICtrlSetBkColor(-1, $COLOR_WHITE)
 		$y += 85
 		$labelForumURL = GUICtrlCreateLabel("https://GameBot.org/latest", $x - 5, $y, 450, 20)
 			GUICtrlSetFont(-1, 8.5, $FW_BOLD)
 			GUICtrlSetColor(-1, $COLOR_BLUE)
 		$y += 100
-		$txtWarn =	"By running this program, the user accepts all responsibility that arises from the use of this software."  & @CRLF & _
-						"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even " & @CRLF & _
-						"the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General " & @CRLF & _
-						"Public License for more details. The license can be found in the main code folder location."  & @CRLF & _
-						"Copyright (C) 2015 GameBot.org"
-		$lbltxtWarn = GUICtrlCreateEdit($txtWarn, $x - 5, $y, 410, 56, BITOR($WS_VISIBLE, $ES_AUTOVSCROLL, $ES_READONLY, $SS_LEFT, $ES_CENTER),0)
+		$lbltxtWarn = GUICtrlCreateEdit(getLocaleString("txtEULA", 1), $x - 5, $y, 410, 56, BITOR($WS_VISIBLE, $ES_AUTOVSCROLL, $ES_READONLY, $SS_LEFT, $ES_CENTER),0)
 			GUICtrlSetColor(-1, 0x000053)
 			GUICtrlSetBkColor(-1, $COLOR_WHITE)
 			GUICtrlSetFont(-1, 6, $FW_BOLD)
@@ -103,9 +91,9 @@ GUISetState(@SW_SHOW)
 $statLog = _GUICtrlStatusBar_Create($frmBot)
 _ArrayConcatenate($G, $y)
 _GUICtrlStatusBar_SetSimple($statLog)
-_GUICtrlStatusBar_SetText($statLog, "Status : Idle")
-$tiAbout = TrayCreateItem("About")
+_GUICtrlStatusBar_SetText($statLog, getLocaleString("statusIdle"))
+$tiAbout = TrayCreateItem(getLocaleString("trayItemAbout"))
 TrayCreateItem("")
-$tiExit = TrayCreateItem("Exit")
+$tiExit = TrayCreateItem(getLocaleString("trayItemExit"))
 
 ;~ -------------------------------------------------------------

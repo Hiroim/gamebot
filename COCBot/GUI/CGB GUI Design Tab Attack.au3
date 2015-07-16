@@ -17,201 +17,177 @@
 ; Attack Basics Tab
 ;~ -------------------------------------------------------------
 
-$tabAttack = GUICtrlCreateTabItem("Attack")
+$tabAttack = GUICtrlCreateTabItem(getLocaleString("tabAttack"))
 	Local $x = 30, $y = 150
-	$grpDeadBaseDeploy = GUICtrlCreateGroup("DeadBase Deploy", $x - 20, $y - 20, 225, 295);95)
-		$lblDBDeploy = GUICtrlCreateLabel("Attack on:", $x, $y + 5, -1, -1)
+	$grpDeadBaseDeploy = GUICtrlCreateGroup(getLocaleString("grpDeadBaseDeploy"), $x - 20, $y - 20, 225, 295);95)
+		$lblDBDeploy = GUICtrlCreateLabel(getLocaleString("lbDeploy"), $x, $y + 5, -1, -1)
 		$cmbDBDeploy = GUICtrlCreateCombo("", $x + 55, $y, 120, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			GUICtrlSetTip(-1, "Attack on a single side, penetrates through base" & @CRLF & "Attack on two sides, penetrates through base" & @CRLF & "Attack on three sides, gets outer and some inside of base" & @CRLF & "Attack on all sides equally, gets most of outer base", "Select the No. of sides to attack on.")
-			GUICtrlSetData(-1, "one side|two sides|three sides|all sides equally", "all sides equally")
+			GUICtrlSetTip(-1,getLocaleString("tipCmbDeploy", 1),getLocaleString("tipCmbDeployTitle") )
+			GUICtrlSetData(-1, getLocaleString("cmbDBDeploy"), getLocaleString("cmbDBDeployDefault"))
 		$y += 25
-		$lblDBSelectTroop=GUICtrlCreateLabel("Troops:",$x, $y + 5, -1 , -1)
+		$lblDBSelectTroop=GUICtrlCreateLabel(getLocaleString("lbSelectTroop"),$x, $y + 5, -1 , -1)
 		$cmbDBSelectTroop=GUICtrlCreateCombo("", $x + 55, $y, 120, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			GUICtrlSetData(-1, "Use All Troops|Use Barracks|Barb Only|Arch Only|B+A|B+Gob|A+Gob|B+A+Gi|B+A+Gob+Gi|B+A+Hog Rider|B+A+Minion", "Use All Troops")
+			GUICtrlSetData(-1, getLocaleString("cmbDBSelectTroop"), getLocaleString("cmbDBSelectTroopAll"))
 		$y += 25
-		$lblDBUnitDelay = GUICtrlCreateLabel("Delay Unit:", $x, $y + 5, -1, -1)
-			$txtTip = "This delays the deployment of troops, 1 (fast) = like a Bot, 10 (slow) = Like a Human." & @CRLF & "Random will make bot more varied and closer to a person."
-			GUICtrlSetTip(-1, $txtTip)
+		$lblDBUnitDelay = GUICtrlCreateLabel(getLocaleString("lbUnitDelay"), $x, $y + 5, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipLbUnitDelay", 1))
 		$cmbDBUnitDelay = GUICtrlCreateCombo("", $x + 55, $y, 36, 21, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetTip(-1, getLocaleString("tipLbUnitDelay", 1))
 			GUICtrlSetData(-1, "1|2|3|4|5|6|7|8|9|10", "5")
-		$lblDBWaveDelay = GUICtrlCreateLabel("Wave:", $x + 105, $y + 5, -1, -1)
-			GUICtrlSetTip(-1, $txtTip)
+		$lblDBWaveDelay = GUICtrlCreateLabel(getLocaleString("lbWaveDelay"), $x + 105, $y + 5, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipLbUnitDelay", 1))
 		$cmbDBWaveDelay = GUICtrlCreateCombo("", $x + 140, $y, 36, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetTip(-1, getLocaleString("tipLbUnitDelay", 1))
 			GUICtrlSetData(-1, "1|2|3|4|5|6|7|8|9|10", "5")
 		$y += 22
-		$chkDBRandomSpeedAtk = GUICtrlCreateCheckbox("Randomize delay for Units && Waves", $x, $y, -1, -1)
-			GUICtrlSetTip(-1, $txtTip)
+		$chkDBRandomSpeedAtk = GUICtrlCreateCheckbox(getLocaleString("chkRandomSpeedAtk"), $x, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipLbUnitDelay", 1))
 			GUICtrlSetOnEvent(-1, "chkDBRandomSpeedAtk")
 	$y = 250
-		$chkDBSmartAttackRedArea = GUICtrlCreateCheckbox("Use Smart Attack: Near Red Line.", $x, $y, -1, -1)
-			$txtTip = "Use Smart Attack to detect the outer 'Red Line' of the village to attack. And drop your troops close to it."
-			GUICtrlSetTip(-1, $txtTip)
+		$chkDBSmartAttackRedArea = GUICtrlCreateCheckbox(getLocaleString("chkSmartAttackRedArea"), $x, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipChkSmartAttackRedArea"))
 			GUICtrlSetState(-1, $GUI_CHECKED)
 			GUICtrlSetOnEvent(-1, "chkDBSmartAttackRedArea")
 		$y += 22
-		$lblDBSmartDeploy = GUICtrlCreateLabel("Drop Type:", $x, $y + 5, -1, -1)
-			$txtTip = "Select the Deploy Mode for the waves of Troops." & @CRLF & _
-				"Type 1: Drop a single wave of troops on each side then switch troops, OR" & @CRLF & _
-				"Type 2: Drop a full wave of all troops (e.g. giants, barbs and archers) on each side then switch sides."
-			GUICtrlSetTip(-1, $txtTip)
+		$lblDBSmartDeploy = GUICtrlCreateLabel(getLocaleString("lbSmartDeploy"), $x, $y + 5, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipSmartDeploy",1), getLocaleString("tipSmartDeployTitle"))
 		$cmbDBSmartDeploy = GUICtrlCreateCombo("", $x + 55, $y, 120, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			GUICtrlSetData(-1, "Sides, then Troops|Troops, then Sides", "Sides, then Troops")
-			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetData(-1, getLocaleString("cmbDBSmartDeploy"), getLocaleString("cmbDBSmartDeployDefault"))
+			GUICtrlSetTip(-1, getLocaleString("tipSmartDeploy",1), getLocaleString("tipSmartDeployTitle"))
 		$y += 26
-		$chkDbAttackNearGoldMine = GUICtrlCreateCheckbox("Mine", $x + 20, $y, 17, 17)
-			$txtTip = "Drop troops near Gold Mines"
-			GUICtrlSetTip(-1, $txtTip)
+		$chkDbAttackNearGoldMine = GUICtrlCreateCheckbox(getLocaleString("chkAttackNearGoldMine"), $x + 20, $y, 17, 17)
+			GUICtrlSetTip(-1, getLocaleString("tipChkAttackNearGoldMine"))
 		$picDBAttackNearGoldMine = GUICtrlCreateIcon($pIconLib, $eIcnMine, $x + 40 , $y - 3 , 24, 24)
-			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetTip(-1, getLocaleString("tipChkAttackNearGoldMine"))
 		$x += 75
 		$chkDBAttackNearElixirCollector = GUICtrlCreateCheckbox("", $x, $y, 17, 17)
-			$txtTip = "Drop troops near Elixir Collectors"
-			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetTip(-1, getLocaleString("tipChkAttackNearElixirCollector"))
 		$picDBAttackNearElixirCollector = GUICtrlCreateIcon($pIconLib, $eIcnCollector, $x + 20 , $y - 3 , 24, 24)
-			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetTip(-1, getLocaleString("tipChkAttackNearElixirCollector"))
  		$x += 55
   		$chkDBAttackNearDarkElixirDrill = GUICtrlCreateCheckbox("", $x, $y, 17, 17)
-			$txtTip = "Drop troops near Dark Elixir Drills"
- 			GUICtrlSetTip(-1, $txtTip)
+ 			GUICtrlSetTip(-1, getLocaleString("tipChkAttackNearDarkElixirDrill"))
 		$picDBAttackNearDarkElixirDrill = GUICtrlCreateIcon($pIconLib, $eIcnDrill, $x + 20 , $y - 3, 24, 24)
- 			GUICtrlSetTip(-1, $txtTip)
+ 			GUICtrlSetTip(-1, getLocaleString("tipChkAttackNearDarkElixirDrill"))
 	Local $x = 30, $y = 335
 		GUICtrlCreateIcon($pIconLib, $eIcnKing, $x , $y, 24, 24)
-		$chkDBKingAttack = GUICtrlCreateCheckbox("Use King", $x + 35, $y, -1, -1)
-			$txtTip = "Use your King when Attacking a DeadBase."
-			GUICtrlSetTip(-1, $txtTip)
+		$chkDBKingAttack = GUICtrlCreateCheckbox(getLocaleString("chkKingAttack"), $x + 35, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipChkKingAttack"))
 		$y += 27
 		GUICtrlCreateIcon($pIconLib, $eIcnQueen, $x, $y, 24, 24)
-		$chkDBQueenAttack = GUICtrlCreateCheckbox("Use Queen", $x + 35, $y, -1, -1)
-			$txtTip = "Use your Queen when Attacking a DeadBase."
-			GUICtrlSetTip(-1, $txtTip)
+		$chkDBQueenAttack = GUICtrlCreateCheckbox(getLocaleString("chkQueenAttack"), $x + 35, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipChkQueenAttack"))
 		$y += 27
 		GUICtrlCreateIcon($pIconLib, $eIcnCC, $x, $y, 24, 24)
-		$chkDBDropCC = GUICtrlCreateCheckbox("Drop in Battle", $x + 35, $y, -1, -1)
-			GUICtrlSetTip(-1, "Drop your Clan Castle in battle if it contains troops.")
+		$chkDBDropCC = GUICtrlCreateCheckbox(getLocaleString("chkDropCC"), $x + 35, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipChkDropCC"))
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 	Local $x = 260, $y = 150
-	$grpLiveBaseDeploy = GUICtrlCreateGroup("LiveBase Deploy", $x - 20, $y - 20, 220, 295);95)
-		$lblABDeploy = GUICtrlCreateLabel("Attack on:", $x, $y + 5, -1, -1)
+	$grpLiveBaseDeploy = GUICtrlCreateGroup(getLocaleString("grpLiveBaseDeploy"), $x - 20, $y - 20, 220, 295);95)
+		$lblABDeploy = GUICtrlCreateLabel(getLocaleString("lbDeploy"), $x, $y + 5, -1, -1)
 		$cmbABDeploy = GUICtrlCreateCombo("", $x + 55, $y, 120, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			GUICtrlSetTip(-1, "Attack on a single side, penetrates through base" & @CRLF & "Attack on two sides, penetrates through base" & @CRLF & "Attack on three sides, gets outer and some inside of base" & @CRLF & "Attack on all sides equally, gets most of outer base", "Select the No. of sides to attack on.")
-			GUICtrlSetData(-1, "one side|two sides|three sides|all sides equally", "all sides equally")
+			GUICtrlSetTip(-1, getLocaleString("tipCmbDeploy", 1), getLocaleString("tipCmbDeployTitle"))
+			GUICtrlSetData(-1, getLocaleString("cmbLBDeploy"), getLocaleString("cmbLBDeployDefault"))
 		$y += 25
-		$lblABSelectTroop=GUICtrlCreateLabel("Troops:",$x, $y + 5, -1 , -1)
+		$lblABSelectTroop=GUICtrlCreateLabel(getLocaleString("lbSelectTroop"),$x, $y + 5, -1 , -1)
 		$cmbABSelectTroop=GUICtrlCreateCombo("", $x + 55, $y, 120, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			GUICtrlSetData(-1, "Use All Troops|Use Barracks|Barb Only|Arch Only|B+A|B+Gob|A+Gob|B+A+Gi|B+A+Gob+Gi|B+A+Hog Rider|B+A+Minion", "Use All Troops")
+			GUICtrlSetData(-1, getLocaleString("cmbLBSelectTroop"), getLocaleString("cmbLBSelectTroopAll"))
 		$y += 25
-		$lblABUnitDelay = GUICtrlCreateLabel("Delay Unit:", $x, $y + 5, -1, -1)
-			$txtTip = "This delays the deployment of troops, 1 (fast) = like a Bot, 10 (slow) = Like a Human." & @CRLF & "Random will make bot more varied and closer to a person."
-			GUICtrlSetTip(-1, $txtTip)
+		$lblABUnitDelay = GUICtrlCreateLabel(getLocaleString("lbUnitDelay"), $x, $y + 5, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipLbUnitDelay", 1))
 		$cmbABUnitDelay = GUICtrlCreateCombo("", $x + 55, $y, 36, 21, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetTip(-1, getLocaleString("tipLbUnitDelay", 1))
 			GUICtrlSetData(-1, "1|2|3|4|5|6|7|8|9|10", "5")
-		$lblABWaveDelay = GUICtrlCreateLabel("Wave:", $x + 105, $y + 5, -1, -1)
-			GUICtrlSetTip(-1, $txtTip)
+		$lblABWaveDelay = GUICtrlCreateLabel(getLocaleString("lbWaveDelay"), $x + 105, $y + 5, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipLbUnitDelay", 1))
 		$cmbABWaveDelay = GUICtrlCreateCombo("", $x + 140, $y, 36, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetTip(-1, getLocaleString("tipLbUnitDelay", 1))
 			GUICtrlSetData(-1, "1|2|3|4|5|6|7|8|9|10", "5")
 		$y += 22
-		$chkABRandomSpeedAtk = GUICtrlCreateCheckbox("Randomize delay for Units && Waves", $x, $y, -1, -1)
-			GUICtrlSetTip(-1, $txtTip)
+		$chkABRandomSpeedAtk = GUICtrlCreateCheckbox(getLocaleString("chkRandomSpeedAtk"), $x, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipLbUnitDelay", 1))
 			GUICtrlSetOnEvent(-1, "chkABRandomSpeedAtk")
 	$y = 250
-		$chkABSmartAttackRedArea = GUICtrlCreateCheckbox("Use Smart Attack: Near Red Line.", $x, $y, -1, -1)
-			$txtTip = "Use Smart Attack to detect the outer 'Red Line' of the village to attack. And drop your troops close to it."
-			GUICtrlSetTip(-1, $txtTip)
+		$chkABSmartAttackRedArea = GUICtrlCreateCheckbox(getLocaleString("chkSmartAttackRedArea"), $x, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipChkSmartAttackRedArea"))
 			GUICtrlSetState(-1, $GUI_CHECKED)
 			GUICtrlSetOnEvent(-1, "chkABSmartAttackRedArea")
 		$y += 22
-		$lblABSmartDeploy = GUICtrlCreateLabel("Drop Type:", $x, $y + 5, -1, -1)
-			$txtTip = "Select the Deploy Mode for the waves of Troops." & @CRLF & _
-				"Type 1: Drop a single wave of troops on each side then switch troops, OR" & @CRLF & _
-				"Type 2: Drop a full wave of all troops (e.g. giants, barbs and archers) on each side then switch sides."
-			GUICtrlSetTip(-1, $txtTip)
+		$lblABSmartDeploy = GUICtrlCreateLabel(getLocaleString("lbSmartDeploy"), $x, $y + 5, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipSmartDeploy",1), getLocaleString("tipSmartDeployTitle"))
 		$cmbABSmartDeploy = GUICtrlCreateCombo("", $x + 55, $y, 120, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			GUICtrlSetData(-1, "Sides, then Troops|Troops, then Sides", "Sides, then Troops")
-			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetData(-1, getLocaleString("cmbLBSmartDeploy"), getLocaleString("cmbLBSmartDeployDefault"))
+			GUICtrlSetTip(-1, getLocaleString("tipSmartDeploy",1), getLocaleString("tipSmartDeployTitle"))
 		$y += 26
 		$chkABAttackNearGoldMine = GUICtrlCreateCheckbox("", $x + 20, $y, 17, 17)
-			$txtTip = "Drop troops near Gold Mines"
-			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetTip(-1, getLocaleString("tipChkAttackNearGoldMine"))
 		$picABAttackNearGoldMine = GUICtrlCreateIcon($pIconLib, $eIcnMine, $x + 40 , $y - 3 , 24, 24)
-			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetTip(-1, getLocaleString("tipChkAttackNearGoldMine"))
 		$x += 75
 		$chkABAttackNearElixirCollector = GUICtrlCreateCheckbox("", $x, $y, 17, 17)
-			$txtTip = "Drop troops near Elixir Collectors"
-			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetTip(-1, getLocaleString("tipChkAttackNearElixirCollector"))
 		$picABAttackNearElixirCollector = GUICtrlCreateIcon($pIconLib, $eIcnCollector, $x + 20 , $y - 3 , 24, 24)
-			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetTip(-1, getLocaleString("tipChkAttackNearElixirCollector"))
  		$x += 55
   		$chkABAttackNearDarkElixirDrill = GUICtrlCreateCheckbox("", $x, $y, 17, 17)
-			$txtTip = "Drop troops near Dark Elixir Drills"
- 			GUICtrlSetTip(-1, $txtTip)
+ 			GUICtrlSetTip(-1, getLocaleString("tipChkAttackNearDarkElixirDrill"))
 		$picABAttackNearDarkElixirDrill = GUICtrlCreateIcon($pIconLib, $eIcnDrill, $x + 20 , $y - 3, 24, 24)
- 			GUICtrlSetTip(-1, $txtTip)
+ 			GUICtrlSetTip(-1, getLocaleString("tipChkAttackNearDarkElixirDrill"))
 	$x -= 70
 	$y = 335
 		GUICtrlCreateIcon($pIconLib, $eIcnKing, $x, $y, 24, 24)
-		$chkABKingAttack = GUICtrlCreateCheckbox("Use King", $x + 35, $y, -1, -1)
-			$txtTip = "Use your King when Attacking a LiveBase."
-			GUICtrlSetTip(-1, $txtTip)
+		$chkABKingAttack = GUICtrlCreateCheckbox(getLocaleString("chkKingAttack"), $x + 35, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipChkKingAttack"))
 		$y += 27
 		GUICtrlCreateIcon($pIconLib, $eIcnQueen, $x, $y, 24, 24)
-		$chkABQueenAttack = GUICtrlCreateCheckbox("Use Queen", $x + 35, $y, -1, -1)
-			$txtTip = "Use your Queen when Attacking a LiveBase."
-			GUICtrlSetTip(-1, $txtTip)
+		$chkABQueenAttack = GUICtrlCreateCheckbox(getLocaleString("chkQueenAttack"), $x + 35, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipChkQueenAttack"))
 		$y += 27
 		GUICtrlCreateIcon($pIconLib, $eIcnCC, $x, $y, 24, 24)
-		$chkABDropCC = GUICtrlCreateCheckbox("Drop in Battle", $x + 35, $y, -1, -1)
-			GUICtrlSetTip(-1, "Drop your Clan Castle in battle if it contains troops.")
+		$chkABDropCC = GUICtrlCreateCheckbox(getLocaleString("chkDropCC"), $x + 35, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipChkDropCC"))
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 	Local $x = 200, $y = 345
-	$grpClanCastleBal = GUICtrlCreateGroup("ClanCastle Balance", $x - 20, $y - 20, 110, 100)
+	$grpClanCastleBal = GUICtrlCreateGroup(getLocaleString("grpClanCastleBal"), $x - 20, $y - 20, 110, 100)
 		GUICtrlCreateLabel("", $x - 18, $y - 7, 106, 85) ; fake label to hide group border from DB and LB setting groups
 		GUICtrlSetBkColor (-1, $COLOR_WHITE)
 		GUICtrlSetState (-1, $GUI_DISABLE)
 		GUICtrlCreateIcon($pIconLib, $eIcnCC, $x + 25, $y - 5, 24, 24)
 		$y += 21
-		$chkUseCCBalanced = GUICtrlCreateCheckbox("Balance D/R", $x - 5, $y, -1, -1)
+		$chkUseCCBalanced = GUICtrlCreateCheckbox(getLocaleString("chkUseCCBalanced"), $x - 5, $y, -1, -1)
 			GUICtrlSetState(-1, $GUI_UNCHECKED)
-			GUICtrlSetTip(-1, "Drop your Clan Castle only if your donated/received ratio is greater than D/R ratio below.")
+			GUICtrlSetTip(-1, getLocaleString("tipChkUseCCBalanced"))
 			GUICtrlSetOnEvent(-1, "chkBalanceDR")
 		$y += 25
 		$cmbCCDonated = GUICtrlCreateCombo("",  $x - 5, $y, 30, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			GUICtrlSetTip(-1, "Donated quotient")
+			GUICtrlSetTip(-1, getLocaleString("tipCmbCCDonated"))
 			GUICtrlSetData(-1, "1|2|3|4|5", "1")
 			GUICtrlSetState(-1, $GUI_DISABLE)
 			GUICtrlSetOnEvent(-1, "cmbBalanceDR")
 		$lblDRRatio = GUICtrlCreateLabel("/", $x + 31, $y + 5, -1, -1)
-			$txtTip = "Wanted donated / received ratio" & @CRLF & "1/1 means donated = received, 1/2 means donated = half the received etc."
-			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetTip(-1, getLocaleString("tipLbDRRatio",1))
 		$cmbCCReceived = GUICtrlCreateCombo("", $x + 44, $y, 30, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			GUICtrlSetTip(-1, "Received quotient")
+			GUICtrlSetTip(-1, getLocaleString("tipCmbCCReceived"))
 			GUICtrlSetData(-1, "1|2|3|4|5", "1")
 			GUICtrlSetState(-1, $GUI_DISABLE)
 			GUICtrlSetOnEvent(-1, "cmbBalanceDR")
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 	Local $x = 30, $y = 450
-	$grpRoyalAbilities = GUICtrlCreateGroup("Hero Abilities", $x - 20, $y - 20, 450, 75)
+	$grpRoyalAbilities = GUICtrlCreateGroup(getLocaleString("grpRoyalAbilities"), $x - 20, $y - 20, 450, 75)
 		GUICtrlCreatePic (@ScriptDir & "\Icons\KingAbility.jpg", $x, $y - 3, 30, 47)
 		GUICtrlCreatePic (@ScriptDir & "\Icons\QueenAbility.jpg", $x + 30, $y - 3, 30, 47)
 		$x += 75
-		$radManAbilities = GUICtrlCreateRadio("Timed activation of Hero Abilities after:", $x, $y + 3, -1, -1)
-			$txtTip = "Activate the Ability on a timer." & @CRLF & "Both Heroes are activated at the same time."
-			GUICtrlSetTip(-1, $txtTip)
+		$radManAbilities = GUICtrlCreateRadio(getLocaleString("radManAbilities"), $x, $y + 3, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipRadManAbilities",1))
 			GUICtrlSetState(-1, $GUI_CHECKED)
-		$radAutoAbilities = GUICtrlCreateRadio("Auto activate Hero Abilities when they become weak (red zone).", $x, $y + 25, -1, -1)
-		$txtTip = "Activate the Ability when the Hero becomes weak." & @CRLF & "King and Queen are checked and activated individually."
-		GUICtrlSetTip(-1, $txtTip)
+		$radAutoAbilities = GUICtrlCreateRadio(getLocaleString("radAutoAbilities"), $x, $y + 25, -1, -1)
+		GUICtrlSetTip(-1, getLocaleString("tipRadAutoAbilities",1))
 		$txtManAbilities = GUICtrlCreateInput("9", $x + 200, $y + 2, 30, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
-			$txtTip = "Set the time in seconds for Timed Activation of Hero Abilities."
-			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetTip(-1, getLocaleString("tipManAbilities"))
 			GUICtrlSetLimit(-1, 2)
-		$lblRoyalAbilitiesSec = GUICtrlCreateLabel("sec.", $x + 235, $y + 7, -1, -1)
+		$lblRoyalAbilitiesSec = GUICtrlCreateLabel(getLocaleString("lbLoyalAbilitiesSec"), $x + 235, $y + 7, -1, -1)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUICtrlCreateTabItem("")
