@@ -38,7 +38,7 @@ Local $x = 30, $y = 150, $w = 450, $h = 170
 	$txtAtkLog = _GUICtrlRichEdit_Create($frmBot, "", $x - 20, $y - 20, $w, $h - 85, BitOR($ES_MULTILINE, $ES_READONLY, $WS_VSCROLL, 8912), $WS_EX_STATICEDGE)
 	$y = 480
 	$lblLog = GUICtrlCreateLabel(getLocaleString("lblLog"), $x - 20, $y + 5, -1, -1)
-	$cmbLog = GUICtrlCreateCombo("", $x + 30, $y, 180, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+	$cmbLog = GUICtrlCreateCombo("", $x + 40, $y, 195, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 		GUICtrlSetTip(-1, getLocaleString("tipCmbLog"))
 		GUICtrlSetData(-1, getLocaleString("cmbLog"), getLocaleString("cmbLogDefault"))
 		GUICtrlSetOnEvent(-1, "cmbLog")

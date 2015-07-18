@@ -64,7 +64,7 @@ Local $x = 260, $y = 205
 		GUICtrlCreateIcon($pIconLib, $eIcnTrap, $x - 5, $y, 24, 24)
 		GUICtrlCreateIcon($pIconLib, $eIcnXbow, $x + 20, $y, 24, 24)
 		GUICtrlCreateIcon($pIconLib, $eIcnInferno, $x + 45, $y, 24, 24)
-		$chkTrap = GUICtrlCreateCheckbox(getLocaleString("chkTrap"), $x + 75, $y + 2, -1, -1)
+		$chkTrap = GUICtrlCreateCheckbox(getLocaleString("chkTrap",1), $x + 75, $y + 2, -1, -1)
 			GUICtrlSetTip(-1, getLocaleString("tipChkTrap"))
 			GUICtrlSetOnEvent(-1, "chkTrap")
 			_ArrayConcatenate($G, $D)

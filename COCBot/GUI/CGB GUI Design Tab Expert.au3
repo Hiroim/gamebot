@@ -59,7 +59,7 @@ GUICtrlSetTip(-1, getLocaleString("tipChkAutostart"))
 GUICtrlSetOnEvent(-1, "chkAutostart")
 $txtAutostartDelay = GUICtrlCreateInput("10", $x + 120, $y, 25, -1, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 GUICtrlSetState(-1, $GUI_DISABLE)
-$lblAutostartSeconds = GUICtrlCreateLabel("sec.", $x + 150, $y + 4, 38, 18)
+$lblAutostartSeconds = GUICtrlCreateLabel(getLocaleString("lblAutoStartSeconds"), $x + 150, $y + 4, 38, 18)
 $y += 22
 $chkLanguage = GUICtrlCreateCheckbox(getLocaleString("chkLanguage"), $x, $y, -1, -1)
 GUICtrlSetTip(-1, getLocaleString("tipChkLanguage"))
@@ -83,7 +83,7 @@ GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 Local $x = 30, $y = 385
 $grpTiming = GUICtrlCreateGroup(getLocaleString("grpTiming"), $x - 20, $y - 20, 205, 50)
-$lblTrainDelay = GUICtrlCreateLabel(getLocaleString("lblTrainDelay"), $x, $y, -1, -1)
+$lblTrainDelay = GUICtrlCreateLabel(getLocaleString("lblTrainDelay",1), $x, $y, -1, -1)
 $lbltxtTrainITDelay = GUICtrlCreateLabel(getLocaleString("trainItDelay"), $x + 70, $y - 5, 37, 50)
 GUICtrlSetTip(-1, getLocaleString("tipTrainDelay"))
 $sldTrainITDelay = GUICtrlCreateSlider($x + 105, $y - 5, 70, 25, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS))
@@ -356,7 +356,7 @@ $grpOtherExpert = GUICtrlCreateGroup(getLocaleString("grpOtherExpert"), $x - 20,
 $chkTotalCampForced = GUICtrlCreateCheckbox(getLocaleString("chkTotalCampForced"), $x, $y, -1, -1)
 GUICtrlSetOnEvent(-1, "chkTotalCampForced")
 GUICtrlSetTip(-1, getLocaleString("tipChkTotalCampForced"))
-$txtTotalCampForced = GUICtrlCreateInput("200", $x + 135, $y, 35, -1, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+$txtTotalCampForced = GUICtrlCreateInput("200", $x + 160, $y, 35, -1, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 GUICtrlSetLimit(-1, 3)
 GUICtrlSetState(-1, $GUI_DISABLE)
 $y += 22

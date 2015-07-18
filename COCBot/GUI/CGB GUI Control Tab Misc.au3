@@ -147,9 +147,9 @@ Func sldVSDelay()
 	GUICtrlSetData($lblVSDelay, $iVSDelay)
 
 	If $iVSDelay = 1 Then
-		GUICtrlSetData($lbltxtVSDelay, "second")
+		GUICtrlSetData($lbltxtVSDelay, getLocaleString("lbltxtVSDelayS"))
 	Else
-		GUICtrlSetData($lbltxtVSDelay, "seconds")
+		GUICtrlSetData($lbltxtVSDelay, getLocaleString("lbltxtVSDelay"))
 	EndIf
 EndFunc   ;==>sldVSDelay
 

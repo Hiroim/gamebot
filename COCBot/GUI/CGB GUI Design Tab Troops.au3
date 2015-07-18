@@ -57,8 +57,9 @@ $tabTroops = GUICtrlCreateTabItem(getLocaleString("tabTroops"))
 	$y -= 5
 		GUICtrlCreateIcon ($pIconLib, $eIcnTroops, $x, $y + 2, 16, 16)
 	$lblFullTroop = GUICtrlCreateLabel(getLocaleString("lblFullTroop"),$x + 25, $y + 5, -1, 17)
-	$txtFullTroop = GUICtrlCreateInput("100",  $x + 150, $y, 35, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 		GUICtrlSetTip(-1, getLocaleString("tipFullTroop"))
+	$txtFullTroop = GUICtrlCreateInput("100",  $x + 150, $y, 35, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+		GUICtrlSetTip(-1, getLocaleString("txtFullTroop"))
 		GUICtrlSetLimit(-1, 3)
 	$lblFullTroop = GUICtrlCreateLabel("%",$x + 188, $y + 5, -1, 17)
 	$y += 25

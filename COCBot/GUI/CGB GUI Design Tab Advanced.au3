@@ -61,7 +61,7 @@
 			GUICtrlSetLimit(-1, 3)
 			GUICtrlSetTip(-1, getLocaleString("tipATBullyMode",1))
 			GUICtrlSetState(-1, $GUI_DISABLE)
-		$lblATBullyMode = GUICtrlCreateLabel(getLocaleString("lbATBullyMode"), $x + 135, $y + 5, -1, -1)
+		$lblATBullyMode = GUICtrlCreateLabel(getLocaleString("lbATBullyMode",1), $x + 135, $y - 4, -1, -1)
 		$y +=25
 		$lblATBullyMode = GUICtrlCreateLabel(getLocaleString("lblATBullyMode"), $x + 10, $y + 3, -1, -1, $SS_RIGHT)
 		$cmbYourTH = GUICtrlCreateCombo("", $x + 95, $y, 50, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
