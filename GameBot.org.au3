@@ -34,8 +34,7 @@ Global $StartupLanguage = IniRead(@ScriptDir & "\COCBot\GUI\localization\lang.in
 ;EndIf
 
 If @AutoItX64 = 1 Then
-	MsgBox(0, getLocaleString("msgboxWarningTitle"), getLocaleString("msgbox_x64_1") & @CRLF & _
-				  getLocaleString("msgbox_x64_2"))
+	MsgBox(0, getLocaleString("msgboxWarningTitle"), getLocaleString("msgbox_x64"))
 	Exit
 EndIf
 

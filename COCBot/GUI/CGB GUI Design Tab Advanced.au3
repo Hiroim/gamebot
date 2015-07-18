@@ -100,7 +100,7 @@
 			GUICtrlSetTip(-1, getLocaleString("tipChkUnbreakable"))
 			GUICtrlSetOnEvent(-1, "chkUnbreakable")
 		$y += 23
-		$lblUnbreakable1 = GUICtrlCreateLabel(getLocaleString("lbUnbreakable1"), $x + 20 , $y + 3, -1, -1, $SS_RIGHT)
+		$lblUnbreakable1 = GUICtrlCreateLabel(getLocaleString("lbUnbreakable1"), $x - 5, $y + 2, -1, -1, $SS_RIGHT)
 		$txtUnbreakable = GUICtrlCreateInput("5", $x + 80, $y, 30, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 			GUICtrlSetTip(-1, getLocaleString("tipUnbreakable1"))
 			GUICtrlSetLimit(-1, 2)

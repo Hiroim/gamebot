@@ -59,7 +59,7 @@ Local $x = 30, $y = 150
 		$lblCredits1 = GUICtrlCreateLabel(getLocaleString("txtCredits", 1), $x - 5, $y, 400, 50)
 			GUICtrlSetFont(-1, 9, $FW_BOLD)
 			GUICtrlSetColor(-1, $COLOR_NAVY)
-		$y += 35
+		$y += 55
 		$lblCredits2 = GUICtrlCreateLabel(getLocaleString("txtVisitForums"), $x - 5, $y, -1, -1)
 		$y += 20
 		$labelGameBotURL = GUICtrlCreateLabel("https://GameBot.org", $x - 5, $y, 150, 20)
@@ -75,7 +75,7 @@ Local $x = 30, $y = 150
 		$labelForumURL = GUICtrlCreateLabel("https://GameBot.org/latest", $x - 5, $y, 450, 20)
 			GUICtrlSetFont(-1, 8.5, $FW_BOLD)
 			GUICtrlSetColor(-1, $COLOR_BLUE)
-		$y += 100
+		$y += 80
 		$lbltxtWarn = GUICtrlCreateEdit(getLocaleString("txtEULA", 1), $x - 5, $y, 410, 56, BITOR($WS_VISIBLE, $ES_AUTOVSCROLL, $ES_READONLY, $SS_LEFT, $ES_CENTER),0)
 			GUICtrlSetColor(-1, 0x000053)
 			GUICtrlSetBkColor(-1, $COLOR_WHITE)
