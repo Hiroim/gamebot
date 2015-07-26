@@ -81,21 +81,21 @@ Func BotCommand()
 			Switch $icmbBotCommand
 				Case 0
 					If $bDonationEnabled = False Then
-						SetLog("Halt Attack, Stay Online/Collect...", $COLOR_BLUE)
+						SetLog(getLocaleString("logHaltFalseDonation"), $COLOR_BLUE)
 					ElseIf $bTrainEnabled = False Then
-						SetLog("Halt Attack, Stay Online/Collect/Donate...", $COLOR_BLUE)
+						SetLog(getLocaleString("logHaltFalseTrain"), $COLOR_BLUE)
 					Else
-						SetLog("Halt Attack, Stay Online/Train/Collect/Donate...", $COLOR_BLUE)
+						SetLog(getLocaleString("logHaltDonateTrain"), $COLOR_BLUE)
 					EndIf
 					$CommandStop = 0 ; Halt Attack
 					If _Sleep(500) Then Return
 				Case 1
-					SetLog("Force Shutdown PC...", $COLOR_BLUE)
+					SetLog(getLocaleString("logHaltShutdown"), $COLOR_BLUE)
 					If _Sleep(500) Then Return
 					Shutdown(5) ; Force Shutdown
 					Return True
 				Case 2
-					SetLog("Sleeping PC...", $COLOR_BLUE)
+					SetLog(getLocaleString("logHaltSleep"), $COLOR_BLUE)
 					If _Sleep(500) Then Return
 					Shutdown(32) ; Sleep / Stand by
 					Return True

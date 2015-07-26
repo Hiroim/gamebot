@@ -25,10 +25,10 @@ Func DropTrophy()
 
 				While Number($TrophyCount) > Number($itxtMaxTrophyNeedCheck)
 					$TrophyCount = getTrophyMainScreen($aTrophies[0], $aTrophies[1])
-					SetLog("Trophy Count : " & $TrophyCount, $COLOR_GREEN)
+					SetLog(getLocaleString("logTrophyCount") & $TrophyCount, $COLOR_GREEN)
 					If Number($TrophyCount) > Number($itxtMaxTrophyNeedCheck) Then
 						$itxtMaxTrophyNeedCheck = $itxtdropTrophy ; $itxtMinTrophy = 1650
-						SetLog("Dropping Trophies to " & $itxtdropTrophy, $COLOR_BLUE)
+						SetLog(getLocaleString("logDropTrophiesTo") & $itxtdropTrophy, $COLOR_BLUE)
 						If _Sleep(2000) Then ExitLoop
 
 						ZoomOut()
@@ -41,7 +41,7 @@ Func DropTrophy()
 							$iCount += 1
 							If $iCount >= 35 Then ExitLoop (2) ; or Return
 						WEnd
-						SetLog("Identification of your troops:", $COLOR_BLUE)
+						SetLog(getLocaleString("logIdentifyTroops"), $COLOR_BLUE)
 						PrepareAttack($DT) ; ==== Troops :checks for type, slot, and quantity ===
 						$iAimGold[$DB] = $iMinGold[$DB]
 						$iAimElixir[$DB] = $iMinElixir[$DB]
@@ -55,10 +55,10 @@ Func DropTrophy()
 						Local $E = (Number($searchElixir) >= Number($iAimElixir[$DB]))
 						Local $GPE = ((Number($searchElixir) + Number($searchGold)) >= Number($iAimGoldPlusElixir[$DB]))
 						If $G = True And $E = True And $GPE = True Then
-							SetLog("Found [G]: " & _NumberFormat($searchGold) & " [E]: " & _NumberFormat($searchElixir) & " [T]: " & _NumberFormat($searchTrophy), $COLOR_BLACK, "Lucida Console")
+							SetLog(getLocaleString("logIdentifyTroops") & _NumberFormat($searchGold) & getLocaleString("logFoundE") & _NumberFormat($searchElixir) & getLocaleString("logFoundT") & _NumberFormat($searchTrophy), $COLOR_BLACK, "Lucida Console")
 							If checkDeadBase() Then
 								; _BlockInputEx(0, "", "", $HWnD) ; block all keyboard keys
-								SetLog(_PadStringCenter(" Dead Base Found!! ", 50, "~"), $COLOR_GREEN)
+								SetLog(_PadStringCenter(getLocaleString("logDeadBaseFound"), 50, "~"), $COLOR_GREEN)
 								Attack()
 								ReturnHome($TakeLootSnapShot)
 								ExitLoop ; or Return, Will end function, no troops left to drop Trophies, will need to Train new Troops first
@@ -81,7 +81,7 @@ Func DropTrophy()
 
 
 							If $King <> -1 Then
-								SetLog("Deploying King", $COLOR_BLUE)
+								SetLog(getLocaleString("logDeployKing"), $COLOR_BLUE)
 								Click(GetXPosOfArmySlot($King, 68), 595, 1, 0, "#0177") ;Select King
 								_Sleep(1000)
 								Click(34, 310, 1, 0, "#0178") ;Drop King
@@ -91,7 +91,7 @@ Func DropTrophy()
 								If _Sleep(1000) Then ExitLoop
 							EndIf
 							If $King = -1 And $Queen <> -1 Then
-								SetLog("Deploying Queen", $COLOR_BLUE)
+								SetLog(getLocaleString("logDeployQueen"), $COLOR_BLUE)
 								Click(GetXPosOfArmySlot($Queen, 68), 595, 1, 0, "#0179") ;Select Queen
 								_Sleep(1000)
 								Click(34, 310, 1, 0, "#0180") ;Drop Queen
@@ -107,35 +107,35 @@ Func DropTrophy()
 									Click(34, 310, 1, 0, "#0181") ;Drop one troop
 									$CurBarb += 1
 									$ArmyComp -= 1
-									SetLog("Deploying 1 Barbarian", $COLOR_BLUE)
+									SetLog(getLocaleString("logDeployBarb"), $COLOR_BLUE)
 								Case $atkTroops[0][0] = $eArch
 									Click(34, 310, 1, 0, "#0182") ;Drop one troop
 									$CurArch += 1
 									$ArmyComp -= 1
-									SetLog("Deploying 1 Archer", $COLOR_BLUE)
+									SetLog(getLocaleString("logDeployArch"), $COLOR_BLUE)
 								Case $atkTroops[0][0] = $eGiant
 									Click(34, 310, 1, 0, "#0183") ;Drop one troop
 									$CurGiant += 1
 									$ArmyComp -= 5
-									SetLog("Deploying 1 Giant", $COLOR_BLUE)
+									SetLog(getLocaleString("logDeployGiant"), $COLOR_BLUE)
 								Case $atkTroops[0][0] = $eWall
 									Click(34, 310, 1, 0, "#0184") ;Drop one troop
 									$CurWall += 1
 									$ArmyComp -= 2
-									SetLog("Deploying 1 WallBreaker", $COLOR_BLUE)
+									SetLog(getLocaleString("logDeployWB"), $COLOR_BLUE)
 								Case $atkTroops[0][0] = $eGobl
 									Click(34, 310, 1, 0, "#0185") ;Drop one troop
 									$CurGobl += 1
 									$ArmyComp -= 2
-									SetLog("Deploying 1 Goblin", $COLOR_BLUE)
+									SetLog(getLocaleString("logDeployGob"), $COLOR_BLUE)
 								Case $atkTroops[0][0] = $eMini
 									Click(34, 310, 1, 0, "#0186") ;Drop one troop
 									$CurMini += 1
 									$ArmyComp -= 2
-									SetLog("Deploying 1 Minion", $COLOR_BLUE)
+									SetLog(getLocaleString("logDeployMini"), $COLOR_BLUE)
 								Case Else
 									$itxtMaxTrophy += 50
-									SetLog("You Don´t have Tier 1/2 Troops, exit of dropping Trophies", $COLOR_BLUE) ; preventing of deploying Tier 2/3 expensive troops
+									SetLog(getLocaleString("logDontHaveLowTierTroops"), $COLOR_BLUE) ; preventing of deploying Tier 2/3 expensive troops
 							EndSelect
 							SetTrophyLoss()
 							If _Sleep(1000) Then ExitLoop
@@ -144,23 +144,23 @@ Func DropTrophy()
 						EndIf
 
 					Else
-						SetLog("Trophy Drop Complete", $COLOR_BLUE)
+						SetLog(getLocaleString("logDropCompleted"), $COLOR_BLUE)
 
 					EndIf
 				WEnd
 			Else
-				Setlog("Drop Thropies: Army is < 70% capacity")
-				Setlog("You selected Option Attack Dead Base if found..")
+				Setlog(getLocaleString("logArmyCap70"))
+				Setlog(getLocaleString("logDropAtkDB"))
 			EndIf
 
 		Else
 
 			While Number($TrophyCount) > Number($itxtMaxTrophyNeedCheck)
 				$TrophyCount = getTrophyMainScreen($aTrophies[0], $aTrophies[1])
-				SetLog("Trophy Count : " & $TrophyCount, $COLOR_GREEN)
+				SetLog(getLocaleString("logTrophyCount") & $TrophyCount, $COLOR_GREEN)
 				If Number($TrophyCount) > Number($itxtMaxTrophyNeedCheck) Then
 					$itxtMaxTrophyNeedCheck = $itxtdropTrophy ; $itxtMinTrophy = 1650
-					SetLog("Dropping Trophies to " & $itxtdropTrophy, $COLOR_BLUE)
+					SetLog(getLocaleString("logDropTrophiesTo") & $itxtdropTrophy, $COLOR_BLUE)
 					If _Sleep(2000) Then ExitLoop
 
 					ZoomOut()
@@ -174,7 +174,7 @@ Func DropTrophy()
 						If $iCount >= 35 Then ExitLoop (2) ; or Return
 					WEnd
 
-					SetLog("Identification of your troops:", $COLOR_BLUE)
+					SetLog(getLocaleString("logIdentifyTroops"), $COLOR_BLUE)
 					PrepareAttack($DT)
 
 					If $iChkTrophyHeroes = 1 Then
@@ -190,7 +190,7 @@ Func DropTrophy()
 
 
 						If $King <> -1 Then
-							SetLog("Deploying King", $COLOR_BLUE)
+							SetLog(getLocaleString("logDeployKing"), $COLOR_BLUE)
 							Click(GetXPosOfArmySlot($King, 68), 595, 1, 0, "#0187") ;Select King
 							_Sleep(1000)
 							Click(34, 310, 1, 0, "#0188") ;Drop King
@@ -200,7 +200,7 @@ Func DropTrophy()
 							If _Sleep(1000) Then ExitLoop
 						EndIf
 						If $King = -1 And $Queen <> -1 Then
-							SetLog("Deploying Queen", $COLOR_BLUE)
+							SetLog(getLocaleString("logDeployQueen"), $COLOR_BLUE)
 							Click(GetXPosOfArmySlot($Queen, 68), 595, 1, 0, "#0189") ;Select Queen
 							_Sleep(1000)
 							Click(34, 310, 1, 0, "#0190") ;Drop Queen
@@ -216,35 +216,35 @@ Func DropTrophy()
 								Click(34, 310, 1, 0, "#0191") ;Drop one troop
 								$CurBarb += 1
 								$ArmyComp -= 1
-								SetLog("Deploying 1 Barbarian", $COLOR_BLUE)
+								SetLog(getLocaleString("logDeployBarb"), $COLOR_BLUE)
 							Case $atkTroops[0][0] = $eArch
 								Click(34, 310, 1, 0, "#0192") ;Drop one troop
 								$CurArch += 1
 								$ArmyComp -= 1
-								SetLog("Deploying 1 Archer", $COLOR_BLUE)
+								SetLog(getLocaleString("logDeployArch"), $COLOR_BLUE)
 							Case $atkTroops[0][0] = $eGiant
 								Click(34, 310, 1, 0, "#0193") ;Drop one troop
 								$CurGiant += 1
 								$ArmyComp -= 5
-								SetLog("Deploying 1 Giant", $COLOR_BLUE)
+								SetLog(getLocaleString("logDeployGiantoyArch"), $COLOR_BLUE)
 							Case $atkTroops[0][0] = $eWall
 								Click(34, 310, 1, 0, "#0194") ;Drop one troop
 								$CurWall += 1
 								$ArmyComp -= 2
-								SetLog("Deploying 1 WallBreaker", $COLOR_BLUE)
+								SetLog(getLocaleString("logDeployWB"), $COLOR_BLUE)
 							Case $atkTroops[0][0] = $eGobl
 								Click(34, 310, 1, 0, "#0195") ;Drop one troop
 								$CurGobl += 1
 								$ArmyComp -= 2
-								SetLog("Deploying 1 Goblin", $COLOR_BLUE)
+								SetLog(getLocaleString("logDeployGob"), $COLOR_BLUE)
 							Case $atkTroops[0][0] = $eMini
 								Click(34, 310, 1, 0, "#0196") ;Drop one troop
 								$CurMini += 1
 								$ArmyComp -= 2
-								SetLog("Deploying 1 Minion", $COLOR_BLUE)
+								SetLog(getLocaleString("logDeployMini"), $COLOR_BLUE)
 							Case Else
 								$itxtMaxTrophy += 50
-								SetLog("You don´t have Tier 1/2 Troops, exit of dropping Trophies", $COLOR_BLUE) ; preventing of deploying Tier 2/3 expensive troops
+								SetLog(getLocaleString("logDontHaveLowTierTroops"), $COLOR_BLUE) ; preventing of deploying Tier 2/3 expensive troops
 						EndSelect
 						SetTrophyLoss()
 						If _Sleep(1000) Then ExitLoop
@@ -253,7 +253,7 @@ Func DropTrophy()
 					EndIf
 
 				Else
-					SetLog("Trophy Drop Complete", $COLOR_BLUE)
+					SetLog(getLocaleString("logDropCompleted"), $COLOR_BLUE)
 				EndIf
 			WEnd
 
@@ -268,6 +268,6 @@ Func SetTrophyLoss()
 	Else
 		$sTrophyLoss = getTrophyLossAttackScreen(48, 184)
 	EndIf
-	Setlog(" Trophy loss = " & $sTrophyLoss, $COLOR_PURPLE) ; record trophy loss
+	Setlog(getLocaleString("logTrophyLoss") & $sTrophyLoss, $COLOR_PURPLE) ; record trophy loss
 	GUICtrlSetData($lblresulttrophiesdropped, GUICtrlRead($lblresulttrophiesdropped) - (Number($sTrophyLoss)))
 EndFunc   ;==>SetTrophyLoss

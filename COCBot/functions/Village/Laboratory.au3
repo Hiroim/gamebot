@@ -24,27 +24,27 @@ Func Laboratory()
 	If $ichkLab = 0 Then Return ; Lab upgrade not enabled.
 
 	If $icmbLaboratory = 0 Then
-		SetLog("Laboratory enabled, but no troop upgrade selected", $COLOR_FUCHSIA)
+		SetLog(getLocaleString("LogNoTroopUpgradeSelected"), $COLOR_FUCHSIA)
 		Return False ; Nothing selected to upgrade
 	EndIf
 	If $aLabPos[0] = 0 Or $aLabPos[1] = 0 Then
-		SetLog("Laboratory Location not found!", $COLOR_RED)
+		SetLog(getLocaleString("LogLabNotFound"), $COLOR_RED)
 		LocateLab() ; Lab location unknown, so find it.
 		If $aLabPos[0] = 0 Or $aLabPos[1] = 0 Then
-			SetLog("Problem locating Laboratory, train laboratory position before proceeding", $COLOR_RED)
+			SetLog(getLocaleString("LogLabLocateProblem"), $COLOR_RED)
 			Return False
 		EndIf
 	EndIf
-	SetLog("Checking Troop Upgrade in Laboratory ...", $COLOR_BLUE)
+	SetLog(getLocaleString("logLabUpgrade"), $COLOR_BLUE)
 
 	; Get updated village elixir and dark elixir values
 	If _ColorCheck(_GetPixelColor(812, 141, True), Hex(0x000000, 6), 10) Then ; check if the village have a Dark Elixir Storage
 		$iElixirCount = getResourcesMainScreen(710, 74)
 		$iDarkCount =  getResourcesMainScreen(731, 123)
-		SetLog("Updating village values [E]: " & $iElixirCount & " [D]: " &  $iDarkCount, $COLOR_GREEN)
+		SetLog(getLocaleString("logUpdateValuesE") & $iElixirCount & getLocaleString("logUpdateValuesD") &  $iDarkCount, $COLOR_GREEN)
 	Else
 		$iElixirCount = getResourcesMainScreen(710, 74)
-		SetLog("Updating village values [E]: " &  $iElixirCount, $COLOR_GREEN)
+		SetLog(getLocaleString("logUpdateValuesE") &  $iElixirCount, $COLOR_GREEN)
 	EndIf
 	$iAvailElixir = Number($iElixirCount)
 	$iAvailDark = Number($iDarkCount)
@@ -64,7 +64,7 @@ Func Laboratory()
 		Click($ButtonPixel[0] + 40, $ButtonPixel[1] + 25,1,0,"#0198") ; Click Research Button
 		If _Sleep(750) Then Return ; Wait for window to open
 	Else
-		Setlog("Trouble finding research button, try again...", $COLOR_FUCHSIA)
+		Setlog(getLocaleString("logCouldntFindResearchBtn"), $COLOR_FUCHSIA)
 		ClickP($aTopLeftClient, 2, 200,"#0199")
 		Return False
 	EndIf
@@ -88,7 +88,7 @@ Func Laboratory()
 	EndIf
 	; check for upgrade in process
 	If _ColorCheck(_GetPixelColor(625, 280, True), Hex(0x60AC10, 6), 20) Or _ColorCheck(_GetPixelColor(660, 280, True), Hex(0x60AC10, 6), 20) Then
-		SetLog("Upgrade in progress, waiting for completion of other troops", $COLOR_FUCHSIA)
+		SetLog(getLocaleString("logUpgradeInProgressFindResearchBtn"), $COLOR_FUCHSIA)
 		If _Sleep(200) Then Return
 		If $debugSetlog <> 1 Then
 			ClickP($aTopLeftClient, 2, 200,"#0328")
@@ -120,12 +120,12 @@ Func Laboratory()
 		EndIf
 	EndIf
 	If $aUpgradeValue[$icmbLaboratory] = -1 Then
-		SetLog($aLabTroops[$icmbLaboratory][3] & " already max level, select another troop", $COLOR_RED)
+		SetLog($aLabTroops[$icmbLaboratory][3] & getLocaleString("logAlreadyMaxed"), $COLOR_RED)
 		ClickP($aTopLeftClient, 2, 200)
 		Return False
 	EndIf
 	If $aUpgradeValue[$icmbLaboratory] = 0 Then
-		SetLog($aLabTroops[$icmbLaboratory][3] & " value read error, close bot and try again!", $COLOR_RED)
+		SetLog($aLabTroops[$icmbLaboratory][3] & getLocaleString("logValueReadError"), $COLOR_RED)
 		$iFirstTimeLab = 2  ; reset value read flag in case use does not restart bot.
 		ClickP($aTopLeftClient, 2, 200)
 		Return False
@@ -133,30 +133,30 @@ Func Laboratory()
 	Switch $icmbLaboratory ;Change messaging based on troop number
 		Case 1 To 15  ; regular elixir
 			If $iAvailElixir < ($aUpgradeValue[$icmbLaboratory] + $itxtUpgrMinElixir) Then
-				SetLog("Insufficent Elixir for " &$aLabTroops[$icmbLaboratory][3]& ", Lab requires: " &  $aUpgradeValue[$icmbLaboratory] & " + " & $itxtUpgrMinElixir & " user reserve", $COLOR_BLUE)
+				SetLog(getLocaleString("logInsufficientE") &$aLabTroops[$icmbLaboratory][3]& getLocaleString("logLabRequires") &  $aUpgradeValue[$icmbLaboratory] & " + " & $itxtUpgrMinElixir & getLocaleString("logLabRequires2"), $COLOR_BLUE)
 				ClickP($aTopLeftClient, 2, 200)
 				Return False
 			EndIf
 			If LabUpgrade() = True Then
-			 Setlog("Elixir used = " & $aUpgradeValue[$icmbLaboratory], $COLOR_BLUE)
+			 Setlog(getLocaleString("logLabUsedE") & $aUpgradeValue[$icmbLaboratory], $COLOR_BLUE)
 			 ClickP($aTopLeftClient, 2, 200)
 			 Return True
 			EndIf
 
 		Case 16 To 24  ; Dark Elixir
 			If $iAvailDark  <  $aUpgradeValue[$icmbLaboratory] + $itxtUpgrMinDark Then
-				SetLog("Insufficent Dark Elixir for " & $aLabTroops[$icmbLaboratory][3] & ", Lab requires: " &  $aUpgradeValue[$icmbLaboratory] & " + " & $itxtUpgrMinDark & " user reserve", $COLOR_BLUE)
+				SetLog(getLocaleString("logInsufficientDE") & $aLabTroops[$icmbLaboratory][3] & getLocaleString("logLabRequires") &  $aUpgradeValue[$icmbLaboratory] & " + " & $itxtUpgrMinDark & getLocaleString("logLabRequires2"), $COLOR_BLUE)
 				ClickP($aTopLeftClient, 2, 200)
 				Return False
 			EndIf
 			If LabUpgrade() = True Then
-				Setlog("Dark Elixir used = " & $aUpgradeValue[$icmbLaboratory], $COLOR_BLUE)
+				Setlog(getLocaleString("logLabUsedDE") & $aUpgradeValue[$icmbLaboratory], $COLOR_BLUE)
 				ClickP($aTopLeftClient, 2, 200)
 				Return True
 			EndIf
 
 		Case Else
-			Setlog("Something went wrong with loot value on Lab upgrade on #" &$aLabTroops[$i][3], $COLOR_RED)
+			Setlog(getLocaleString("logLabSomethingWentWrong") &$aLabTroops[$i][3], $COLOR_RED)
 			Return False
 	EndSwitch
 
@@ -169,23 +169,23 @@ Func LabUpgrade()
 	Select
 		Case _ColorCheck(_GetPixelColor($aLabTroops[$icmbLaboratory][0] + 47, $aLabTroops[$icmbLaboratory][1] + 6, True), Hex(0xE0E4D0, 6), 20) = True
 			; check for beige pixel in center just below edge for troop not unlocked
-			SetLog($aLabTroops[$icmbLaboratory][3] & " not unlocked yet, select another troop", $COLOR_RED)
+			SetLog($aLabTroops[$icmbLaboratory][3] & getLocaleString("logNotUnlocked"), $COLOR_RED)
 			If _Sleep(200) Then Return
 
 		Case _ColorCheck(_GetPixelColor($aLabTroops[$icmbLaboratory][0] + 68, $aLabTroops[$icmbLaboratory][1] + 79, True), Hex(0xE70A12, 6), 20) And _ColorCheck(_GetPixelColor($aLabTroops[$icmbLaboratory][0] + 68, $aLabTroops[$icmbLaboratory][1] + 82, True), Hex(0xE70A12, 6), 20)
 			; Check for 2 red pixels in last zero of loot value to see if enough loot is available.
 			; this case should never be run if value check is working right!
-			SetLog("Value check error and Not enough Loot to upgrade " & $aLabTroops[$icmbLaboratory][3] & "...", $COLOR_RED)
+			SetLog(getLocaleString("logValueCheckError") & $aLabTroops[$icmbLaboratory][3] & getLocaleString("logValueCheckError2"), $COLOR_RED)
 			If _Sleep(200) Then Return
 
 		Case _ColorCheck(_GetPixelColor($aLabTroops[$icmbLaboratory][0] + 8, $aLabTroops[$icmbLaboratory][1] + 59, True), Hex(0xFFC360, 6), 20) = True
 			; Look for Golden pixel inside level indicator for max troops
-			SetLog($aLabTroops[$icmbLaboratory][3] & " already max level, select another troop", $COLOR_RED)
+			SetLog($aLabTroops[$icmbLaboratory][3] & getLocaleString("logAlreadyMaxed"), $COLOR_RED)
 			If _Sleep(200) Then Return
 
 		Case _ColorCheck(_GetPixelColor($aLabTroops[$icmbLaboratory][0] + 3, $aLabTroops[$icmbLaboratory][1] + 19, True), Hex(0xB7B7B7, 6), 20) = True
 			; Look for Gray pixel inside left border if Lab upgrade required or if we missed that upgrade is in process
-			SetLog("Laboratory upgrade not available now" & $aLabTroops[$icmbLaboratory][3] & "...", $COLOR_RED)
+			SetLog(getLocaleString("logUpgradeNotAvailable") & $aLabTroops[$icmbLaboratory][3] & getLocaleString("logUpgradeNotAvailable2"), $COLOR_RED)
 			If _Sleep(200) Then Return
 
 		Case Else
@@ -194,13 +194,13 @@ Func LabUpgrade()
 			If _Sleep(1000) Then Return
 			If $debugSetlog = 1 Then DebugImageSave("LabUpgrade_")
 			If _ColorCheck(_GetPixelColor(258, 192, True), Hex(0xFF1919, 6), 20) And _ColorCheck(_GetPixelColor(272, 194, True), Hex(0xFF1919, 6), 20) Then
-				SetLog($aLabTroops[$icmbLaboratory][3] & " Previously maxxed, select another troop", $COLOR_RED) ; oops, we found the red warning message
+				SetLog($aLabTroops[$icmbLaboratory][3] & getLocaleString("logPreviouslyMaxed"), $COLOR_RED) ; oops, we found the red warning message
 				If _Sleep(200) Then Return
 				ClickP($aTopLeftClient, 2, 200,"#0201")
 				Return False
 			EndIf
 			If _ColorCheck(_GetPixelColor(557, 487, True), Hex(0xE70A12, 6), 20) And _ColorCheck(_GetPixelColor(557, 492), Hex(0xE70A12, 6), 20) Then ; Check for Red Zero = means not enough loot!
-				SetLog("Missing Loot to upgrade " & $aLabTroops[$icmbLaboratory][3] & " (secondary check after Upgrade Value read failed)", $COLOR_RED)
+				SetLog(getLocaleString("logMissingLoot") & $aLabTroops[$icmbLaboratory][3] & getLocaleString("logMissingLoot2"), $COLOR_RED)
 				If _Sleep(200) Then Return
 				ClickP($aTopLeftClient, 2, 200,"#0333")
 				Return False
@@ -211,11 +211,11 @@ Func LabUpgrade()
 
 			If isGemOpen(True) = False Then ; check for gem window
 				If Not(_ColorCheck(_GetPixelColor(625, 270, True), Hex(0x60AC10, 6), 20)) Or Not(_ColorCheck(_GetPixelColor(660, 270, True), Hex(0x60AC10, 6), 20)) Then
-					SetLog("Something went wrong with " & $aLabTroops[$icmbLaboratory][3] & " Upgrade, try again.", $COLOR_RED)
+					SetLog(getLocaleString("logLabGemCheck") & $aLabTroops[$icmbLaboratory][3] & getLocaleString("logLabGemCheck2"), $COLOR_RED)
 					ClickP($aTopLeftClient, 2, 200)
 					Return False
 				EndIf
-				SetLog("Upgrade " & $aLabTroops[$icmbLaboratory][3] & " in your laboratory is complete...", $COLOR_GREEN)
+				SetLog(getLocaleString("logLabUpgradeCompleted") & $aLabTroops[$icmbLaboratory][3] & getLocaleString("logLabUpgradeCompleted2"), $COLOR_GREEN)
 				PushMsg("LabSuccess")
 				If _Sleep(200) Then Return
 				$ichkLab = 0 ;reset enable lab upgrade flag
@@ -225,7 +225,7 @@ Func LabUpgrade()
 
 				Return True
 			Else
-				SetLog("Oops, Gems required for " & $aLabTroops[$icmbLaboratory][3] & " Upgrade, try again.", $COLOR_RED)
+				SetLog(getLocaleString("logLabGemCheck3") & $aLabTroops[$icmbLaboratory][3] & getLocaleString("logLabGemCheck4"), $COLOR_RED)
 			EndIf
 	EndSelect
 	ClickP($aTopLeftClient, 2, 200,"#0205")

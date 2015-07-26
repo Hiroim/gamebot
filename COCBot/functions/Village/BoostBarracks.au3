@@ -23,7 +23,7 @@ Func BoostBarracks()
 			If _Sleep(2000) Then Return
 		EndIf
 		While 1
-			SetLog("Boosting Barracks", $COLOR_BLUE)
+			SetLog(getLocaleString("logBoostBarracks"), $COLOR_BLUE)
 
 
 			Click(1, 1,1,0,"#0157")
@@ -42,18 +42,18 @@ Func BoostBarracks()
 					_CaptureRegion()
 					If _ColorCheck(_GetPixelColor(586, 267), Hex(0xd80405, 6), 20) Then
 						_GUICtrlComboBox_SetCurSel($cmbBoostBarracks, 0)
-						SetLog("Not enough gems", $COLOR_RED)
+						SetLog(getLocaleString("logBoostGemsNotEnough"), $COLOR_RED)
 					Else
 						_GUICtrlComboBox_SetCurSel($cmbBoostBarracks, (GUICtrlRead($cmbBoostBarracks) - 1))
-						SetLog('Boost completed. Remaining :' & (GUICtrlRead($cmbBoostBarracks)), $COLOR_GREEN)
+						SetLog(getLocaleString("logBoostCompleted") & (GUICtrlRead($cmbBoostBarracks)), $COLOR_GREEN)
 					EndIf
 				Else
-					SetLog("Barracks are already Boosted", $COLOR_RED)
+					SetLog(getLocaleString("logBoostAlreadyBarracks"), $COLOR_RED)
 				EndIf
 				If _Sleep(500) Then ExitLoop
 				Click(1, 1,1,0,"#0161")
 			Else
-				SetLog("Barracks are already Boosted", $COLOR_RED)
+				SetLog(getLocaleString("logBoostAlreadyBarracks"), $COLOR_RED)
 				If _Sleep(1000) Then Return
 			EndIf
 
@@ -75,7 +75,7 @@ Func BoostSpellFactory()
 			SaveConfig()
 			If _Sleep(2000) Then Return
 		EndIf
-		SetLog("Boost Spell Factory...", $COLOR_BLUE)
+		SetLog(getLocaleString("logBoostSpellFactory"), $COLOR_BLUE)
 		If $SFPos[0] = -1 Then
 			LocateSpellFactory()
 			SaveConfig()
@@ -94,18 +94,18 @@ Func BoostSpellFactory()
 					_CaptureRegion()
 					If _ColorCheck(_GetPixelColor(586, 267), Hex(0xd80405, 6), 20) Then
 						_GUICtrlComboBox_SetCurSel($cmbBoostSpellFactory, 0)
-						SetLog("Not enough gems", $COLOR_RED)
+						SetLog(getLocaleString("logBoostGemsNotEnough"), $COLOR_RED)
 					Else
 						_GUICtrlComboBox_SetCurSel($cmbBoostSpellFactory, (GUICtrlRead($cmbBoostSpellFactory) - 1))
-						SetLog('Boost completed. Remaining :' & (GUICtrlRead($cmbBoostSpellFactory)), $COLOR_GREEN)
+						SetLog(getLocaleString("logBoostCompleted") & (GUICtrlRead($cmbBoostSpellFactory)), $COLOR_GREEN)
 					EndIf
 				Else
-					SetLog("Factory is already Boosted", $COLOR_RED)
+					SetLog(getLocaleString("logBoostAlreadyFactory"), $COLOR_RED)
 				EndIf
 				If _Sleep(500) Then Return
 				Click(1, 1,1,0,"#0165")
 			Else
-				SetLog("Factory is already Boosted", $COLOR_RED)
+				SetLog(getLocaleString("logBoostAlreadyFactory"), $COLOR_RED)
 				If _Sleep(1000) Then Return
 			EndIf
 		EndIf

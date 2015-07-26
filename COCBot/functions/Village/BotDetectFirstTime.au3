@@ -18,7 +18,7 @@ Func BotDetectFirstTime()
 	_WinAPI_DeleteObject($hBitmapFirst)
 	$hBitmapFirst = _CaptureRegion2()
 
-	SetLog("Detecting your Buildings..", $COLOR_BLUE)
+	SetLog(getLocaleString("logDetectBuildings"), $COLOR_BLUE)
 
 	If $ichkTrap = 1 And $TownHallPos[0] = -1 Then
 		Local $PixelTHHere = GetLocationItem("getLocationTownHall")
@@ -88,10 +88,10 @@ Func BotDetectFirstTime()
 	If _Sleep(100) Then Return
 
 	If $listResourceLocation = "" Then
-		SetLog ( "Verifying your Mines/Extractors/Drills ...wait ...")
+		SetLog (getLocaleString("logDetectMines"))
 		$PixelMineHere = GetLocationItem("getLocationMineExtractor")
 		If UBound($PixelMineHere) > 0 Then
-			SetLog("Total No. of Gold Mines: " & UBound($PixelMineHere))
+			SetLog(getLocaleString("logTotalMines") & UBound($PixelMineHere))
 		EndIf
 		For $i = 0 To UBound($PixelMineHere) - 1
 			$pixel = $PixelMineHere[$i]
@@ -101,7 +101,7 @@ Func BotDetectFirstTime()
 		If _Sleep(1000) Then Return
 		$PixelElixirHere = GetLocationItem("getLocationElixirExtractor")
 		If UBound($PixelElixirHere) > 0 Then
-			SetLog("Total No. of Elixir Collectors: " & UBound($PixelElixirHere))
+			SetLog(getLocaleString("logTotalCollectors") & UBound($PixelElixirHere))
 		EndIf
 		For $i = 0 To UBound($PixelElixirHere) - 1
 			$pixel = $PixelElixirHere[$i]
@@ -111,7 +111,7 @@ Func BotDetectFirstTime()
 		If _Sleep(1000) Then Return
 		$PixelDarkElixirHere = GetLocationItem("getLocationDarkElixirExtractor")
 		If UBound($PixelDarkElixirHere) > 0 Then
-			SetLog("Total No. of Dark Elixir Drills: " & UBound($PixelDarkElixirHere))
+			SetLog(getLocaleString("logTotalDrills") & UBound($PixelDarkElixirHere))
 		EndIf
 		For $i = 0 To UBound($PixelDarkElixirHere) - 1
 			$pixel = $PixelDarkElixirHere[$i]

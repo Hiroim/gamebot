@@ -15,7 +15,7 @@
 
 Func isElixirFull()
 	If _CheckPixel($aIsElixirFull, $bCapturePixel) Then ;Hex if color of elixir (purple)
-		SetLog("Elixir Storages are full!", $COLOR_GREEN)
+		SetLog(getLocaleString("logElixirStoragesFull"), $COLOR_GREEN)
 		Return True
 	EndIf
 	Return False

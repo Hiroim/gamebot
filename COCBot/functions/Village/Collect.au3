@@ -22,7 +22,7 @@ Func Collect()
 
 	Local $collx, $colly, $i = 0
 
-	SetLog("Collecting Resources", $COLOR_BLUE)
+	SetLog(getLocaleString("logCollectRes"), $COLOR_BLUE)
 	If _Sleep(250) Then Return
 
 	if $listResourceLocation <> "" then
@@ -33,7 +33,7 @@ Func Collect()
 				If isInsideDiamondXY($pixel[1],$pixel[2]) Then
 					click($pixel[1],$pixel[2],1,0,"#0331")
 				Else
-					SetLog("Please rebuild building.ini and restart program", $COLOR_RED)
+					SetLog(getLocaleString("logRebuild"), $COLOR_RED)
 				EndIf
 				If _Sleep(250) Then Return
 			endif

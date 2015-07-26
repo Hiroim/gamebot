@@ -13,13 +13,13 @@
 ; Example .......: No
 ; ===============================================================================================================================
 Func LocateBarrack($ArmyCamp = False)
-	Local $choice = "Barrack"
+	Local $choice = getLocaleString("choiceBarrack")
 	Local $stext, $MsgBox, $iCount, $iStupid = 0, $iSilly = 0, $sErrorText = "", $sLocMsg = "", $sInfo, $sArmyInfo
 	Local $aGetArmySize[3] = ["", "", ""]
 	Local $sArmyInfo = ""
 
-	If $ArmyCamp Then $choice = "Army Camp"
-	SetLog("Locating " & $choice & "...", $COLOR_BLUE)
+	If $ArmyCamp Then $choice = getLocaleString("choiceArmyCamp")
+	SetLog(getLocaleString("logLocatingAC") & $choice & getLocaleString("logLocatingAC2"), $COLOR_BLUE)
 
 	If _GetPixelColor($aTopLeftClient[0], $aTopLeftClient[1], True) <> Hex($aTopLeftClient[2], 6) And _GetPixelColor($aTopRightClient[0], $aTopRightClient[1], True) <> Hex($aTopRightClient[2], 6) Then
 		Zoomout()
@@ -28,10 +28,10 @@ Func LocateBarrack($ArmyCamp = False)
 
 	While 1
 		ClickP($aTopLeftClient)
-		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Comic Sans MS", 500)
-		$stext =  $sErrorText & @CRLF & "Click OK then click on one of your " & $choice & "'s." & @CRLF & @CRLF & _
-		"Do not move mouse quickly after clicking location"& @CRLF & @CRLF & "Make sure the building name is visible for me!" & @CRLF
-		$MsgBox = _ExtMsgBox(0, "Ok|Cancel", "Locate " & $choice, $stext, 15, $frmBot)
+		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Arial", 500)
+		$stext =  $sErrorText & @CRLF & getLocaleString("msgboxMsg1") & $choice & getLocaleString("msgboxMsg1_2") & @CRLF & @CRLF & _
+		getLocaleString("msgboxMsg2")& @CRLF & @CRLF & getLocaleString("msgboxMsg3") & @CRLF
+		$MsgBox = _ExtMsgBox(0, getLocaleString("msgboxControlOk"), getLocaleString("msgboxControlLocate") & $choice, $stext, 15, $frmBot)
 		If $MsgBox = 1 Then
 			WinActivate($HWnD)
 			If $ArmyCamp Then
@@ -42,24 +42,24 @@ Func LocateBarrack($ArmyCamp = False)
 					$iStupid += 1
 					Select
 						Case $iStupid = 1
-							$sErrorText = $choice & " Location Not Valid!"&@CRLF
-							SetLog("Location not valid, try again", $COLOR_RED)
+							$sErrorText = $choice & getLocaleString("txtLocationNotValid")&@CRLF
+							SetLog(getLocaleString("logStupidCase1"), $COLOR_RED)
 							ContinueLoop
 						Case $iStupid = 2
-							$sErrorText = "Please try to click inside the grass field!" & @CRLF
+							$sErrorText = getLocaleString("txtStupidCase2") & @CRLF
 							ContinueLoop
 						Case $iStupid = 3
-							$sErrorText = "This is not funny, why did you click @ (" & $ArmyPos[0] & "," & $ArmyPos[1] & ")?" & @CRLF & "  Please stop!" & @CRLF
+							$sErrorText = getLocaleString("txtStupidCase3") & $ArmyPos[0] & "," & $ArmyPos[1] & getLocaleString("txtStupidCase3_2",1) & @CRLF
 							ContinueLoop
 						Case $iStupid = 4
-							$sErrorText = "Last Chance, DO NOT MAKE ME ANGRY, or" & @CRLF & "I will give ALL of your gold to Barbarian King," & @CRLF & "And ALL of your Gems to the Archer Queen!"& @CRLF
+							$sErrorText = getLocaleString("txtStupidCase4",1) & @CRLF
 							ContinueLoop
 						Case $iStupid > 4
-							SetLog(" Operator Error - Bad " & $choice & " Location: " & "(" & $ArmyPos[0] & "," & $ArmyPos[1] & ")", $COLOR_RED)
+							SetLog(getLocaleString("txtOperatorErr") & $choice & getLocaleString("txtOperatorErr2") & "(" & $ArmyPos[0] & "," & $ArmyPos[1] & ")", $COLOR_RED)
 							ClickP($aTopLeftClient)
 							Return False
 						Case Else
-							SetLog(" Operator Error - Bad " & $choice & " Location: " & "(" & $ArmyPos[0] & "," & $ArmyPos[1] & ")", $COLOR_RED)
+							SetLog(getLocaleString("txtOperatorErr") & $choice & getLocaleString("txtOperatorErr2") & "(" & $ArmyPos[0] & "," & $ArmyPos[1] & ")", $COLOR_RED)
 							$ArmyPos[0] = -1
 							$ArmyPos[1] = -1
 							ClickP($aTopLeftClient)
@@ -70,26 +70,26 @@ Func LocateBarrack($ArmyCamp = False)
 				If $sArmyInfo[0] > 1 Or $sArmyInfo[0] = "" Then
 					If  StringInStr($sArmyInfo[1], "Army") = 0 Then
 						If $sArmyInfo[0] = "" Then
-							$sLocMsg = "Nothing"
+							$sLocMsg = getLocaleString("txtLocMsgNothing")
 						Else
 							$sLocMsg = $sArmyInfo[1]
 						EndIf
 						$iSilly += 1
 						Select
 							Case $iSilly = 1
-								$sErrorText = "Wait, That is not a Army Camp?, It was a " & $sLocMsg & @CRLF
+								$sErrorText = getLocaleString("txtSillyCaseArmyCamp") & $sLocMsg & @CRLF
 								ContinueLoop
 							Case $iSilly = 2
-								$sErrorText = "Quit joking, That was " & $sLocMsg & @CRLF
+								$sErrorText = getLocaleString("txtSillyCase2") & $sLocMsg & @CRLF
 								ContinueLoop
 							Case $iSilly = 3
-								$sErrorText = "This is not funny, why did you click " & $sLocMsg & "? Please stop!" & @CRLF
+								$sErrorText = getLocaleString("txtSillyCase3") & $sLocMsg & getLocaleString("txtSillyCase3_2",1) & @CRLF
 								ContinueLoop
 							Case $iSilly = 4
-								$sErrorText = $sLocMsg&" ?!?!?!"&@CRLF&@CRLF&"Last Chance, DO NOT MAKE ME ANGRY, or" & @CRLF & "I will give ALL of your gold to Barbarian King," & @CRLF & "And ALL of your Gems to the Archer Queen!"& @CRLF
+								$sErrorText = $sLocMsg & " ?!?!?!" & @CRLF & @CRLF & getLocaleString("txtStupidCase4",1) & @CRLF
 								ContinueLoop
 							Case $iSilly > 4
-								SetLog("Quit joking, Click the Army Camp, or restart bot and try again", $COLOR_RED)
+								SetLog(getLocaleString("txtSillyCase4AC"), $COLOR_RED)
 								$ArmyPos[0] = -1
 								$ArmyPos[1] = -1
 								ClickP($aTopLeftClient)
@@ -97,7 +97,7 @@ Func LocateBarrack($ArmyCamp = False)
 						EndSelect
 					EndIf
 				Else
-					SetLog(" Operator Error - Bad " & $choice & " Location: " & "(" & $ArmyPos[0] & "," & $ArmyPos[1] & ")", $COLOR_RED)
+					SetLog(getLocaleString("txtOperatorErr") & $choice & getLocaleString("txtOperatorErr2") & "(" & $ArmyPos[0] & "," & $ArmyPos[1] & ")", $COLOR_RED)
 					$ArmyPos[0] = -1
 					$ArmyPos[1] = -1
 					ClickP($aTopLeftClient)
@@ -111,24 +111,24 @@ Func LocateBarrack($ArmyCamp = False)
 					$iStupid += 1
 					Select
 						Case $iStupid = 1
-							$sErrorText = $choice & " Location Not Valid!"&@CRLF
-							SetLog("Location not valid, try again", $COLOR_RED)
+							$sErrorText = $choice & getLocaleString("txtLocationNotValid")&@CRLF
+							SetLog(getLocaleString("logStupidCase1"), $COLOR_RED)
 							ContinueLoop
 						Case $iStupid = 2
-							$sErrorText = "Please try to click inside the grass field!" & @CRLF
+							$sErrorText = getLocaleString("txtStupidCase2") & @CRLF
 							ContinueLoop
 						Case $iStupid = 3
-							$sErrorText = "This is not funny, why did you click @ (" &$barrackPos[0] & "," & $barrackPos[1] & ")?  Please stop!" & @CRLF
+							$sErrorText = getLocaleString("txtStupidCase3") &$barrackPos[0] & "," & $barrackPos[1] & getLocaleString("txtStupidCase3_2",1) & @CRLF
 							ContinueLoop
 						Case $iStupid = 4
-							$sErrorText = "Last Chance, DO NOT MAKE ME ANGRY, or" & @CRLF & "I will give ALL of your gold to Barbarian King," & @CRLF & "And ALL of your Gems to the Archer Queen!"& @CRLF
+							$sErrorText = getLocaleString("txtStupidCase4",1) & @CRLF
 							ContinueLoop
 						Case $iStupid > 4
-							SetLog(" Operator Error - Bad  " & $choice & " Location: " & "(" & $barrackPos[0] & "," & $barrackPos[1] & ")", $COLOR_RED)
+							SetLog(getLocaleString("txtOperatorErr") & $choice & getLocaleString("txtOperatorErr2") & "(" & $barrackPos[0] & "," & $barrackPos[1] & ")", $COLOR_RED)
 							ClickP($aTopLeftClient)
 							Return False
 						Case Else
-							SetLog(" Operator Error - Bad " & $choice & " Location: " & "(" & $barrackPos[0] & "," & $barrackPos[1] & ")", $COLOR_RED)
+							SetLog(getLocaleString("txtOperatorErr") & $choice & getLocaleString("txtOperatorErr2") & "(" & $barrackPos[0] & "," & $barrackPos[1] & ")", $COLOR_RED)
 							$barrackPos[0] = -1
 							$barrackPos[1] = -1
 							ClickP($aTopLeftClient)
@@ -139,26 +139,26 @@ Func LocateBarrack($ArmyCamp = False)
 				If $sInfo[0] > 1 Or $sInfo[0] = "" Then
 					If  StringInStr($sInfo[1], "Barr") = 0 Then
 						If $sInfo[0] = "" Then
-							$sLocMsg = "Nothing"
+							$sLocMsg = getLocaleString("txtLocMsgNothing")
 						Else
 							$sLocMsg = $sInfo[1]
 						EndIf
 						$iSilly += 1
 						Select
 							Case $iSilly = 1
-								$sErrorText = "Wait, That is not a Barracks?, It was a " & $sLocMsg & @CRLF
+								$sErrorText = getLocaleString("txtSillyCaseBarracks") & $sLocMsg & @CRLF
 								ContinueLoop
 							Case $iSilly = 2
-								$sErrorText = "Quit joking, That was " & $sLocMsg & @CRLF
+								$sErrorText = getLocaleString("txtSillyCase2") & $sLocMsg & @CRLF
 								ContinueLoop
 							Case $iSilly = 3
-								$sErrorText = "This is not funny, why did you click " & $sLocMsg & "? Please stop!" & @CRLF
+								$sErrorText = getLocaleString("txtSillyCase3") & $sLocMsg & getLocaleString("txtSillyCase3_2",1) & @CRLF
 								ContinueLoop
 							Case $iSilly = 4
-								$sErrorText = $sLocMsg&" ?!?!?!"&@CRLF&@CRLF&"Last Chance, DO NOT MAKE ME ANGRY, or" & @CRLF & "I will give ALL of your gold to Barbarian King," & @CRLF & "And ALL of your Gems to the Archer Queen!"& @CRLF
+								$sErrorText = $sLocMsg&" ?!?!?!"&@CRLF&@CRLF&getLocaleString("txtStupidCase4",1) & @CRLF
 								ContinueLoop
 							Case $iSilly > 4
-								SetLog("Quit joking, Click the Barracks, or restart bot and try again", $COLOR_RED)
+								SetLog(getLocaleString("txtSillyCase4Barr"), $COLOR_RED)
 								$barrackPos[0] = -1
 								$barrackPos[1] = -1
 								ClickP($aTopLeftClient)
@@ -166,16 +166,16 @@ Func LocateBarrack($ArmyCamp = False)
 						EndSelect
 					EndIf
 				Else
-					SetLog(" Operator Error - Bad " & $choice & " Location: " & "(" & $barrackPos[0] & "," & $barrackPos[1] & ")", $COLOR_RED)
+					SetLog(getLocaleString("txtOperatorErr") & $choice & getLocaleString("txtOperatorErr2") & "(" & $barrackPos[0] & "," & $barrackPos[1] & ")", $COLOR_RED)
 					$barrackPos[0] = -1
 					$barrackPos[1] = -1
 					ClickP($aTopLeftClient)
 					Return False
 				EndIf
-				SetLog("Locate success "&$choice & ": " & "(" & $barrackPos[0] & "," & $barrackPos[1] & ")", $COLOR_GREEN)
+				SetLog(getLocaleString("logLocateSuccess") & $choice & ": " & "(" & $barrackPos[0] & "," & $barrackPos[1] & ")", $COLOR_GREEN)
 			EndIf
 		Else
-			SetLog("Locate "&$choice&" Cancelled", $COLOR_BLUE)
+			SetLog(getLocaleString("logLocateCancelled") & $choice & getLocaleString("logLocateCancelled2"), $COLOR_BLUE)
 			ClickP($aTopLeftClient)
 			Return
 		EndIf
@@ -183,9 +183,9 @@ Func LocateBarrack($ArmyCamp = False)
 	WEnd
 	If $ArmyCamp Then
 		$TotalCamp = 0 ; reset total camp number to get it updated
-		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Comic Sans MS", 500)
-		$stext = "Keep Mouse OUT of BlueStacks Window While I Update Army Camp Number, Thanks!!"
-		$MsgBox = _ExtMsgBox(48, "OK", "Notice!", $stext, 15, $frmBot)
+		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Arial", 500)
+		$stext = getLocaleString("msgboxMsgAC")
+		$MsgBox = _ExtMsgBox(48, getLocaleString("msgboxMsgACControls"), getLocaleString("msgboxMsgACTitle"), $stext, 15, $frmBot)
 		If _Sleep(1000) Then Return
 
 		ClickP($aTopLeftClient) ;Click Away
@@ -216,7 +216,7 @@ Func LocateBarrack($ArmyCamp = False)
 
 		If $TotalCamp = 0 Then ; if Total camp size is still not set
 			If $ichkTotalCampForced = 0 Then ; check if forced camp size set in expert tab
-				$sInputbox = InputBox("Question", "Enter your total Army Camp capacity", "200", "", Default, Default, Default, Default, 0, $frmbot)
+				$sInputbox = InputBox(getLocaleString("msgboxMsgForceAcTitle"), getLocaleString("msgboxMsgForceAc"), "200", "", Default, Default, Default, Default, 0, $frmbot)
 				$TotalCamp = Number($sInputbox)
 				Setlog("Army Camp User input = " & $TotalCamp, $COLOR_RED) ; log if there is read error AND we ask the user to tell us.
 			Else

@@ -181,7 +181,7 @@ $y += 75
 			GUICtrlSetState(-1, $GUI_HIDE)
 		$txtDonateArchers = GUICtrlCreateEdit("", $x - 5, $y + 20, 205, 135, BitOR($ES_WANTRETURN, $ES_CENTER, $ES_AUTOVSCROLL))
 			GUICtrlSetState(-1, $GUI_HIDE)
-			GUICtrlSetData(-1, StringFormat("archers\r\narch"))
+			GUICtrlSetData(-1, StringFormat("reinforcement\r\narchers\r\narch\r\nany"))
 			GUICtrlSetTip(-1, getLocaleString("keywordsArchers"))
 		$lblBlacklistArchers = GUICtrlCreateLabel(getLocaleString("lbBlacklist"), $x + 215, $y + 70, -1, -1)
 			GUICtrlSetState(-1, $GUI_HIDE)

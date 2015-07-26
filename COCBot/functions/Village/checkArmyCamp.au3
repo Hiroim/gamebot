@@ -18,7 +18,7 @@ Func checkArmyCamp()
 	Local $sArmyInfo = ""
 	Local $sInputbox
 
-	SetLog("Checking Army Camp...", $COLOR_BLUE)
+	SetLog(getLocaleString("logCheckAC"), $COLOR_BLUE)
 	If _Sleep(100) Then Return
 
 	ClickP($aTopLeftClient, 1, 0, "#0292") ;Click Away
@@ -47,22 +47,22 @@ Func checkArmyCamp()
 		EndIf
 		If $debugSetlog = 1 Then Setlog("$TotalCamp = " & $TotalCamp, $COLOR_PURPLE)
 	Else
-		Setlog("Army size read error, Troop numbers can't be trained correctly", $COLOR_RED) ; log if there is read error
+		Setlog(getLocaleString("logCampReadError"), $COLOR_RED) ; log if there is read error
 		$CurCamp = 0
 	EndIf
 
 	If $TotalCamp = 0 Then ; if Total camp size is still not set
 		If $ichkTotalCampForced = 0 Then ; check if forced camp size set in expert tab
-			$sInputbox = InputBox("Question", "Enter your total Army Camp capacity", "200", "", Default, Default, Default, Default, 0, $frmbot)
+			$sInputbox = InputBox(getLocaleString("inputTotalCampTitle"), getLocaleString("inputTotalCamp"), "200", "", Default, Default, Default, Default, 0, $frmbot)
 			$TotalCamp = Number($sInputbox)
-			Setlog("Army Camp User input = " & $TotalCamp, $COLOR_RED) ; log if there is read error AND we ask the user to tell us.
+			Setlog(getLocaleString("inputCampError") & $TotalCamp, $COLOR_RED) ; log if there is read error AND we ask the user to tell us.
 		Else
 			$TotalCamp = Number($iValueTotalCampForced)
 		EndIf
 	EndIf
 	If _Sleep(500) Then Return
 
-	SetLog("Total Army Camp capacity: " & $CurCamp & "/" & $TotalCamp)
+	SetLog(getLocaleString("logTotalArmyCamp") & $CurCamp & "/" & $TotalCamp)
 
 	If ($CurCamp >= ($TotalCamp * $fulltroop / 100)) Then
 		$fullArmy = True
@@ -94,87 +94,87 @@ Func checkArmyCamp()
 
 			If $Troops[1] = "Barbarian" Then
 				$TroopQ = $Troops[3]
-				$TroopName = "Barbarians"
+				$TroopName = getLocaleString("troopBarbarians")
 				If ($CurBarb = 0 And $FirstStart) Then $CurBarb -= $TroopQ
 
 			ElseIf $Troops[1] = "Archer" Then
 				$TroopQ = $Troops[3]
-				$TroopName = "Archers"
+				$TroopName = getLocaleString("troopArchers")
 				If ($CurArch = 0 And $FirstStart) Then $CurArch -= $TroopQ
 
 			ElseIf $Troops[1] = "Giant" Then
 				$TroopQ = $Troops[3]
-				$TroopName = "Giants"
+				$TroopName = getLocaleString("troopGiants")
 				If ($CurGiant = 0 And $FirstStart) Then $CurGiant -= $TroopQ
 
 			ElseIf $Troops[1] = "Goblin" Then
 				$TroopQ = $Troops[3]
-				$TroopName = "Goblins"
+				$TroopName = getLocaleString("troopGoblins")
 				If ($CurGobl = 0 And $FirstStart) Then $CurGobl -= $TroopQ
 
 			ElseIf $Troops[1] = "WallBreaker" Then
 				$TroopQ = $Troops[3]
-				$TroopName = "Wallbreakers"
+				$TroopName = getLocaleString("troopWallBreakers")
 				If ($CurWall = 0 And $FirstStart) Then $CurWall -= $TroopQ
 
 			ElseIf $Troops[1] = "Balloon" Then
 				$TroopQ = $Troops[3]
-				$TroopName = "Balloons"
+				$TroopName = getLocaleString("troopBalloons")
 				If ($CurBall = 0 And $FirstStart) Then $CurBall -= $TroopQ
 
 			ElseIf $Troops[1] = "Healer" Then
 				$TroopQ = $Troops[3]
-				$TroopName = "Healers"
+				$TroopName = getLocaleString("troopHealers")
 				If ($CurHeal = 0 And $FirstStart) Then $CurHeal -= $TroopQ
 
 			ElseIf $Troops[1] = "Wizard" Then
 				$TroopQ = $Troops[3]
-				$TroopName = "Wizards"
+				$TroopName = getLocaleString("troopWizards")
 				If ($CurWiza = 0 And $FirstStart) Then $CurWiza -= $TroopQ
 
 			ElseIf $Troops[1] = "Dragon" Then
 				$TroopQ = $Troops[3]
-				$TroopName = "Dragons"
+				$TroopName = getLocaleString("troopDragons")
 				If ($CurDrag = 0 And $FirstStart) Then $CurDrag -= $TroopQ
 
 			ElseIf $Troops[1] = "Pekka" Then
 				$TroopQ = $Troops[3]
-				$TroopName = "Pekkas"
+				$TroopName = getLocaleString("troopPekkas")
 				If ($CurPekk = 0 And $FirstStart) Then $CurPekk -= $TroopQ
 
 			ElseIf $Troops[1] = "Minion" Then
 				$TroopQ = $Troops[3]
-				$TroopName = "Minions"
+				$TroopName = getLocaleString("troopMinions")
 				If ($CurMini = 0 And $FirstStart) Then $CurMini -= $TroopQ
 
 			ElseIf $Troops[1] = "HogRider" Then
 				$TroopQ = $Troops[3]
-				$TroopName = "Hog Riders"
+				$TroopName = getLocaleString("troopHogRiders")
 				If ($CurHogs = 0 And $FirstStart) Then $CurHogs -= $TroopQ
 
 			ElseIf $Troops[1] = "Valkyrie" Then
 				$TroopQ = $Troops[3]
-				$TroopName = "Valkyries"
+				$TroopName = getLocaleString("troopValkyries")
 				If ($CurValk = 0 And $FirstStart) Then $CurValk -= $TroopQ
 
 			ElseIf $Troops[1] = "Golem" Then
 				$TroopQ = $Troops[3]
-				$TroopName = "Golems"
+				$TroopName = getLocaleString("troopGolems")
 				If ($CurGole = 0 And $FirstStart) Then $CurGole -= $TroopQ
 
 			ElseIf $Troops[1] = "Witch" Then
 				$TroopQ = $Troops[3]
-				$TroopName = "Witches"
+				$TroopName = getLocaleString("troopWitches")
 				If ($CurWitc = 0 And $FirstStart) Then $CurWitc -= $TroopQ
 
 			ElseIf $Troops[1] = "LavaHound" Then
 				$TroopQ = $Troops[3]
-				$TroopName = "Lava Hounds"
+				$TroopName = getLocaleString("troopLavaHounds")
 				If ($CurLava = 0 And $FirstStart) Then $CurLava -= $TroopQ
 
 			EndIf
 
-			If $TroopQ <> 0 Then SetLog(" - No. of " & $TroopName & ": " & $TroopQ)
+			If $TroopQ <> 0 Then SetLog(getLocaleString("logTroopsNoOf") & $TroopName & ": " & $TroopQ)
 		Next
 	If Not $fullArmy And $FirstStart Then
 		$ArmyComp = $CurCamp

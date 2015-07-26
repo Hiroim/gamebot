@@ -107,11 +107,11 @@ Func BarracksStatus($showlog = false)
 		EndIf
 
 	If $showlog = true or $debugSetlog = 1 Then
-		SetLog("Barracks and Spell factory status: ", $COLOR_GREEN)
-		SetLog("- Barracks detected: " & $numBarracks & " available: " & $numBarracksAvaiables & " upgrading: " & $numBarracks -  $numBarracksAvaiables,$COLOR_GREEN)
-		SetLog("- Dark Barracks detected: " & $numDarkBarracks & " available: " & $numDarkBarracksAvaiables & " upgrading: " & $numDarkBarracks -  $numDarkBarracksAvaiables,$COLOR_GREEN)
-		Setlog("- Spell factory detected: " & $numFactorySpell & " available: " & $numFactorySpellAvaiables & " upgrading: " & $numFactorySpell -  $numFactorySpellAvaiables,$COLOR_GREEN)
-		Setlog("- Dark Spell factory detected: " & $numFactoryDarkSpell & " available: " & $numFactoryDarkSpellAvaiables & " upgrading: " & $numFactoryDarkSpell -  $numFactoryDarkSpellAvaiables,$COLOR_GREEN)
+		SetLog(getLocaleString("logBarracksStatus"), $COLOR_GREEN)
+		SetLog(getLocaleString("logBarracksDeteced") & $numBarracks & getLocaleString("logBarracksAvailable") & $numBarracksAvaiables & getLocaleString("logBarracksUpgrading") & $numBarracks -  $numBarracksAvaiables,$COLOR_GREEN)
+		SetLog(getLocaleString("logDarkBarracksDeteced") & $numDarkBarracks & getLocaleString("logBarracksAvailable") & $numDarkBarracksAvaiables & getLocaleString("logBarracksUpgrading") & $numDarkBarracks -  $numDarkBarracksAvaiables,$COLOR_GREEN)
+		Setlog(getLocaleString("logSpellFactoryDeteced") & $numFactorySpell & getLocaleString("logBarracksAvailable") & $numFactorySpellAvaiables & getLocaleString("logBarracksUpgrading") & $numFactorySpell -  $numFactorySpellAvaiables,$COLOR_GREEN)
+		Setlog(getLocaleString("logDarkSpellFactoryDeteced") & $numFactoryDarkSpell & getLocaleString("logBarracksAvailable") & $numFactoryDarkSpellAvaiables & getLocaleString("logBarracksUpgrading") & $numFactoryDarkSpell -  $numFactoryDarkSpellAvaiables,$COLOR_GREEN)
 	EndIf
 
 	If $debugSetlog = 1 Then

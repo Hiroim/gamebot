@@ -30,7 +30,7 @@ Func DonateCC($Check = False)
 	If $iPlannedDonateHoursEnable = 1 Then
 		Local $hour = StringSplit(_NowTime(4), ":", $STR_NOCOUNT)
 		If $iPlannedDonateHours[$hour[0]] = 0 Then
-			SetLog("Donation not Planned, Skipped..", $COLOR_GREEN)
+			SetLog(getLocaleString("logDonationNotPlanned"), $COLOR_GREEN)
 			Return ; exit func if no planned donate checkmarks
 		EndIf
 	EndIf
@@ -76,12 +76,12 @@ Func DonateCC($Check = False)
 
 
 				If $ClanString = "" Or $ClanString = " " Then
-					SetLog("Unable to read Chat Request!", $COLOR_RED)
+					SetLog(getLocaleString("logRequestError"), $COLOR_RED)
 					$Donate = True
 					$y = $DonatePixel[1] + 10
 					ContinueLoop
 				Else
-					SetLog("Chat Request: " & $ClanString)
+					SetLog(getLocaleString("logChatRequest") & $ClanString)
 				EndIf
 
 				;;; Custom Combination Donate by ChiefM3
@@ -352,14 +352,14 @@ Func CheckDonateTroop($Type, $aDonTroop, $aBlkTroop, $aBlackList, $ClanString)
 
 	For $i = 1 To UBound($aBlackList) - 1
 		If CheckDonateString($aBlackList[$i], $ClanString) Then
-			SetLog("General Blacklist Keyword found: " & $aBlackList[$i], $COLOR_RED)
+			SetLog(getLocaleString("logGeneralBLkeyword") & $aBlackList[$i], $COLOR_RED)
 			Return False
 		EndIf
 	Next
 
 	For $i = 1 To UBound($aBlkTroop) - 1
 		If CheckDonateString($aBlkTroop[$i], $ClanString) Then
-			SetLog(NameOfTroop($Type) & " Blacklist Keyword found: " & $aBlkTroop[$i], $COLOR_RED)
+			SetLog(NameOfTroop($Type) & getLocaleString("logBLkeyword") & $aBlkTroop[$i], $COLOR_RED)
 			Return False
 		EndIf
 	Next
@@ -367,9 +367,9 @@ Func CheckDonateTroop($Type, $aDonTroop, $aBlkTroop, $aBlackList, $ClanString)
 	For $i = 1 To UBound($aDonTroop) - 1
 		If CheckDonateString($aDonTroop[$i], $ClanString) Then
 			If $Type > $eLava Then
-				Setlog("Custom Donation Keyword found: " & $aDonTroop[$i], $COLOR_GREEN)
+				Setlog(getLocaleString("logCustomKeyword") & $aDonTroop[$i], $COLOR_GREEN)
 			Else
-				Setlog(NameOfTroop($Type) & " Keyword found: " & $aDonTroop[$i], $COLOR_GREEN)
+				Setlog(NameOfTroop($Type) & getLocaleString("logKeywordFound") & $aDonTroop[$i], $COLOR_GREEN)
 			EndIf
 			Return True
 		EndIf
@@ -428,9 +428,9 @@ Func DonateTroopType($Type, $quant = 8, $custom = False)
 			_ColorCheck(_GetPixelColor(237 + ($Slot * 82), $DonatePixel[1] - 10 + $YComp), Hex(0x507C00, 6), 10) Or _
 			_ColorCheck(_GetPixelColor(237 + ($Slot * 82), $DonatePixel[1] - 16 + $YComp), Hex(0x507C00, 6), 10) Then
 		If $custom Then
-			SetLog("Donating " & $quant & " " & NameOfTroop($Type), $COLOR_GREEN)
+			SetLog(getLocaleString("logDonating") & $quant & " " & NameOfTroop($Type), $COLOR_GREEN)
 		Else
-			SetLog("Donating " & NameOfTroop($Type), $COLOR_GREEN)
+			SetLog(getLocaleString("logDonating") & NameOfTroop($Type), $COLOR_GREEN)
 		EndIf
 		Click(237 + ($Slot * 82), $DonatePixel[1] - 10 + $YComp, $quant, 50, "#0175")
 ;~		PureClick(237 + ($Slot * 82), $DonatePixel[1] - 10 + $YComp, $quant, 50)
@@ -454,9 +454,9 @@ Func DonateTroopType($Type, $quant = 8, $custom = False)
 			EndIf
 		Next
 	ElseIf $DonatePixel[1] - 5 + $YComp > 675 Then
-		Setlog("Unable to donate " & NameOfTroop($Type) & ". Donate screen not visible, will retry next run.", $COLOR_RED)
+		Setlog(getLocaleString("logUnableDonate") & NameOfTroop($Type) & ". Donate screen not visible, will retry next run.", $COLOR_RED)
 	Else
-		SetLog("No " & NameOfTroop($Type) & " available to donate..", $COLOR_RED)
+		SetLog(getLocaleString("logTroopNo") & NameOfTroop($Type) & getLocaleString("logTroopAvailable"), $COLOR_RED)
 	EndIf
 
 	ClickP($aTopLeftClient, 1, 0, "#0176")
