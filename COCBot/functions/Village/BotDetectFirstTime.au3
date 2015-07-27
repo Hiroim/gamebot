@@ -98,21 +98,20 @@ Func BotDetectFirstTime()
 
 	If _Sleep(100) Then Return
 
-	While 1 ; Clear the collectors using old image find to reduce collector image finding errors
-		If _Sleep(100) Or $RunState = False Then ExitLoop
-		_CaptureRegion(0, 0, 780)
-		If _ImageSearch(@ScriptDir & "\images\collect.png", 1, $collx, $colly, 20) Then
-			Click($collx, $colly, 1, 0, "#0330") ;Click collector
-			If _Sleep(100) Then Return
-			ClickP($aTopLeftClient, 1, 0, "#0329") ;Click Away
-		ElseIf $i >= 20 Then
-			ExitLoop
-		EndIf
-		$i += 1
-	WEnd
-
 	If $listResourceLocation = "" Then
-		SetLog (getLocaleString("logDetectMines"))
+		While 1 ; Clear the collectors using old image find to reduce collector image finding errors
+			If _Sleep(100) Or $RunState = False Then ExitLoop
+			_CaptureRegion(0, 0, 780)
+			If _ImageSearch(@ScriptDir & "\images\collect.png", 1, $collx, $colly, 20) Then
+				Click($collx, $colly, 1, 0, "#0330") ;Click collector
+				If _Sleep(100) Then Return
+				ClickP($aTopLeftClient, 1, 0, "#0329") ;Click Away
+			ElseIf $i >= 20 Then
+				ExitLoop
+			EndIf
+			$i += 1
+		WEnd
+		SetLog("Verifying your Mines/Extractors/Drills ...wait ...")
 		$PixelMineHere = GetLocationItem("getLocationMineExtractor")
 		If UBound($PixelMineHere) > 0 Then
 			SetLog(getLocaleString("logTotalMines") & UBound($PixelMineHere))
