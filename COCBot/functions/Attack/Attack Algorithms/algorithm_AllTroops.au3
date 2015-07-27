@@ -119,23 +119,39 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 	;########################################################################################################################
 	Local $nbSides = 0
 	Switch $iChkDeploySettings[$iMatchMode]
-		Case 0 ;Single sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		Case 0 ;Single sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			SetLog("Attacking on a single side", $COLOR_BLUE)
 			$nbSides = 1
-		Case 1 ;Two sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		Case 1 ;Two sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			SetLog("Attacking on two sides", $COLOR_BLUE)
 			$nbSides = 2
 		Case 2 ;Three sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			SetLog("Attacking on three sides", $COLOR_BLUE)
 			$nbSides = 3
-		Case 3 ;All sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		Case 3 ;All sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			SetLog("Attacking on all sides", $COLOR_BLUE)
 			$nbSides = 4
+		Case 4 ;Four fingers style ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			SetLog("Four fingers Barch deployment style", $COLOR_BLUE)
+		$nbSides = 5
 	EndSwitch
 	If ($nbSides = 0) Then Return
 	If _Sleep(1000) Then Return
 
-	Local $listInfoDeploy[13][5] = [[$eGiant, $nbSides, 1, 1, 2] _
+	If $nbSides = 5 Then
+		Local $listInfoDeploy[10][5] = [[$eGiant, $nbSides, 1, 1, 2] _
+    			, [$eBarb, $nbSides, 1, 1, 0] _
+    			, [$eWall, $nbSides, 1, 1, 1] _
+    			, [$eArch, $nbSides, 1, 1, 0] _
+    			, [$eGobl, $nbSides, 1, 1, 0] _
+    			, ["CC", 1, 1, 1, 1] _
+    			, [$eHogs, $nbSides, 1, 1, 1] _
+    			, [$eWiza, $nbSides, 1, 1, 0] _
+    			, [$eMini, $nbSides, 1, 1, 0] _
+    			, ["HEROES", 1, 2, 1, 1] _
+    			]
+	Else
+		Local $listInfoDeploy[13][5] = [[$eGiant, $nbSides, 1, 1, 2] _
     			, [$eBarb, $nbSides, 1, 2, 0] _
     			, [$eWall, $nbSides, 1, 1, 1] _
     			, [$eArch, $nbSides, 1, 2, 0] _
@@ -149,6 +165,7 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
     			, [$eGobl, $nbSides, 2, 2, 0] _
     			, ["HEROES", 1, 2, 1, 1] _
     			]
+    EndIf
 
 	LaunchTroop2($listInfoDeploy, $CC, $King, $Queen)
 
