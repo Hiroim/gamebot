@@ -128,25 +128,22 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 		Case 2 ;Three sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			SetLog("Attacking on three sides", $COLOR_BLUE)
 			$nbSides = 3
-		Case 3 ;Two sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		Case 3 ;All sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			SetLog("Attacking on all sides", $COLOR_BLUE)
 			$nbSides = 4
 	EndSwitch
 	If ($nbSides = 0) Then Return
 	If _Sleep(1000) Then Return
 
-	Local $listInfoDeploy[13][5] = [[$eGiant, $nbSides, 1, 1, 2] _
-			, [$eBarb, $nbSides, 1, 2, 0] _
+	Local $listInfoDeploy[10][5] = [[$eGiant, $nbSides, 1, 1, 2] _
+			, [$eBarb, $nbSides, 1, 1, 0] _
 			, [$eWall, $nbSides, 1, 1, 1] _
-			, [$eArch, $nbSides, 1, 2, 0] _
-			, [$eBarb, $nbSides, 2, 2, 0] _
-			, [$eGobl, $nbSides, 1, 2, 0] _
+			, [$eArch, $nbSides, 1, 1, 0] _
+			, [$eGobl, $nbSides, 1, 1, 0] _
 			, ["CC", 1, 1, 1, 1] _
 			, [$eHogs, $nbSides, 1, 1, 1] _
 			, [$eWiza, $nbSides, 1, 1, 0] _
 			, [$eMini, $nbSides, 1, 1, 0] _
-			, [$eArch, $nbSides, 2, 2, 0] _
-			, [$eGobl, $nbSides, 2, 2, 0] _
 			, ["HEROES", 1, 2, 1, 1] _
 			]
 
