@@ -135,17 +135,20 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 	If ($nbSides = 0) Then Return
 	If _Sleep(1000) Then Return
 
-	Local $listInfoDeploy[10][5] = [[$eGiant, $nbSides, 1, 1, 2] _
-			, [$eBarb, $nbSides, 1, 1, 0] _
-			, [$eWall, $nbSides, 1, 1, 1] _
-			, [$eArch, $nbSides, 1, 1, 0] _
-			, [$eGobl, $nbSides, 1, 1, 0] _
-			, ["CC", 1, 1, 1, 1] _
-			, [$eHogs, $nbSides, 1, 1, 1] _
-			, [$eWiza, $nbSides, 1, 1, 0] _
-			, [$eMini, $nbSides, 1, 1, 0] _
-			, ["HEROES", 1, 2, 1, 1] _
-			]
+	Local $listInfoDeploy[13][5] = [[$eGiant, $nbSides, 1, 1, 2] _
+    			, [$eBarb, $nbSides, 1, 2, 0] _
+    			, [$eWall, $nbSides, 1, 1, 1] _
+    			, [$eArch, $nbSides, 1, 2, 0] _
+    			, [$eBarb, $nbSides, 2, 2, 0] _
+    			, [$eGobl, $nbSides, 1, 2, 0] _
+    			, ["CC", 1, 1, 1, 1] _
+    			, [$eHogs, $nbSides, 1, 1, 1] _
+    			, [$eWiza, $nbSides, 1, 1, 0] _
+    			, [$eMini, $nbSides, 1, 1, 0] _
+    			, [$eArch, $nbSides, 2, 2, 0] _
+    			, [$eGobl, $nbSides, 2, 2, 0] _
+    			, ["HEROES", 1, 2, 1, 1] _
+    			]
 
 	LaunchTroop2($listInfoDeploy, $CC, $King, $Queen)
 
