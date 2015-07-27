@@ -150,7 +150,6 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 			, ["HEROES", 1, 2, 1, 1] _
 			]
 
-
 	LaunchTroop2($listInfoDeploy, $CC, $King, $Queen)
 
 	If _Sleep(100) Then Return
