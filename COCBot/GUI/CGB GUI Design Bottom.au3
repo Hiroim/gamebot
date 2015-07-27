@@ -29,7 +29,7 @@ $grpButtons = GUICtrlCreateGroup(getLocaleString("grpButtons"), $x - 5, $y - 10,
 		GUICtrlSetOnEvent(-1, "btnStop")
 		IF $btnColor then GUICtrlSetBkColor(-1, 0xDB4D4D)
 		GUICtrlSetState(-1, $GUI_HIDE)
- 	$btnPause = GUICtrlCreateButton("Pause", $x + 90, -1, 90, 40-5)
+ 	$btnPause = GUICtrlCreateButton(getLocaleString("btnPause"), $x + 90, -1, 90, 40-5)
 		GUICtrlSetTip(-1, getLocaleString("tipPause"))
 		GUICtrlSetOnEvent(-1, "btnPause")
  		IF $btnColor then GUICtrlSetBkColor(-1,  0xFFA500)
