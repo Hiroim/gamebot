@@ -39,8 +39,8 @@ Func BotDetectFirstTime()
 		If IsArray($Result) Then $iTownHallLevel = 0  ; Check for error finding TH level, and reset to zero if yes
 	EndIf
 	If Number($iTownHallLevel) > 1 And Number($iTownHallLevel) < 6 Then
-		Setlog("Warning: TownHall level below 6 NOT RECOMMENDED!", $COLOR_RED)
-		Setlog("Proceed with caution as errors may occur.", $COLOR_RED)
+		Setlog(getLocaleString("logWarnTHLv6"), $COLOR_RED)
+		Setlog(getLocaleString("logWarnTHLv6_2"), $COLOR_RED)
 	EndIf
 
 	If _Sleep(100) Then Return
@@ -111,7 +111,7 @@ Func BotDetectFirstTime()
 			EndIf
 			$i += 1
 		WEnd
-		SetLog("Verifying your Mines/Extractors/Drills ...wait ...")
+		SetLog (getLocaleString("logDetectMines"))
 		$PixelMineHere = GetLocationItem("getLocationMineExtractor")
 		If UBound($PixelMineHere) > 0 Then
 			SetLog(getLocaleString("logTotalMines") & UBound($PixelMineHere))
