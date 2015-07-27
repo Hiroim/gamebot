@@ -11,8 +11,8 @@ Func TogglePauseImpl($Source)
 	$TPaused = NOT $TPaused
 	If $TPaused and $Runstate = True Then
 		TrayTip($sBotTitle, "", 1)
-		TrayTip($sBotTitle, "was Paused!", 1, $TIP_ICONEXCLAMATION)
-		Setlog("ClashGameBot was Paused!",$COLOR_RED)
+		TrayTip($sBotTitle, getLocaleString("trayBotPaused"), 1, $TIP_ICONEXCLAMATION)
+		Setlog(getLocaleString("logBotPaused"),$COLOR_RED)
 		PushMsg("Pause", $Source)
 		 If $BlockInputPause>0 Then	 $BlockInputPausePrev=$BlockInputPause
 		 If $BlockInputPause>0 Then  _BlockInputEx(0,"","",$HWnD)
@@ -21,8 +21,8 @@ Func TogglePauseImpl($Source)
 		;GUICtrlSetState($btnMakeScreenshot, $GUI_ENABLE)
 	ElseIf $TPaused = False And $Runstate = True Then
 		TrayTip($sBotTitle, "", 1)
-		TrayTip($sBotTitle, "was Resumed.", 1, $TIP_ICONASTERISK)
-		Setlog("ClashGameBot was Resumed.",$COLOR_GREEN)
+		TrayTip($sBotTitle, getLocaleString("trayBotResumed"), 1, $TIP_ICONASTERISK)
+		Setlog(getLocaleString("logBotResumed"),$COLOR_GREEN)
 		PushMsg("Resume", $Source)
 		 If $BlockInputPausePrev>0 Then  _BlockInputEx($BlockInputPausePrev,"","",$HWnD)
 		 If $BlockInputPausePrev>0 Then $BlockInputPausePrev=0

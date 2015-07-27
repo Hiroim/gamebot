@@ -24,9 +24,9 @@ Func CompareResources($pMode, $bIsWeakBase) ;Compares resources and returns true
 			If $iAimGoldPlusElixir[$pMode] - $ReduceGoldPlusElixir >= 0 Then $iAimGoldPlusElixir[$pMode] -= $ReduceGoldPlusElixir
 
 			If $iCmbMeetGE[$pMode] = 2 Then
-				SetLog("Aim:           [G+E]:" & StringFormat("%7s", $iAimGoldPlusElixir[$pMode]) & " [D]:" & StringFormat("%5s", $iAimDark[$pMode]) & " [T]:" & StringFormat("%2s", $iAimTrophy[$pMode]) & $iAimTHtext[$pMode] & " for: " & $sModeText[$pMode], $COLOR_GREEN, "Lucida Console", 7.5)
+				SetLog(getLocaleString("txtAimGplusE") & StringFormat("%7s", $iAimGoldPlusElixir[$pMode]) & getLocaleString("txtAimDE") & StringFormat("%5s", $iAimDark[$pMode]) & getLocaleString("txtAimTrophy") & StringFormat("%2s", $iAimTrophy[$pMode]) & $iAimTHtext[$pMode] & getLocaleString("txtAimMode") & $sModeText[$pMode], $COLOR_GREEN, "Lucida Console", 7.5)
 			Else
-				SetLog("Aim: [G]:" & StringFormat("%7s", $iAimGold[$pMode]) & " [E]:" & StringFormat("%7s", $iAimElixir[$pMode]) & " [D]:" & StringFormat("%5s", $iAimDark[$pMode]) & " [T]:" & StringFormat("%2s", $iAimTrophy[$pMode]) & $iAimTHtext[$pMode] & " for: " & $sModeText[$pMode], $COLOR_GREEN, "Lucida Console", 7.5)
+				SetLog(getLocaleString("txtAimG") & StringFormat("%7s", $iAimGold[$pMode]) & getLocaleString("txtAimE") & StringFormat("%7s", $iAimElixir[$pMode]) & getLocaleString("txtAimDE") & StringFormat("%5s", $iAimDark[$pMode]) & getLocaleString("txtAimTrophy") & StringFormat("%2s", $iAimTrophy[$pMode]) & $iAimTHtext[$pMode] & getLocaleString("txtAimMode") & $sModeText[$pMode], $COLOR_GREEN, "Lucida Console", 7.5)
 			EndIf
 		EndIf
 	EndIf

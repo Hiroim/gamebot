@@ -26,21 +26,20 @@ Func BoostBarracks()
 			SetLog(getLocaleString("logBoostBarracks"), $COLOR_BLUE)
 
 
-			Click(1, 1,1,0,"#0157")
+			ClickP($aTopLeftClient,1,0,"#0157")
 			If _Sleep(1000) Then ExitLoop
 			Click($barrackPos[0], $barrackPos[1],1,0,"#0158")
 			If _Sleep(1000) Then ExitLoop
 			_CaptureRegion()
 			$Boost = _PixelSearch(410, 603, 493, 621, Hex(0xfffd70, 6), 10)
 			If IsArray($Boost) Then
+				If $DebugSetlog = 1 Then Setlog("Boost Button X|Y = "&$Boost[0]&"|"&$Boost[1]&", color = "&_GetPixelColor($Boost[0], $Boost[1]), $COLOR_PURPLE)
 				Click($Boost[0], $Boost[1],1,0,"#0159")
 				If _Sleep(1000) Then Return
-				_CaptureRegion()
-				If _ColorCheck(_GetPixelColor(420, 375), Hex(0xd2ec78, 6), 20) Then
+				If _ColorCheck(_GetPixelColor(420, 375, True), Hex(0xD0E978, 6), 20) Then
 					Click(420, 375,1,0,"#0160")
 					If _Sleep(2000) Then Return
-					_CaptureRegion()
-					If _ColorCheck(_GetPixelColor(586, 267), Hex(0xd80405, 6), 20) Then
+					If _ColorCheck(_GetPixelColor(586, 267, True), Hex(0xd80405, 6), 20) Then
 						_GUICtrlComboBox_SetCurSel($cmbBoostBarracks, 0)
 						SetLog(getLocaleString("logBoostGemsNotEnough"), $COLOR_RED)
 					Else
@@ -51,16 +50,17 @@ Func BoostBarracks()
 					SetLog(getLocaleString("logBoostAlreadyBarracks"), $COLOR_RED)
 				EndIf
 				If _Sleep(500) Then ExitLoop
-				Click(1, 1,1,0,"#0161")
+				ClickP($aTopLeftClient,1,0,"#0161")
 			Else
-				SetLog(getLocaleString("logBoostAlreadyBarracks"), $COLOR_RED)
+				SetLog(getLocaleString("logBoostNoButton"), $COLOR_RED)
 				If _Sleep(1000) Then Return
 			EndIf
 
 			ExitLoop
 		WEnd
 	EndIf
-
+	If _Sleep(500) Then Return
+	checkMainScreen(False)  ; Check for errors during function
 
 EndFunc   ;==>BoostBarracks
 
@@ -85,14 +85,13 @@ Func BoostSpellFactory()
 			_CaptureRegion()
 			$Boost = _PixelSearch(382, 603, 440, 621, Hex(0xfffd70, 6), 10)
 			If IsArray($Boost) Then
+				If $DebugSetlog = 1 Then Setlog("Boost Button X|Y = "&$Boost[0]&"|"&$Boost[1]&", color = "&_GetPixelColor($Boost[0], $Boost[1]), $COLOR_PURPLE)
 				Click($Boost[0], $Boost[1],1,0,"#0163")
 				If _Sleep(1000) Then Return
-				_CaptureRegion()
-				If _ColorCheck(_GetPixelColor(420, 375), Hex(0xD0E978, 6), 20) Then
+				If _ColorCheck(_GetPixelColor(420, 375, True), Hex(0xD0E978, 6), 20) Then
 					Click(420, 375,1,0,"#0164")
 					If _Sleep(2000) Then Return
-					_CaptureRegion()
-					If _ColorCheck(_GetPixelColor(586, 267), Hex(0xd80405, 6), 20) Then
+					If _ColorCheck(_GetPixelColor(586, 267, True), Hex(0xd80405, 6), 20) Then
 						_GUICtrlComboBox_SetCurSel($cmbBoostSpellFactory, 0)
 						SetLog(getLocaleString("logBoostGemsNotEnough"), $COLOR_RED)
 					Else
@@ -103,11 +102,14 @@ Func BoostSpellFactory()
 					SetLog(getLocaleString("logBoostAlreadyFactory"), $COLOR_RED)
 				EndIf
 				If _Sleep(500) Then Return
-				Click(1, 1,1,0,"#0165")
+				ClickP($aTopLeftClient,1,0,"#0165")
 			Else
-				SetLog(getLocaleString("logBoostAlreadyFactory"), $COLOR_RED)
+				SetLog(getLocaleString("logBoostNoButtonSF"), $COLOR_RED)
 				If _Sleep(1000) Then Return
 			EndIf
 		EndIf
 	EndIf
+	If _Sleep(500) Then Return
+	checkMainScreen(False)  ; Check for errors during function
+
 EndFunc   ;==>BoostSpellFactory

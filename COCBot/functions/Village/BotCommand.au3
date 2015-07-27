@@ -99,6 +99,11 @@ Func BotCommand()
 					If _Sleep(500) Then Return
 					Shutdown(32) ; Sleep / Stand by
 					Return True
+				Case 3
+					SetLog("Reebooting PC...", $COLOR_BLUE)
+					If _Sleep(500) Then Return
+					Shutdown($SD_REBOOT ) ; Reboot
+					Return True
 			EndSwitch
 		EndIf
 	EndIf

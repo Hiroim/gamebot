@@ -27,7 +27,7 @@ Func CheckHeroesHealth()
 		EndIf
 
 		If $checkKPower Then
-			If $debugSetlog = 1 Then Setlog(" King _GetPixelColor(" & $aKingHealthCopy[0] & "," & $aKingHealthCopy[1] & "): " & $KingPixelColor)
+			If $debugSetlog = 1 Then Setlog(" King _GetPixelColor(" & $aKingHealthCopy[0] & "," & $aKingHealthCopy[1] & "): " & $KingPixelColor, $COLOR_PURPLE)
 			If _CheckPixel($aKingHealthCopy, $bCapturePixel, "Red") Then
 
 				SetLog("King is getting weak, Activating King's power", $COLOR_BLUE)
@@ -36,7 +36,7 @@ Func CheckHeroesHealth()
 			EndIf
 		EndIf
 		If $checkQPower Then
-			If $debugSetlog = 1 Then Setlog(" Queen _GetPixelColor(" & $aQueenHealthCopy[0] & "," & $aQueenHealthCopy[1] & "): " & $QueenPixelColor)
+			If $debugSetlog = 1 Then Setlog(" Queen _GetPixelColor(" & $aQueenHealthCopy[0] & "," & $aQueenHealthCopy[1] & "): " & $QueenPixelColor, $COLOR_PURPLE)
 			If _CheckPixel($aQueenHealthCopy, $bCapturePixel, "Red") Then
 				SetLog("Queen is getting weak, Activating Queen's power", $COLOR_BLUE)
 				SelectDropTroop($Queen)

@@ -11,8 +11,8 @@
 ; ===============================================================================================================================
 
 
-Func getNameBuilding($x_start, $y_start); getNameBuilding(250,520) -> Gets complete name and level of the buildings - to use in future features
-	Return getOcrAndCapture("coc-build", $x_start, $y_start, 360, 27)
+Func getNameBuilding($x_start, $y_start); getNameBuilding(242,520) -> Gets complete name and level of the buildings - to use in future features
+	Return getOcrAndCapture("coc-build", $x_start, $y_start, 377, 27)
 EndFunc   ;==>getNameBuilding
 
 Func getGoldVillageSearch($x_start, $y_start);48 68 -> Gets complete value of gold xxx,xxx Getresources.au3
@@ -120,15 +120,6 @@ EndFunc   ;==>getAttackDisable
 
 Func getOcrAndCapture($language, $x_start, $y_start, $width, $height, $removeSpace = False)
 	Local $hBmp = _CaptureRegion2($x_start, $y_start, $x_start + $width, $y_start + $height)
-	;	If $debugSetlog = 1 Then
-	;		Local $Date = @MDAY & "." & @MON & "." & @YEAR
-	;		Local $Time = @HOUR & "." & @MIN & "." & @SEC
-	;		Local $hBitmap = _GDIPlus_BitmapCreateFromHBITMAP($hBmp)
-	;		If _Sleep(200) Then Return
-	;		_GDIPlus_ImageSaveToFile($hBitmap, $dirloots & "OCR_" & $Date & " at " & $Time & ".png")
-	;		If _Sleep(1000) Then Return
-	;		_GDIPlus_BitmapDispose($hBitmap)
-	;	EndIf
 	Local $result = getOcr($hBmp, $language)
 	If ($removeSpace) Then
 		$result = StringReplace($result, " ", "")

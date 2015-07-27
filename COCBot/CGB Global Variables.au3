@@ -44,7 +44,7 @@
 ;debugging
 Global $debugSearchArea = 0, $debugOcr = 0, $debugRedArea = 0, $debugSetlog = 0
 
-Global Const $COLOR_ORANGE = 0xFFA500
+Global Const $COLOR_ORANGE = 0xFF7700
 Global Const $bCapturePixel = True, $bNoCapturePixel = False
 
 Global $Compiled
@@ -63,13 +63,18 @@ Global $hHBitmapScreenshot; Handle Image for screenshot functions
 Global $Title = "BlueStacks App Player" ; Name of the Window
 Global $HWnD = WinGetHandle($Title) ;Handle for Bluestacks window
 
-Global $sCurrProfile = "01"
 Global $iVillageName
 Global $sProfilePath = @ScriptDir & "\Profiles"
 Global $sTemplates = @ScriptDir & "\Templates"
-If FileExists($sProfilePath & "\profile.ini") Then
-	$sCurrProfile = IniRead($sProfilePath & "\profile.ini", "general", "defaultprofile", "01")
+If $CmdLine[0] > 0 Then
+	$sCurrProfile = $CmdLine[1]
+ElseIf FileExists($sProfilePath & "\profile.ini") Then
+	Global $sCurrProfile = IniRead($sProfilePath & "\profile.ini", "general", "defaultprofile", "01")
+Else
+	Global $sCurrProfile = "01"
 EndIf
+Global $DevMode = 0
+If FileExists(@ScriptDir & "\EnableGameBotDebug.txt") Then $DevMode = 1
 Global $config = $sProfilePath & "\" & $sCurrProfile & "\config.ini"
 Global $building = $sProfilePath & "\" & $sCurrProfile & "\building.ini"
 Global $dirLogs = $sProfilePath & "\" & $sCurrProfile & "\Logs\"
@@ -137,7 +142,7 @@ Global $ichkAlertPBCampFull
 Global $ichkAlertPBCampFullTest = 0
 Global $cmbTroopComp ;For Event change on ComboBox Troop Compositions
 Global $iCollectCounter = 0 ; Collect counter, when reaches $COLLECTATCOUNT, it will collect
-Global $COLLECTATCOUNT = 8 ; Run Collect() after this amount of times before actually collect
+Global $COLLECTATCOUNT = 10 ; Run Collect() after this amount of times before actually collect
 
 ;---------------------------------------------------------------------------------------------------
 Global $BSpos[2] ; Inside BlueStacks positions relative to the screen
@@ -271,7 +276,7 @@ Global $OutOfGold = 0 ; Flag for out of gold to search for attack
 Global $OutOfElixir = 0 ; Flag for out of elixir to train troops
 
 ;Zoom/scroll variables for TH snipe, bottom corner
-Global $zoomedin = false, $zCount = 0, $sCount = 0
+Global $zoomedin = False, $zCount = 0, $sCount = 0
 
 ;Boosts Settings
 Global $remainingBoosts = 0 ;  remaining boost to active during session
@@ -279,7 +284,7 @@ Global $boostsEnabled = 1 ; is this function enabled
 
 ; TownHall Settings
 Global $TownHallPos[2] = [-1, -1] ;Position of TownHall
-Global $iTownHallLevel = 0  ; Level of user townhall
+Global $iTownHallLevel = 0 ; Level of user townhall
 Global $Y[4] = [46, 116, 120, 116]
 ;Mics Setting
 Global $SFPos[2] = [-1, -1] ;Position of Spell Factory
@@ -414,6 +419,7 @@ Global $BarrackDarkStatus[2] = [False, False]
 Global $listResourceLocation = ""
 Global $isNormalBuild = ""
 Global $isDarkBuild = ""
+Global $TotalTrainedTroops = 0
 
 For $i = 0 To UBound($TroopGroup, 1) - 1
 	$TroopName[$i] = $TroopGroup[$i][0]
@@ -489,28 +495,28 @@ Global $pushLastModified = 0
 
 
 ;UpgradeTroops
-Global $aLabPos[2] = [-1,-1]
+Global $aLabPos[2] = [-1, -1]
 Global $iChkLab, $iCmbLaboratory, $iFirstTimeLab
 
 ; Array to hold Laboratory Troop information [LocX of upper left corner of image, LocY of upper left corner of image, PageLocation, Troop "name", Icon # in DLL file]
 Global Const $aLabTroops[25][5] = [ _
-		[-1, -1, -1, "None", $eIcnBlank], _
-		[123, 311, 0, "Barbarian", $eIcnBarbarian], _
-		[123, 417, 0, "Archer", $eIcnArcher], _
-		[230, 311, 0, "Giant", $eIcnGiant], _
-		[230, 417, 0, "Goblin", $eIcnGoblin], _
-		[336, 311, 0, "Wall Breaker", $eIcnWallBreaker], _
-		[336, 417, 0, "Balloon", $eIcnBalloon], _
-		[443, 311, 0, "Wizard", $eIcnWizard], _
-		[443, 417, 0, "Healer", $eIcnHealer], _
-		[550, 311, 0, "Dragon", $eIcnDragon], _
-		[550, 417, 0, "Pekka", $eIcnPekka], _
-		[657, 311, 0, "Lightning Spell", $eIcnLightSpell], _
-		[657, 417, 0, "Healing Spell", $eIcnHealSpell], _
-		[105, 311, 1, "Rage Spell", $eIcnRageSpell], _
-		[105, 417, 1, "Jump Spell", $eIcnJumpSpell], _
-		[211, 311, 1, "Freeze Spell", $eIcnFreezeSpell], _
-		[211, 417, 1, "Poison Spell", $eIcnHourGlass], _
+		[-1, -1, -1, getLocaleString("sNameNone"), $eIcnBlank], _
+		[123, 311, 0, getLocaleString("sNameBarbarian"), $eIcnBarbarian], _
+		[123, 417, 0, getLocaleString("sNameArcher"), $eIcnArcher], _
+		[230, 311, 0, getLocaleString("sNameGiant"), $eIcnGiant], _
+		[230, 417, 0, getLocaleString("sNameGoblin"), $eIcnGoblin], _
+		[336, 311, 0, getLocaleString("sNameWallBreaker"), $eIcnWallBreaker], _
+		[336, 417, 0, getLocaleString("sNameBalloon"), $eIcnBalloon], _
+		[443, 311, 0, getLocaleString("sNameWizard"), $eIcnWizard], _
+		[443, 417, 0, getLocaleString("sNameHealer"), $eIcnHealer], _
+		[550, 311, 0, getLocaleString("sNameDragon"), $eIcnDragon], _
+		[550, 417, 0, getLocaleString("sNamePekka"), $eIcnPekka], _
+		[657, 311, 0, getLocaleString("sNameLightningSpell"), $eIcnLightSpell], _
+		[657, 417, 0, getLocaleString("sNameHealingSpell"), $eIcnHealSpell], _
+		[105, 311, 1, getLocaleString("sNameRageSpell"), $eIcnRageSpell], _
+		[105, 417, 1, getLocaleString("sNameJumpSpell"), $eIcnJumpSpell], _
+		[211, 311, 1, getLocaleString("sNameFreezeSpell"), $eIcnFreezeSpell], _
+		[211, 417, 1, getLocaleString("sNamePoisonSpell"), $eIcnHourGlass], _
 		[317, 311, 1, "Earthquake Spell", $eIcnHourGlass], _
 		[317, 417, 1, "Haste Spell", $eIcnHourGlass], _
 		[424, 311, 1, "Minion", $eIcnMinion], _
@@ -577,6 +583,11 @@ Global $numFactorySpell = 0
 Global $numFactorySpellAvaiables = 0
 Global $numFactoryDarkSpell = 0
 Global $numFactoryDarkSpellAvaiables = 0
+
+;position of barakcs
+Global $btnpos = [[114, 535], [228, 535], [288, 535], [348, 535], [409, 535], [494, 535], [555, 535], [637, 535], [698, 535]]
+;barracks and spells avaiables
+Global $Trainviable = [1, 0, 0, 0, 0, 0, 0, 0, 0]
 
 ; Attack Report
 Global $BonusLeagueG, $BonusLeagueE, $BonusLeagueD, $LeagueShort

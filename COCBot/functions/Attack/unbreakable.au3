@@ -24,7 +24,7 @@ Func Unbreakable()
 
 	Switch $iUnbreakableMode
 		Case 2
-			If ($GoldVillage > $iUnBrkMaxGold) And ($ElixirVillage > $iUnBrkMaxElixir) And ($DarkVillage > $iUnBrkMaxDark) Then
+			If (Number($GoldCount) > Number($iUnBrkMaxGold)) And (Number($ElixirCount) > Number($iUnBrkMaxElixir)) And (Number($DarkCount) > Number($iUnBrkMaxDark)) Then
 				SetLog(" ====== Unbreakable Mode restarted! ====== ", $COLOR_GREEN)
 				$iUnbreakableMode = 1
 			Else
@@ -37,23 +37,23 @@ Func Unbreakable()
 			SetLog(">>> Programmer Humor, You shouldn't ever see this message, RUN! <<<", $COLOR_PURPLE)
 	EndSwitch
 
-	If $CurCamp < 1 Then
-		SetLog("Oops, wait for troops", $COLOR_RED)
+	If ($CurCamp <= ($TotalCamp * 70 / 100)) Then
+		SetLog("Oops, wait for 70% troops filled", $COLOR_RED)
 		Return True ; no troops then cycle again
 	EndIf
 
 	Local $sMissingLoot = ""
-	If (($GoldVillage - $iUnBrkMinGold) < 0) Then
-		$sMissingLoot &= " Gold, "
+	If ((Number($GoldCount) - Number($iUnBrkMinGold)) < 0) Then
+		$sMissingLoot &= "Gold, "
 	EndIf
-	If (($ElixirVillage - $iUnBrkMinElixir) < 0) Then
-		$sMissingLoot &= " Elixir, "
+	If ((Number($ElixirCount) - Number($iUnBrkMinElixir)) < 0) Then
+		$sMissingLoot &= "Elixir, "
 	EndIf
-	If (($DarkVillage - $iUnBrkMinDark) < 0) Then
-		$sMissingLoot &= " Dark Elxir,"
+	If ((Number($DarkCount) - Number($iUnBrkMinDark)) < 0) Then
+		$sMissingLoot &= "Dark Elxir"
 	EndIf
 	If $sMissingLoot <> "" Then
-		SetLog("Oops, Out of" & $sMissingLoot & " - back to farming", $COLOR_RED)
+		SetLog("Oops, Out of " & $sMissingLoot & " - back to farming", $COLOR_RED)
 		$iUnbreakableMode = 2 ; go back to farming mode.
 		Return False
 	EndIf
@@ -62,6 +62,7 @@ Func Unbreakable()
 	If _Sleep(2000) Then Return  ; wait for home screen
 	ClickP($aTopLeftClient, 1, 100, "#0112") ;clear screen
 	If _Sleep(1000) Then Return  ; wait for home screen
+	If $Restart = True Then Return True ; Check Restart Flag to see if drop trophy used all the troops and need to train more.
 	$iCount = 0
 	Local $TrophyCount = getTrophyMainScreen($aTrophies[0], $aTrophies[1])  ; Get trophy
 	If $debugSetlog = 1 Then Setlog("Trophy Count Read = " &$TrophyCount, $COLOR_PURPLE)
@@ -79,11 +80,11 @@ Func Unbreakable()
 		EndIf
 		$iCount += 1
 	WEnd
+	If $Restart = True Then Return True ; Check Restart Flag to see if drop trophy used all the troops and need to train more.
 
 	PrepareSearch() ; Break Shield
 	If _Sleep(3000) Then Return
 
-	; ClickP($aTopLeftClient, 2, 100, "#0113") ;clear screen selection
 	$i = 0
 	While _CheckPixel($aSurrenderButton, True) = False
 		If _Sleep(1000) Then Return ; wait for clouds to disappear and the end battle button to appear
@@ -132,7 +133,6 @@ Func Unbreakable()
 		If $i > 15 Then ExitLoop
 		$i += 1
 	WEnd
-	;PureClick(515, 400, 1, 0, "#0117") ;Click Confirm to stop CoC
 
 	$iTime = Number($iUnbreakableWait)
 	If $iTime < 1 Then $iTime = 1 ;error check user time input

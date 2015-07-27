@@ -20,32 +20,32 @@ Func VillageReport($bBypass = False)
 
 	Switch $bBypass
 		Case False
-			SetLog("Village Report", $COLOR_BLUE)
+			SetLog(getLocaleString("logVillageReport"), $COLOR_BLUE)
 		Case True
-			SetLog("Updating Village Resource Values", $COLOR_BLUE)
+			SetLog(getLocaleString("logUpdatingValues"), $COLOR_BLUE)
 		Case Else
-			SetLog("Village Report Error, You have been a BAD programmer!", $COLOR_RED)
+			SetLog(getLocaleString("logVillageReportErr"), $COLOR_RED)
 	EndSwitch
 
 	Local $aGetBuilders = StringSplit(getBuilders($aBuildersDigits[0], $aBuildersDigits[1]), "#", $STR_NOCOUNT)
 	$FreeBuilder = $aGetBuilders[0]
 	$TotalBuilders = $aGetBuilders[1]
-	Setlog("No. of Free/Total Builders: " & $FreeBuilder & "/" & $TotalBuilders, $COLOR_GREEN)
+	Setlog(getLocaleString("logBuilders") & $FreeBuilder & "/" & $TotalBuilders, $COLOR_GREEN)
 
 	$TrophyCount = getTrophyMainScreen($aTrophies[0], $aTrophies[1])
-	Setlog(" [T]: " & _NumberFormat($TrophyCount), $COLOR_GREEN)
+	Setlog(getLocaleString("logTrophyCount_") & _NumberFormat($TrophyCount), $COLOR_GREEN)
 
 	If _ColorCheck(_GetPixelColor(812, 141, True), Hex(0x000000, 6), 10) Then ; check if the village have a Dark Elixir Storage
 		$GoldCount = getResourcesMainScreen(710, 23)
 		$ElixirCount = getResourcesMainScreen(710, 74)
 		$DarkCount = getResourcesMainScreen(731, 123)
 		$GemCount = getResourcesMainScreen(740, 171)
-		SetLog(" [G]: " & _NumberFormat($GoldCount) & " [E]: " & _NumberFormat($ElixirCount) & " [D]: " & _NumberFormat($DarkCount) & " [GEM]: " & _NumberFormat($GemCount), $COLOR_GREEN)
+		SetLog(getLocaleString("logGoldCount") & _NumberFormat($GoldCount) & getLocaleString("logElixirCount") & _NumberFormat($ElixirCount) & getLocaleString("logDarkElixirCount") & _NumberFormat($DarkCount) & getLocaleString("logGemCount") & _NumberFormat($GemCount), $COLOR_GREEN)
 	Else
 		$GoldCount = getResourcesMainScreen(710, 23)
 		$ElixirCount = getResourcesMainScreen(710, 74)
 		$GemCount = getResourcesMainScreen(719, 123)
-		SetLog(" [G]: " & _NumberFormat($GoldCount) & " [E]: " & _NumberFormat($ElixirCount) & " [GEM]: " & _NumberFormat($GemCount), $COLOR_GREEN)
+		SetLog(getLocaleString("logGoldCount") & _NumberFormat($GoldCount) & getLocaleString("logElixirCount") & _NumberFormat($ElixirCount) & getLocaleString("logGemCount") & _NumberFormat($GemCount), $COLOR_GREEN)
 	EndIf
 	If $bBypass = False Then ; update stats
 		Switch $FirstAttack

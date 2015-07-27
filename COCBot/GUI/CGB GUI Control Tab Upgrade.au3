@@ -138,7 +138,7 @@ Func chkLab()
 		GUICtrlSetState($lblNextUpgrade, $GUI_ENABLE)
 		GUICtrlSetState($cmbLaboratory, $GUI_ENABLE)
 		GUICtrlSetState($btnLocateLaboratory, $GUI_SHOW)
-		GUICtrlSetImage($icnLabUpgrade, $pIconLib, $aLabTroops[$icmbLaboratory][4])
+		GUICtrlSetImage($icnLabUpgrade, $pIconLib, $aLabTroops[$iCmbLaboratory][4])
 	Else
 		$ichkLab = 0
 		GUICtrlSetState($icnLabUpgrade, $GUI_HIDE)
@@ -150,6 +150,6 @@ Func chkLab()
 EndFunc   ;==>chkLab
 
 Func cmbLab()
-	$icmbLaboratory = _GUICtrlComboBox_GetCurSel($cmbLaboratory)
-	GUICtrlSetImage($icnLabUpgrade, $pIconLib, $aLabTroops[$icmbLaboratory][4])
+	$iCmbLaboratory = _GUICtrlComboBox_GetCurSel($cmbLaboratory)
+	GUICtrlSetImage($icnLabUpgrade, $pIconLib, $aLabTroops[$iCmbLaboratory][4])
 EndFunc   ;==>cmbLab

@@ -49,22 +49,19 @@ Func GoldElixirChangeEBO()
 
 
 	;CALCULATE TWO STARS REACH
-	If _ColorCheck(_GetPixelColor($aWonTwoStar[0], $aWonTwoStar[1], True), Hex($aWonTwoStar[2], 6), $aWonTwoStar[3]) Then
-		If $ichkEndTwoStars = 1 Then
-			SetLog("Two Star Reach, exit", $COLOR_GREEN)
-			$exitTwoStars = 1
-			$z = 0
-		EndIf
+	If $ichkEndTwoStars = 1 And _CheckPixel($aWonTwoStar, True) Then
+		SetLog("Two Star Reach, exit", $COLOR_GREEN)
+		$exitTwoStars = 1
+		$z = 0
 	EndIf
 
 	;CALCULATE ONE STARS REACH
-	If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) Then
-		If $ichkEndOneStar = 1 Then
-			SetLog("One Star Reach, exit", $COLOR_GREEN)
-			$exitOneStar = 1
-			$z = 0
-		EndIf
+	If $ichkEndOneStar = 1 And _CheckPixel($aWonOneStar, True) Then
+		SetLog("One Star Reach, exit", $COLOR_GREEN)
+		$exitOneStar = 1
+		$z = 0
 	EndIf
+
 
 
 	;MAIN LOOP
@@ -99,7 +96,7 @@ Func GoldElixirChangeEBO()
 		If $Gold2 = "" and $Elixir2 = "" and $DarkElixir2= "" Then
 			SetLog("detected [G]: " & $Gold2 & " [E]: " & $Elixir2 & " [DE]: " & $DarkElixir2 & " |  Exit now ", $COLOR_BLUE)
 		Else
-			SetLog("detected [G]: " & $Gold2 & " [E]: " & $Elixir2 & " [DE]: " & $DarkElixir2 & " |  Exit in " & StringReplace(StringFormat("%2.1f", $txtDiff), "-", "") & " sec.", $COLOR_BLUE)
+			SetLog("detected [G]: " & $Gold2 & " [E]: " & $Elixir2 & " [DE]: " & $DarkElixir2 & " |  Exit in " & StringReplace(StringFormat("%2i", $txtDiff), "-", "") & " sec.", $COLOR_BLUE)
 		EndIf
 
 		;CALCULATE RESOURCE CHANGES
@@ -117,21 +114,17 @@ Func GoldElixirChangeEBO()
 		EndIf
 
 		;EXIT IF TWO STARS REACH
-		If _ColorCheck(_GetPixelColor($aWonTwoStar[0], $aWonTwoStar[1], True), Hex($aWonTwoStar[2], 6), $aWonTwoStar[3]) Then
-			If $ichkEndTwoStars = 1 Then
-				SetLog("Two Star Reach, exit", $COLOR_GREEN)
-				$exitTwoStars = 1
-				ExitLoop
-			EndIf
+		If $ichkEndTwoStars = 1 And _CheckPixel($aWonTwoStar, True) Then
+			SetLog("Two Star Reach, exit", $COLOR_GREEN)
+			$exitTwoStars = 1
+			ExitLoop
 		EndIf
 
 		;EXIT IF ONE STARS REACH
-		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) Then
-			If $ichkEndOneStar = 1 Then
-				SetLog("One Star Reach, exit", $COLOR_GREEN)
-				$exitOneStar = 1
-				ExitLoop
-			EndIf
+		If $ichkEndOneStar = 1 And _CheckPixel($aWonOneStar, True) Then
+			SetLog("One Star Reach, exit", $COLOR_GREEN)
+			$exitOneStar = 1
+			ExitLoop
 		EndIf
 
 		;EXIT LOOP IF RESOURCES = "" ... battle end
@@ -178,14 +171,12 @@ Func GoldElixirChangeEBO()
 		Return False
 	Else
 		IF $debugsetlog= 1 Then
-			Setlog("Gold1: "  & Number($Gold1) & "  Gold2: " & Number($Gold2))
-			Setlog("Elixir1: "  & Number($Elixir1) & "  Elixir2: " & Number($Elixir2))
-			Setlog("Dark Elixir1: "  & Number($DarkElixir1) & "  Dark Elixir2: " & Number($DarkElixir2))
+			Setlog("Gold1: "  & Number($Gold1) & "  Gold2: " & Number($Gold2), $COLOR_PURPLE)
+			Setlog("Elixir1: "  & Number($Elixir1) & "  Elixir2: " & Number($Elixir2), $COLOR_PURPLE)
+			Setlog("Dark Elixir1: "  & Number($DarkElixir1) & "  Dark Elixir2: " & Number($DarkElixir2), $COLOR_PURPLE)
 		EndIf
 		SetLog("Gold & Elixir & DE change detected, waiting...", $COLOR_GREEN)
 		Return True
 	EndIf
-
-
 
 EndFunc   ;==>GoldElixirChangeEBO

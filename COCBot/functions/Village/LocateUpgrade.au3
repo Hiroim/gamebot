@@ -14,6 +14,12 @@
 ; ===============================================================================================================================
 
 Func LocateUpgrades()
+	ControlGetPos($Title, "", "[CLASS:BlueStacksApp; INSTANCE:1]")  ;Check For valid BS position
+	If @error = 1 Then  ; If not found, BS is not open so exit politely
+		Setlog("BlueStacks in not open", $COLOR_RED)
+		SetError(1)
+		Return
+	EndIf
 	If $hLogFileHandle = "" Then CreateLogFile()
 	If $hAttackLogFileHandle = "" Then CreateAttackLogFile()
 	Setlog("Upgrade Buildings and Auto Wall Upgrade Can Not Use same Loot Type!", $COLOR_GREEN)

@@ -5,7 +5,7 @@ Func UpgradeWall()
 	If GUICtrlRead($chkWalls) = $GUI_CHECKED Then
 		If $FreeBuilder > 0 Then
 			SetLog("Checking Upgrade Walls", $COLOR_BLUE)
-			Click(1, 1,1,0,"#0313") ; click away
+			ClickP($aTopLeftClient,1,0,"#0313") ; click away
 			$itxtWallMinGold = GUICtrlRead($txtWallMinGold)
 			$itxtWallMinElixir = GUICtrlRead($txtWallMinElixir)
 
@@ -51,14 +51,17 @@ Func UpgradeWall()
 						EndIf
 					EndIf
 			EndSwitch
-			Click(1, 1,1,0,"#0314") ; click away
+			ClickP($aTopLeftClient,1,0,"#0314") ; click away
 			Click(820, 40,1,0,"#0315") ; Close Builder/Shop if open by accident
 		Else
 			SetLog("No free builder, Upgrade Walls skipped..", $COLOR_RED)
 		EndIf
 	EndIf
+	If _Sleep(500) Then Return
+	checkMainScreen(False) ; Check for errors during function
 
 EndFunc   ;==>UpgradeWall
+
 
 Func UpgradeWallGold()
 

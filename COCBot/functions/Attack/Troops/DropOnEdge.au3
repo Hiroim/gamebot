@@ -37,12 +37,12 @@ Func DropOnEdge($troop, $edge, $number, $slotsPerEdge = 0, $edge2 = -1, $x = -1)
 		Local $nbTroopsLeft = $number
 		For $i = 0 To $slotsPerEdge - 1
 			Local $nbtroopPerSlot = Round($nbTroopsLeft / ($slotsPerEdge - $i)) ; progressively adapt the number of drops to fill at the best
-			Local $posX = $minX + (($maxX - $minX) * $i) / ($slotsPerEdge - 1)
-			Local $posY = $minY + (($maxY - $minY) * $i) / ($slotsPerEdge - 1)
+			Local $posX = Round($minX + (($maxX - $minX) * $i) / ($slotsPerEdge - 1))
+			Local $posY = Round($minY + (($maxY - $minY) * $i) / ($slotsPerEdge - 1))
 			Click($posX, $posY, $nbtroopPerSlot,0,"#0108")
 			If $edge2 <> -1 Then ; for 2, 3 and 4 sides attack use 2x dropping
-				Local $posX2 = $maxX2 - (($maxX2 - $minX2) * $i) / ($slotsPerEdge - 1)
-				Local $posY2 = $maxY2 - (($maxY2 - $minY2) * $i) / ($slotsPerEdge - 1)
+				Local $posX2 = Round($maxX2 - (($maxX2 - $minX2) * $i) / ($slotsPerEdge - 1))
+				Local $posY2 = Round($maxY2 - (($maxY2 - $minY2) * $i) / ($slotsPerEdge - 1))
 				;If $x = 0 Then
 				;  If _Sleep(SetSleep(0)) Then Return ; add delay for first wave attack to prevent skip dropping troops, must add for 4 sides attack
 				;EndIf

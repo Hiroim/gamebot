@@ -29,16 +29,18 @@ Func CheckTombs()
 			$TombLoc = _ImageSearch($tomb, 1, $TombX, $TombY, $TombTol) ; Getting Tree Location
 ;			If $TombLoc = 1 And $TombX > 35 And $TombY < 610 Then
 			If $TombLoc = 1 And isInsideDiamondXY($TombX, $TombY) Then
-				SetLog("Found tombstone ,  Removing...", $COLOR_GREEN)
-				If $DebugSetLog = 1 Then SetLog("Tombstone found (" & $TombX & "," & $TombY & ") tolerance:" & $TombTol)
+				SetLog(getLocaleString("logTombFound"), $COLOR_GREEN)
+				If $DebugSetLog = 1 Then SetLog("Tombstone found (" & $TombX & "," & $TombY & ") tolerance:" & $TombTol, $COLOR_PURPLE)
 				Click($TombX, $TombY,1,0,"#0120")
 				If _Sleep(2000) Then Return
-				Click(1, 1,1,0,"#0121") ; click away
+				ClickP($aTopLeftClient,1,0,"#0121") ; click away
 				If _Sleep(500) Then Return
 				Return True
 			EndIf
 		EndIf
 	Next
-	If $DebugSetLog = 1 Then SetLog("Cannot find tombstones, Yard is clean!", $COLOR_BLUE)
+	If $DebugSetLog = 1 Then SetLog("Cannot find tombstones, Yard is clean!", $COLOR_PURPLE)
+	If _Sleep(500) Then Return
+	checkMainScreen(False) ; check for screen errors while function was running
 
 EndFunc   ;==>CheckTombs

@@ -73,24 +73,24 @@ Func checkArmyCamp()
 	EndIf
 		_WinAPI_DeleteObject($hBitmapFirst)
 		Local $hBitmapFirst = _CaptureRegion2(140, 165, 705, 220)
-		If $debugSetlog = 1 Then SetLog("$hBitmapFirst made")
+		If $debugSetlog = 1 Then SetLog("$hBitmapFirst made", $COLOR_PURPLE)
 		If _Sleep(250) Then Return
-		If $debugSetlog = 1 Then SetLog("Calling CGBfunctions.dll/searchIdentifyTroopTrained ")
+		If $debugSetlog = 1 Then SetLog("Calling CGBfunctions.dll/searchIdentifyTroopTrained ", $COLOR_PURPLE)
 
 		Local $FullTemp = DllCall($LibDir & "\CGBfunctions.dll", "str", "searchIdentifyTroopTrained", "ptr", $hBitmapFirst)
-		If $debugSetlog = 1 Then SetLog("Dll return $FullTemp :" & $FullTemp[0])
+		If $debugSetlog = 1 Then SetLog("Dll return $FullTemp :" & $FullTemp[0], $COLOR_PURPLE)
 		Local $TroopTypeT = StringSplit($FullTemp[0], "#")
-		If $debugSetlog = 1 Then SetLog("$Trooptype split # : " & $TroopTypeT[0])
+		If $debugSetlog = 1 Then SetLog("$Trooptype split # : " & $TroopTypeT[0], $COLOR_PURPLE)
 		Local $TroopName = 0
 		Local $TroopQ = 0
-		If $debugSetlog = 1 Then SetLog("Start the Loop")
+		If $debugSetlog = 1 Then SetLog("Start the Loop", $COLOR_PURPLE)
 
 		For $i = 1 To $TroopTypeT[0]
 			$TroopName = "Unknown"
 			$TroopQ = "0"
 			If _sleep(100) Then Return
 			Local $Troops = StringSplit($TroopTypeT[$i], "|")
-			If $debugSetlog = 1 Then SetLog("$TroopTypeT[$i] split : " & $i)
+			If $debugSetlog = 1 Then SetLog("$TroopTypeT[$i] split : " & $i, $COLOR_PURPLE)
 
 			If $Troops[1] = "Barbarian" Then
 				$TroopQ = $Troops[3]
@@ -174,7 +174,7 @@ Func checkArmyCamp()
 
 			EndIf
 
-			If $TroopQ <> 0 Then SetLog(getLocaleString("logTroopsNoOf") & $TroopName & ": " & $TroopQ)
+			If $TroopQ <> 0 Then SetLog(getLocaleString("logTroopsNoOf") & $TroopName & ": " & $TroopQ & getLocaleString("logTroopsNoOf2"))
 		Next
 	If Not $fullArmy And $FirstStart Then
 		$ArmyComp = $CurCamp

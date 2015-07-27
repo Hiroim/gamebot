@@ -31,10 +31,6 @@ $tabSearch = GUICtrlCreateTabItem(getLocaleString("tabSearch"))
 		$chkAlertSearch = GUICtrlCreateCheckbox(getLocaleString("chkAlertSearch"), $x, $y, -1, -1, $BS_MULTILINE)
 			GUICtrlSetTip(-1, getLocaleString("tipChkAlertSearch"))
 			GUICtrlSetState(-1, $GUI_CHECKED)
-#cs		$y += 21
-		$btnSearchMode = GUICtrlCreateButton(getLocaleString("btnSearchMode"), $x + 90, $y, 100, 25)
-			GUICtrlSetOnEvent(-1, "btnSearchMode")
-#ce			GUICtrlSetTip(-1, getLocaleString("tipBtnSearchMode"))
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 	Local $x = 30, $y = 210

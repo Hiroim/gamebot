@@ -18,7 +18,7 @@ Func debugCGBFunctions($debugSearchArea = 0, $debugRedArea = 0, $debugOcr = 0)
 	Local $result = DllCall($pFuncLib, "str", "setGlobalVar", "int", $debugSearchArea, "int", $debugRedArea, "int", $debugOcr)
 	;dll return 0 on success, -1 on error
 	If IsArray($result) Then
-		If $debugSetlog And $result[0] = -1 Then setlog("CGBfunctions.dll error setting Global vars.")
+		If $debugSetlog And $result[0] = -1 Then setlog("CGBfunctions.dll error setting Global vars.", $COLOR_PURPLE)
 	Else
 		If $debugSetlog Then setlog("CGBfunctions.dll not found.")
 	EndIf

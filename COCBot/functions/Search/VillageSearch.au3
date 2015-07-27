@@ -38,51 +38,51 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 	For $x = 0 To $iModeCount - 1
 		If $x = $iCmbSearchMode Or $iCmbSearchMode = 2 Then
 
-			SetLog(_PadStringCenter(" Searching For " & $sModeText[$x] & " ", 54, "="), $COLOR_BLUE)
+			SetLog(_PadStringCenter(getLocaleString("logSearchingFor") & $sModeText[$x] & " ", 54, "="), $COLOR_BLUE)
 
 			Local $MeetGxEtext = "", $MeetGorEtext = "", $MeetGplusEtext = "", $MeetDEtext = "", $MeetTrophytext = "", $MeetTHtext = "", $MeetTHOtext = "", $MeetWeakBasetext = "", $EnabledAftertext = ""
 
-			SetLog(_PadStringCenter(" SEARCH CONDITIONS ", 50, "~"), $COLOR_BLUE)
+			SetLog(_PadStringCenter(getLocaleString("logSearchCond"), 50, "~"), $COLOR_BLUE)
 
-			If $iCmbMeetGE[$x] = 0 Then $MeetGxEtext = "Meet: Gold and Elixir"
-			If $iCmbMeetGE[$x] = 1 Then $MeetGorEtext = "Meet: Gold or Elixir"
-			If $iCmbMeetGE[$x] = 2 Then $MeetGplusEtext = "Meet: Gold + Elixir"
-			If $iChkMeetDE[$x] = 1 Then $MeetDEtext = ", Dark"
-			If $iChkMeetTrophy[$x] = 1 Then $MeetTrophytext = ", Trophy"
-			If $iChkMeetTH[$x] = 1 Then $MeetTHtext = ", Max TH " & $iMaxTH[$x] ;$icmbTH
-			If $iChkMeetTHO[$x] = 1 Then $MeetTHOtext = ", TH Outside"
-			If $iChkWeakBase[$x] = 1 Then $MeetWeakBasetext = ", Weak Base(Mortar: " & $iCmbWeakMortar[$x] & ", WizTower: " & $iCmbWeakWizTower[$x] & ")"
-			If $iChkEnableAfter[$x] = 1 Then $EnabledAftertext = ", Enabled after " & $iEnableAfterCount[$x] & " searches"
+			If $iCmbMeetGE[$x] = 0 Then $MeetGxEtext = getLocaleString("txtMeetGxE")
+			If $iCmbMeetGE[$x] = 1 Then $MeetGorEtext = getLocaleString("txtMeetGorE")
+			If $iCmbMeetGE[$x] = 2 Then $MeetGplusEtext = getLocaleString("txtMeetGplusE")
+			If $iChkMeetDE[$x] = 1 Then $MeetDEtext = getLocaleString("txtMeetDE")
+			If $iChkMeetTrophy[$x] = 1 Then $MeetTrophytext = getLocaleString("txtMeetTrophy")
+			If $iChkMeetTH[$x] = 1 Then $MeetTHtext = getLocaleString("txtMeetTH") & $iMaxTH[$x] ;$icmbTH
+			If $iChkMeetTHO[$x] = 1 Then $MeetTHOtext = getLocaleString("txtMeetTHO")
+			If $iChkWeakBase[$x] = 1 Then $MeetWeakBasetext = getLocaleString("txtMeetWeakBase") & $iCmbWeakMortar[$x] & getLocaleString("txtMeetWeakBase2") & $iCmbWeakWizTower[$x] & ")"
+			If $iChkEnableAfter[$x] = 1 Then $EnabledAftertext = getLocaleString("txtEnabledAfter") & $iEnableAfterCount[$x] & getLocaleString("txtEnabledAfter2")
 
 			SetLog($MeetGxEtext & $MeetGorEtext & $MeetGplusEtext & $MeetDEtext & $MeetTrophytext & $MeetTHtext & $MeetTHOtext & $MeetWeakBasetext & $EnabledAftertext)
 
-			If $iChkMeetOne[$x] = 1 Then SetLog("Meet One and Attack!")
+			If $iChkMeetOne[$x] = 1 Then SetLog(getLocaleString("txtMeetOne"))
 
-			SetLog(_PadStringCenter(" RESOURCE CONDITIONS ", 50, "~"), $COLOR_BLUE)
-			If $iChkMeetTH[$x] = 1 Then $iAimTHtext[$x] = " [TH]:" & StringFormat("%2s", $iMaxTH[$x]) ;$icmbTH
-			If $iChkMeetTHO[$x] = 1 Then $iAimTHtext[$x] &= ", Out"
+			SetLog(_PadStringCenter(getLocaleString("logResourceCond"), 50, "~"), $COLOR_BLUE)
+			If $iChkMeetTH[$x] = 1 Then $iAimTHtext[$x] = getLocaleString("txtAimTH") & StringFormat("%2s", $iMaxTH[$x]) ;$icmbTH
+			If $iChkMeetTHO[$x] = 1 Then $iAimTHtext[$x] &= getLocaleString("txtAimTHO")
 
 
 			If $iCmbMeetGE[$x] = 2 Then
-				SetLog("Aim:           [G+E]:" & StringFormat("%7s", $iAimGoldPlusElixir[$x]) & " [D]:" & StringFormat("%5s", $iAimDark[$x]) & " [T]:" & StringFormat("%2s", $iAimTrophy[$x]) & $iAimTHtext[$x] & " for: " & $sModeText[$x], $COLOR_GREEN, "Lucida Console", 7.5)
+				SetLog(getLocaleString("txtAimGplusE") & StringFormat("%7s", $iAimGoldPlusElixir[$x]) & getLocaleString("txtAimDE") & StringFormat("%5s", $iAimDark[$x]) & getLocaleString("txtAimTrophy") & StringFormat("%2s", $iAimTrophy[$x]) & $iAimTHtext[$x] & getLocaleString("txtAimMode") & $sModeText[$x], $COLOR_GREEN, "Lucida Console", 7.5)
 			Else
-				SetLog("Aim: [G]:" & StringFormat("%7s", $iAimGold[$x]) & " [E]:" & StringFormat("%7s", $iAimElixir[$x]) & " [D]:" & StringFormat("%5s", $iAimDark[$x]) & " [T]:" & StringFormat("%2s", $iAimTrophy[$x]) & $iAimTHtext[$x] & " for: " & $sModeText[$x], $COLOR_GREEN, "Lucida Console", 7.5)
+				SetLog(getLocaleString("txtAimG") & StringFormat("%7s", $iAimGold[$x]) & getLocaleString("txtAimE") & StringFormat("%7s", $iAimElixir[$x]) & getLocaleString("txtAimDE") & StringFormat("%5s", $iAimDark[$x]) & getLocaleString("txtAimTrophy") & StringFormat("%2s", $iAimTrophy[$x]) & $iAimTHtext[$x] & getLocaleString("txtAimMode") & $sModeText[$x], $COLOR_GREEN, "Lucida Console", 7.5)
 			EndIf
-			
+
 		EndIf
 	Next
 
 	If $OptBullyMode + $OptTrophyMode + $chkATH > 0 Then
-		SetLog(_PadStringCenter(" ADVANCED SETTINGS ", 50, "~"), $COLOR_BLUE)
+		SetLog(_PadStringCenter(getLocaleString("logSearchCondAdv"), 50, "~"), $COLOR_BLUE)
 		Local $YourTHText = "", $AttackTHTypeText = "", $chkATHText = "", $OptTrophyModeText = ""
 
 		If $OptBullyMode = 1 Then
 			For $i = 0 To 4
-				If $YourTH = $i Then $YourTHText = "TH" & $THText[$i]
+				If $YourTH = $i Then $YourTHText = getLocaleString("txtYourTH") & $THText[$i]
 			Next
 		EndIf
 
-		If $OptBullyMode = 1 Then SetLog("THBully Combo @" & $ATBullyMode & " SearchCount, " & $YourTHText)
+		If $OptBullyMode = 1 Then SetLog(getLocaleString("logTHBully") & $ATBullyMode & getLocaleString("logTHBully2") & $YourTHText)
 
 		If $chkATH = 1 Then $chkATHText = "AttackTH"
 		If $chkATH = 1 And $AttackTHType = 0 Then $AttackTHTypeText = ", Barch"
@@ -152,17 +152,17 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 			$dbBase = checkDeadBase()
 		EndIf
 		If $matchDB And $dbBase Then
-			SetLog(_PadStringCenter(" Dead Base Found! ", 50, "~"), $COLOR_GREEN)
+			SetLog(_PadStringCenter(getLocaleString("logDBFound"), 50, "~"), $COLOR_GREEN)
 			$iMatchMode = $DB
 			ExitLoop
 		ElseIf $matchLB And Not $dbBase Then
-			SetLog(_PadStringCenter(" Live Base Found! ", 50, "~"), $COLOR_GREEN)
+			SetLog(_PadStringCenter(getLocaleString("logLBFound"), 50, "~"), $COLOR_GREEN)
 			$iMatchMode = $LB
 			ExitLoop
 		ElseIf $matchLB Or $matchDB Then
 			If $OptBullyMode = 1 And ($SearchCount >= $ATBullyMode) Then
 				If $SearchTHLResult = 1 Then
-					SetLog(_PadStringCenter(" Not a match, but TH Bully Level Found! ", 50, "~"), $COLOR_GREEN)
+					SetLog(_PadStringCenter(getLocaleString("logTBFound"), 50, "~"), $COLOR_GREEN)
 					$iMatchMode = $iTHBullyAttackMode
 					ExitLoop
 				EndIf
@@ -171,7 +171,7 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 		;If $bBtnAttackNowPressed = True Then ExitLoop
 		If $OptTrophyMode = 1 Then ;Enables Triple Mode Settings ;---compare resources
 			If SearchTownHallLoc() Then ; attack this base anyway because outside TH found to snipe
-				SetLog(_PadStringCenter(" TH Outside Found! ", 50, "~"), $COLOR_GREEN)
+				SetLog(_PadStringCenter(getLocaleString("logTHOFound"), 50, "~"), $COLOR_GREEN)
 				$iMatchMode = $TS
 				ExitLoop
 			EndIf
@@ -179,13 +179,13 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 		;If $bBtnAttackNowPressed = True Then ExitLoop
 		For $x = 0 To $iModeCount - 1
 			If ($x = $iCmbSearchMode Or $iCmbSearchMode = 2) And $iChkWeakBase[$x] = 1 And Not $isWeakBase[$x] Then
-				$noMatchTxt &= ", Not a Weak Base for " & $sModeText[$x]
+				$noMatchTxt &= getLocaleString("logNotWeakBase") & $sModeText[$x]
 			EndIf
 		Next
 		If $matchDB And Not $dbBase Then
-			$noMatchTxt &= ", Not a " & $sModeText[$DB]
+			$noMatchTxt &= getLocaleString("logNotDB") & $sModeText[$DB] & getLocaleString("logNotDB2")
 		ElseIf $matchLB And $dbBase Then
-			$noMatchTxt &= ", Not a " & $sModeText[$LB]
+			$noMatchTxt &= getLocaleString("logNotLB") & $sModeText[$LB] & getLocaleString("logNotLB2")
 		EndIf
  		If $noMatchTxt <> "" Then
 			SetLog(_PadStringCenter(" " & StringMid($noMatchTxt, 3) & " ", 50, "~"), $COLOR_PURPLE)
@@ -195,12 +195,14 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 			If _Sleep(1000 * $iAttackNowDelay) Then Return ; add human reaction time on AttackNow button function
 		EndIf
 		If $bBtnAttackNowPressed = True Then ExitLoop
-		Click(825, 527,1,0,"#0155") ;Click Next
+		ClickP($NextBtn,1,0,"#0155") ;Click Next
 		If _Sleep(500) Then Return
 		If isGemOpen(True) = True Then
-			Setlog(" Not enough gold to keep searching.....", $COLOR_RED)
+			Setlog(getLocaleString("logOutOfGoldSearching"), $COLOR_RED)
 			Click(585, 252,1,0,"#0156")  ; Click close gem window "X"
+			If _Sleep(500) Then Return
 			$OutOfGold = 1  ; Set flag for out of gold to search for attack
+			ReturnHome(False, False)
 			Return
 		EndIf
 		$iSkipped = $iSkipped + 1
@@ -208,7 +210,7 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 	WEnd
 
 	If $bBtnAttackNowPressed = True Then
-		Setlog(_PadStringCenter(" Attack Now Pressed! ", 50, "~"), $COLOR_GREEN)
+		Setlog(_PadStringCenter(getLocaleString("logAttackNowPressed"), 50, "~"), $COLOR_GREEN)
 	EndIf
 
 	If $iChkAttackNow = 1 Then
@@ -221,7 +223,7 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 	EndIf
 
 	If $AlertSearch = 1 Then
-		TrayTip($sModeText[$iMatchMode] & " Match Found!", "Gold: " & $searchGold & "; Elixir: " & $searchElixir & "; Dark: " & $searchDark & "; Trophy: " & $searchTrophy, "", 0)
+		TrayTip($sModeText[$iMatchMode] & getLocaleString("logMatchFound"), getLocaleString("logMatchG") & $searchGold & getLocaleString("logMatchE") & $searchElixir & getLocaleString("logMatchDE") & $searchDark & getLocaleString("logMatchT") & $searchTrophy, "", 0)
 		If FileExists(@WindowsDir & "\media\Festival\Windows Exclamation.wav") Then
 			SoundPlay(@WindowsDir & "\media\Festival\Windows Exclamation.wav", 1)
 		ElseIf FileExists(@WindowsDir & "\media\Windows Exclamation.wav") Then
@@ -229,18 +231,18 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 		EndIf
 	EndIf
 
-	SetLog(_PadStringCenter(" Search Complete ", 50, "="), $COLOR_BLUE)
+	SetLog(_PadStringCenter(getLocaleString("logSearchCompleted"), 50, "="), $COLOR_BLUE)
 	PushMsg("MatchFound")
 
 	; TH Detection Check Once Conditions
 	If $OptBullyMode = 0 And $OptTrophyMode = 0 And $iChkMeetTH[$iMatchMode] = 0 And $iChkMeetTHO[$iMatchMode] = 0 And $chkATH = 1 Then
 		$searchTH = checkTownhallADV()
 		If SearchTownHallLoc() = False And $searchTH <> "-" Then
-			SetLog("Checking Townhall location: TH is inside, skip Attack TH")
+			SetLog(getLocaleString("logTHLocIn"))
 		ElseIf $searchTH <> "-" Then
-			SetLog("Checking Townhall location: TH is outside, Attacking Townhall!")
+			SetLog(getLocaleString("logTHLocOut"))
 		Else
-			SetLog("Checking Townhall location: Could not locate TH, skipping attack TH...")
+			SetLog(getLocaleString("logTHLocErr"))
 		EndIf
 	EndIf
 
@@ -255,7 +257,7 @@ EndFunc   ;==>VillageSearch
 
 Func IsSearchModeActive($pMode)
 	If $iChkEnableAfter[$pMode] = 0 Then Return True
-	If $SearchCount = $iEnableAfterCount[$pMode] Then SetLog(_PadStringCenter(" " & $sModeText[$pMode] & " search conditions are activated! ", 50, "~"), $COLOR_BLUE)
+	If $SearchCount = $iEnableAfterCount[$pMode] Then SetLog(_PadStringCenter(" " & $sModeText[$pMode] & getLocaleString("logSearchModeActivated"), 50, "~"), $COLOR_BLUE)
 	If $SearchCount >= $iEnableAfterCount[$pMode] Then Return True
 	Return False
 EndFunc

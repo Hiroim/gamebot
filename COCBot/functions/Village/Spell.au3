@@ -53,7 +53,7 @@ SetLog("Creating Spells...")
 			    EndIf
 	   EndIf
         If _Sleep(250) Then Return
-		Click(1, 1,1,0,"#0265")
+		ClickP($aTopLeftClient,1,0,"#0265")
 		If _Sleep(250) Then Return
  EndIf
 EndFunc

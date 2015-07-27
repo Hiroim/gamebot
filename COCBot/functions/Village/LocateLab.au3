@@ -15,7 +15,7 @@
 Func LocateLab()
 	Local $stext, $MsgBox, $iStupid = 0, $iSilly = 0, $sErrorText = ""
 
-	SetLog(getLocaleString("logLocateLab") , $COLOR_BLUE)
+	SetLog(getLocaleString("logLocateLab"), $COLOR_BLUE)
 
 	If _GetPixelColor($aTopLeftClient[0], $aTopLeftClient[1], True) <> Hex($aTopLeftClient[2], 6) And _GetPixelColor($aTopRightClient[0], $aTopRightClient[1], True) <> Hex($aTopRightClient[2], 6) Then
 		Zoomout()
@@ -24,9 +24,9 @@ Func LocateLab()
 
 	While 1
 		ClickP($aTopLeftClient)
-		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Arial", 600)
+		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Arial", 700)
 		$stext =  $sErrorText & @CRLF& getLocaleString("msgboxLocateLab_msg",1) & @CRLF
-		$MsgBox = _ExtMsgBox(0, getLocaleString("msgboxLocateLab_controlsb") , getLocaleString("msgboxLocateLab_title") , $stext, 15, $frmBot)
+		$MsgBox = _ExtMsgBox(0, getLocaleString("msgboxLocateLab_controls") , getLocaleString("msgboxLocateLab_title") , $stext, 15, $frmBot)
 		If $MsgBox = 1 Then
 			WinActivate($HWnD)
 			$aLabPos[0] = Int(FindPos()[0])
@@ -36,7 +36,7 @@ Func LocateLab()
 				Select
 					Case $iStupid = 1
 						$sErrorText = getLocaleString("txtStupidCase1Lab") & @CRLF
-						SetLog(getLocaleString("logStupidCase1Lab"), $COLOR_RED)
+						SetLog(getLocaleString("logStupidCase1"), $COLOR_RED)
 						ContinueLoop
 					Case $iStupid = 2
 						$sErrorText = getLocaleString("txtStupidCase2") & @CRLF
@@ -64,7 +64,7 @@ Func LocateLab()
 			ClickP($aTopLeftClient)
 			Return
 		EndIf
-		$sLabInfo = BuildingInfo(250, 520)
+		$sLabInfo = BuildingInfo(242, 520)
 		If $sLabInfo[0] > 1 Or $sLabInfo[0] = "" Then
 			If  StringInStr($sLabInfo[1], "Lab") = 0 Then
 				If $sLabInfo[0] = "" Then

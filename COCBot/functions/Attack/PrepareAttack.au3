@@ -24,7 +24,7 @@ Func PrepareAttack($pMatchMode, $Remaining = False) ;Assigns troops
 	$hBitmapFirst = _CaptureRegion2(0, 571, 859, 671)
 	If _Sleep(250) Then Return
 	Local $result = DllCall($pFuncLib, "str", "searchIdentifyTroop", "ptr", $hBitmapFirst)
-	If $debugSetlog = 1 Then Setlog("DLL Troopsbar list: " & $result[0])
+	If $debugSetlog = 1 Then Setlog("DLL Troopsbar list: " & $result[0], $COLOR_PURPLE)
 	Local $aTroopDataList = StringSplit($result[0], "#")
 	Local $aTemp[12][3]
 	If $result[0] <> "" Then

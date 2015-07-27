@@ -377,7 +377,7 @@ Func readConfig() ;Reads config and sets it to the variables
 
 		;Laboratory
 		$ichkLab = IniRead($config, "upgrade", "upgradetroops", "0")
-		$icmbLaboratory = IniRead($config, "upgrade", "upgradetroopname", "0")
+		$iCmbLaboratory = IniRead($config, "upgrade", "upgradetroopname", "0")
 		$aLabPos[0] = Int(IniRead($building, "upgrade", "LabPosX", "0"))
 		$aLabPos[1] = Int(IniRead($building, "upgrade", "LabPosY", "0"))
 
@@ -399,8 +399,8 @@ Func readConfig() ;Reads config and sets it to the variables
 		$sTimeWakeUp = IniRead($config, "other", "txtTimeWakeUp", "0")
 		$iVSDelay = IniRead($config, "other", "VSDelay", "0")
 
-		$itxtMaxTrophy = IniRead($config, "other", "MaxTrophy", "3000")
-		$itxtdropTrophy = IniRead($config, "other", "MinTrophy", "3000")
+		$itxtMaxTrophy = IniRead($config, "other", "MaxTrophy", "5000")
+		$itxtdropTrophy = IniRead($config, "other", "MinTrophy", "5000")
 		$iChkTrophyHeroes = IniRead($config, "other", "chkTrophyHeroes", "0")
 		$iChkTrophyAtkDead = IniRead($config, "other", "chkTrophyAtkDead", "0")
 
@@ -437,6 +437,12 @@ Func readConfig() ;Reads config and sets it to the variables
 		$iDeleteLootsDays	= IniRead($config, "deletefiles", "DeleteLootsDays", "7")
 
 		$debugClick = IniRead($config, "debug", "debugClick", "0")
+		If $DevMode = 1 Then
+			GUICtrlSetState($chkDebugSetlog, $GUI_SHOW)
+			GUICtrlSetState($chkDebugOcr, $GUI_SHOW)
+			$DebugSetlog = BitOR($DebugSetlog, IniRead($config, "debug", "debugsetlog", "0"))
+			$DebugOcr = BitOR($DebugOcr, IniRead($config, "debug", "debugocr", "0"))
+		EndIf
 
 		; Hours Planned
 		$iPlannedDonateHours 			= StringSplit(IniRead($config, "planned", "DonateHours", "1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1"),"|", $STR_NOCOUNT)

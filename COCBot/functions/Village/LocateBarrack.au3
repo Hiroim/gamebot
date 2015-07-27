@@ -28,7 +28,7 @@ Func LocateBarrack($ArmyCamp = False)
 
 	While 1
 		ClickP($aTopLeftClient)
-		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Arial", 500)
+		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Arial", 700)
 		$stext =  $sErrorText & @CRLF & getLocaleString("msgboxMsg1") & $choice & getLocaleString("msgboxMsg1_2") & @CRLF & @CRLF & _
 		getLocaleString("msgboxMsg2")& @CRLF & @CRLF & getLocaleString("msgboxMsg3") & @CRLF
 		$MsgBox = _ExtMsgBox(0, getLocaleString("msgboxControlOk"), getLocaleString("msgboxControlLocate") & $choice, $stext, 15, $frmBot)
@@ -66,7 +66,7 @@ Func LocateBarrack($ArmyCamp = False)
 							Return False
 					EndSelect
 				EndIf
-				$sArmyInfo = BuildingInfo(250, 520)
+				$sArmyInfo = BuildingInfo(242, 520)
 				If $sArmyInfo[0] > 1 Or $sArmyInfo[0] = "" Then
 					If  StringInStr($sArmyInfo[1], "Army") = 0 Then
 						If $sArmyInfo[0] = "" Then
@@ -135,7 +135,7 @@ Func LocateBarrack($ArmyCamp = False)
 							Return False
 					EndSelect
 				EndIf
-				$sInfo = BuildingInfo(250, 520)
+				$sInfo = BuildingInfo(242, 520)
 				If $sInfo[0] > 1 Or $sInfo[0] = "" Then
 					If  StringInStr($sInfo[1], "Barr") = 0 Then
 						If $sInfo[0] = "" Then

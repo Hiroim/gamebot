@@ -35,9 +35,9 @@ Func UpgradeBuilding()
 
 	; Need to update village report function to skip statistics and extra messages not required using a bypass?
 	VillageReport(True) ; Get current loot available after training troops and update free builder status
-	$iAvailGold = Number($GoldVillage)
-	$iAvailElixir = Number($ElixirVillage)
-	$iAvailDark = Number($DarkVillage)
+	$iAvailGold = Number($GoldCount)
+	$iAvailElixir = Number($ElixirCount)
+	$iAvailDark = Number($DarkCount)
 
 	If $iSaveWallBldr = 1 Then  ; If save wall builder is enable, make sure to reserve builder if enabled
 		$iAvailBldr = $FreeBuilder - $iSaveWallBldr
@@ -104,7 +104,10 @@ Func UpgradeBuilding()
 		EndSwitch
 	Next
 	If $iUpgradeAction <= 0 Then Setlog("No Upgrades Available", $COLOR_GREEN)
+	If _Sleep(500) Then Return
+	checkMainScreen(False)  ; Check for screen errors during function
 	Return $iUpgradeAction
+
 EndFunc   ;==>UpgradeBuilding
 ;
 Func UpgradeNormal($inum)

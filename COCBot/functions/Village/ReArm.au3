@@ -26,12 +26,12 @@ Func ReArm()
 		If _Sleep(1000) Then Return
 	EndIf
 
-	Click(1, 1,1,0,"#0224") ; Click away
+	ClickP($aTopLeftClient,1,0,"#0224") ; Click away
 	If _Sleep(500) Then Return
 	Click($TownHallPos[0], $TownHallPos[1] + 5,1,0,"#0225")
 	If _Sleep(1500) Then Return
 
-	If $debugSetlog = 1 Then DebugImageSave("ReArmView")
+	;If $debugSetlog = 1 Then DebugImageSave("ReArmView")
 
 	;Traps
 	Local $offColors[3][3] = [[0x887d79, 24, 34], [0xF3EC55, 69, 7], [0xECEEE9, 77, 0]] ; 2nd pixel brown wrench, 3rd pixel gold, 4th pixel edge of button
@@ -99,6 +99,8 @@ Func ReArm()
 		EndIf
 	EndIf
 
-	Click(1, 1,1,0,"#0234") ; Click away
+	ClickP($aTopLeftClient,1,0,"#0234") ; Click away
+	If _Sleep(500) Then Return
+	checkMainScreen(False) ; check for screen errors while running function
 
 EndFunc   ;==>ReArm

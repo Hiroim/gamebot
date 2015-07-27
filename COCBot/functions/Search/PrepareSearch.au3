@@ -15,7 +15,7 @@
 ; ===============================================================================================================================
 Func PrepareSearch() ;Click attack button and find match button, will break shield
 
-	SetLog("Going to Attack...", $COLOR_BLUE)
+	SetLog(getLocaleString("logGoingToAtk"), $COLOR_BLUE)
 
 	ClickP($aAttackButton, 1, 0, "#0149") ; Click Attack Button
 	If _Sleep(1000) Then Return
@@ -26,7 +26,7 @@ Func PrepareSearch() ;Click attack button and find match button, will break shie
 	Local $Result = getAttackDisable(346, 182)  ; Grab Ocr for TakeABreak check
 
 	If isGemOpen(True) = True Then ; Check for gem window open)
-		Setlog(" Not enough gold to start searching.....", $COLOR_RED)
+		Setlog(getLocaleString("logSearchOutOfGold"), $COLOR_RED)
 		Click(585, 252, 1, 0, "#0151") ; Click close gem window "X"
 		If _Sleep(1000) Then Return
 		Click(822, 32, 1, 0, "#0152") ; Click close attack window "X"
@@ -37,9 +37,9 @@ Func PrepareSearch() ;Click attack button and find match button, will break shie
 	If _Sleep(1000) Then Return
 	If $result = "" Then $Result = getAttackDisable(346, 182)  ; Grab Ocr for TakeABreak 2nd time if not found due slow PC
 	If $debugSetlog = 1 Then Setlog("Take-A-Break OCR result = " & $Result, $COLOR_PURPLE)
-	If $Result > 0 Then ; we may have Take-A-Break
+	If $Result <> "" Then ; we may have Take-A-Break
 		If StringInStr($Result, "disable") <> 0 Then ; double check just in case.
-			Setlog("Attacking disabled, Take-A-Break detected. Exiting CoC", $COLOR_RED)
+			Setlog(getLocaleString("logAtkDisabled"), $COLOR_RED)
 			; shut it down...
 			$Restart = True ; Set flag to restart bot main code and let Checkmainscreen clean up
 			Local $i = 0
@@ -58,12 +58,12 @@ Func PrepareSearch() ;Click attack button and find match button, will break shie
 					ExitLoop
 				EndIf
 				If $i > 15 Then
-					Setlog("Can not find Okay button to exit CoC, giving up", $COLOR_RED)
+					Setlog(getLocaleString("logCantFindOkBtn"), $COLOR_RED)
 					Return
 				EndIf
 				$i += 1
 			WEnd
-			SetLog("Waiting 20seconds for server logoff", $COLOR_GREEN)
+			SetLog(getLocaleString("logWait20sec"), $COLOR_GREEN)
 			If _SleepStatus(20000) Then Return ; Wait for server to see log off
 			$HWnD = WinGetHandle($Title)
 			Local $RunApp = StringReplace(_WinAPI_GetProcessFileName(WinGetProcess($Title)), "Frontend", "RunApp")

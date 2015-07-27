@@ -5,7 +5,7 @@
 ; Parameters ....:
 ; Return values .: None
 ; Author ........: Code Monkey #73
-; Modified ......: (2015-06) Sardo
+; Modified ......: (2015-06) Sardo, KnowJack(July 2015)
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -29,16 +29,17 @@ Func RequestCC()
 	SetLog("Requesting Clan Castle Troops", $COLOR_BLUE)
 
 	;open army overview
-	Click($aArmyTrainButton[0], $aArmyTrainButton[1], 1, 0, "#9999")
+	Click($aArmyTrainButton[0], $aArmyTrainButton[1], 1, 0, "#0334")
 
 	;wait to see army overview
 	Local $icount = 0
 	While Not ( _ColorCheck(_GetPixelColor($aArmyOverviewTest[0], $aArmyOverviewTest[1], True), Hex($aArmyOverviewTest[2], 6), $aArmyOverviewTest[3]))
-		If _Sleep(100) Then ContinueLoop
-		$icount = $icount + 1
-		If $icount = 5 Then ExitLoop
+		If _Sleep(500) Then ExitLoop
+		$icount += 1
+		If $DebugSetLog = 1 Then Setlog("$icount1 = "&$iCount&", "&_GetPixelColor($aArmyOverviewTest[0], $aArmyOverviewTest[1], True), $COLOR_PURPLE)
+		If $icount > 5 Then ExitLoop  ; wait 6*500ms = 3 seconds max
 	WEnd
-	If $icount = 5 And $debugSetlog = 1 Then Setlog("RequestCC warning 1")
+	If $icount > 5 And $debugSetlog = 1 Then Setlog("RequestCC warning 1", $COLOR_PURPLE)
 
 	$color = _GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1], True)
 	If _ColorCheck($color, Hex($aRequestTroopsAO[2], 6), $aRequestTroopsAO[5]) Then
@@ -56,43 +57,51 @@ Func RequestCC()
 	EndIf
 
 	;exit from army overview
-	Click(1, 1, 2, 0, "#9999")
+	ClickP($aTopLeftClient, 2, 0, "#0335")
 
 EndFunc   ;==>RequestCC
 
 
 Func _makerequest()
 	;click button request troops
-	Click($aRequestTroopsAO[0], $aRequestTroopsAO[1], 1, 0, "#9999") ;Select text for request
+	Click($aRequestTroopsAO[0], $aRequestTroopsAO[1], 1, 0, "0336") ;Select text for request
 
 	;wait window
 	Local $icount = 0
 	While Not ( _ColorCheck(_GetPixelColor($aCancRequestCCBtn[0], $aCancRequestCCBtn[1], True), Hex($aCancRequestCCBtn[2], 6), $aCancRequestCCBtn[3]))
-		_Sleep(100)
-		$icount = $icount + 1
-		If $icount = 5 Then ExitLoop
+		If _Sleep(500) Then ExitLoop
+		$icount += 1
+		If $DebugSetLog = 1 Then Setlog("$icount2 = "&$iCount&", "&_GetPixelColor($aCancRequestCCBtn[0], $aCancRequestCCBtn[1], True), $COLOR_PURPLE)
+		If $icount > 20 Then ExitLoop  ; wait 21*500ms = 10.5 seconds max
 	WEnd
-	If $icount = 5 Then
-		SetLog("Unable to request, or request has already been made", $COLOR_RED)
-		Click(1, 1, 2, 0, "#0257")
+	If $icount > 20 Then
+		SetLog("Request has already been made, or request window not available", $COLOR_RED)
+		ClickP($aTopLeftClient, 2, 0, "#0257")
+		If _Sleep(1000) Then Return
 	Else
 		If $sTxtRequest <> "" Then
-			Click($atxtRequestCCBtn[0], $atxtRequestCCBtn[1], 1, 0, "#0254") ;Select text for request
-			_Sleep(250)
-			ControlSend($Title, "", "", $sTxtRequest, 0)
+			ControlFocus($Title,"", "")
+			PureClick($atxtRequestCCBtn[0], $atxtRequestCCBtn[1], 1, 0, "#0254") ;Select text for request $atxtRequestCCBtn[2] = [430, 140]
+			_Sleep(1000)
+			If ControlSend($Title, "", "", $sTxtRequest, 0) = 0 Then
+				Setlog(" Request text entry failed, try again", $COLOR_RED)
+				Return
+			EndIf
 		EndIf
+		If _Sleep(1000) Then Return ; wait time for text request to complete
 		$icount = 0
 		While Not _ColorCheck(_GetPixelColor($aSendRequestCCBtn[0], $aSendRequestCCBtn[1], True), Hex(0x5fac10, 6), 20)
-			_Sleep(50)
+			If _Sleep(500) Then ExitLoop
 			$icount += 1
-			If $icount = 100 Then ExitLoop
+			If $DebugSetLog = 1 Then Setlog("$icount3 = "&$iCount&", "&_GetPixelColor($aSendRequestCCBtn[0], $aSendRequestCCBtn[1], True), $COLOR_PURPLE)
+			If $icount > 25 Then ExitLoop  ; wait 26*500ms = 13 seconds max
 		WEnd
-		If $icount = 100 Then
-			If $debugSetlog = 1 Then SetLog("send request button not found")
-			;emergency exit
-		    checkMainScreen(False)
+		If $icount > 25 Then
+		If $debugSetlog = 1 Then SetLog("Send request button not found", $COLOR_PURPLE)
+			CheckMainScreen(False) ;emergency exit
 		EndIf
-		Click($aSendRequestCCBtn[0], $aSendRequestCCBtn[1], 1, 100, "#0256") ; click send button
+		ControlFocus($title, "", "")  ; make sure BS has window focus
+		PureClick($aSendRequestCCBtn[0], $aSendRequestCCBtn[1], 1, 100, "#0256") ; click send button
 	EndIf
 
 EndFunc   ;==>_makerequest

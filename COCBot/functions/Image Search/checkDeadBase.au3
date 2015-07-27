@@ -106,7 +106,7 @@ Func ZombieSearch()
 ;~ 		$ZSExclude = 0 ;Set to 0 to include Elixir Lvl 6, 1 to include lvl 7 and so on..
 ;~ 	EndIf
 
-	; If $debugSetlog = 1 Then SetLog("$ZSExclude :" & $ZSExclude)
+	; If $debugSetlog = 1 Then SetLog("$ZSExclude :" & $ZSExclude, $COLOR_PURPLE)
 
 	$ZombieCount = 0
 	$ZC = 0

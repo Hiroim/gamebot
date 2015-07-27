@@ -1119,6 +1119,24 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 		GUICtrlSetState($chkDebugClick, $GUI_UNCHECKED)
 	EndIf
 
+	If $DevMode = 1 Then
+		GUICtrlSetState($chkDebugSetlog, $GUI_ENABLE)
+		GUICtrlSetState($chkDebugOcr, $GUI_ENABLE)
+	EndIf
+
+	If $DebugSetlog = 1 Then
+		GUICtrlSetState($chkDebugSetlog, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkDebugSetlog, $GUI_UNCHECKED)
+	EndIf
+
+	If $debugOcr = 1 Then
+		GUICtrlSetState($chkDebugOcr, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkDebugOcr, $GUI_UNCHECKED)
+	EndIf
+
+
 	;forced Total Camp values
 	If $ichkTotalCampForced = 1 Then
 		GUICtrlSetState($chkTotalCampForced, $GUI_CHECKED)

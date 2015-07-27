@@ -207,6 +207,7 @@ Func ReplayShare($last = 1)
 		EndIf ; >30 min
 	EndIf ;last=1
 	If _Sleep(500) Then Return
+	checkMainScreen(False) ; check for screen errors while running function
 
 EndFunc   ;==>ReplayShare
 

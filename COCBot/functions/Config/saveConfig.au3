@@ -1014,6 +1014,22 @@ Func saveConfig() ;Saves the controls settings to the config
 		IniWrite($config, "debug", "debugClick", 0)
 	EndIf
 
+	If $DevMode = 1 Then
+		If GUICtrlRead($chkDebugSetLog) = $GUI_CHECKED Then
+			IniWrite($config, "debug", "debugsetlog", 1)
+		Else
+			IniWrite($config, "debug", "debugsetlog", 0)
+		EndIf
+		If GUICtrlRead($chkDebugOcr) = $GUI_CHECKED Then
+			IniWrite($config, "debug", "debugocr", 1)
+		Else
+			IniWrite($config, "debug", "debugocr", 0)
+		EndIf
+	Else
+		IniDelete($config, "debug", "debugocr")
+		IniDelete($config, "debug", "debugsetlog")
+	EndIf
+
 	;forced Total Camp values
 	If GUICtrlRead($ChkTotalCampForced) = $GUI_CHECKED Then
 		IniWrite($config, "other", "ChkTotalCampForced", 1)

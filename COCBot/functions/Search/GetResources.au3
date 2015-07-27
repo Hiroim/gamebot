@@ -27,20 +27,20 @@ Func GetResources() ;Reads resources
 		If $i >= 60 Or isProblemAffect(True) Then ; wait max 30 sec then restart bot
 			checkMainScreen()
 			If $Restart Then
-				SetLog("Cannot locate Next button, Restarting Bot...", $COLOR_RED)
+				SetLog(getLocaleString("logCantLocateNextBtn"), $COLOR_RED)
 				Pushmsg("OoSResources")
 				$Is_ClientSyncError = True
 				$iStuck = 0
 				Return
 			Else
-				SetLog("Have strange problem can not determine, Restarting Bot...", $COLOR_RED)
+				SetLog(getLocaleString("logStrangeProblem"), $COLOR_RED)
 				$Is_ClientSyncError = True
 				$iStuck = 0
 				$Restart = True
 				Return
 			EndIf
 		EndIf
-		If $debugSetlog = 1 Then SetLog("Loop to clean screen without Clouds , nº :" & $i)
+		If $debugSetlog = 1 Then SetLog("Loop to clean screen without Clouds , nº :" & $i, $COLOR_PURPLE)
 	WEnd
 
 	If _Sleep(150) Then Return
@@ -66,13 +66,13 @@ Func GetResources() ;Reads resources
 	If $iStuck >= 5 Then
 		checkMainScreen()
 		If $Restart Then
-			SetLog("Cannot locate Next button, Restarting Bot...", $COLOR_RED)
+			SetLog(getLocaleString("logCantLocateNextBtn"), $COLOR_RED)
 			Pushmsg("OoSResources")
 			$Is_ClientSyncError = True
 			$iStuck = 0
 			Return
 		Else
-			SetLog("Have strange problem can not determine, Restarting Bot...", $COLOR_RED)
+			SetLog(getLocaleString("logStrangeProblem"), $COLOR_RED)
 			$Is_ClientSyncError = True
 			$iStuck = 0
 			$Restart = True
@@ -90,18 +90,18 @@ Func GetResources() ;Reads resources
 		EndIf
 
 		If SearchTownHallLoc() = False And $searchTH <> "-" Then
-			$THLoc = "In"
+			$THLoc = getLocaleString("txtTHIn")
 		ElseIf $searchTH <> "-" Then
-			$THLoc = "Out"
+			$THLoc = getLocaleString("txtTHOut")
 		Else
 			$THLoc = $searchTH
 			$THx = 0
 			$THy = 0
 		EndIf
-		$THString = " [TH]:" & StringFormat("%2s", $searchTH) & ", " & $THLoc
+		$THString = getLocaleString("txtTHStr") & StringFormat("%2s", $searchTH) & ", " & $THLoc
 	EndIf
 
 	$SearchCount += 1 ; Counter for number of searches
-	SetLog(StringFormat("%3s", $SearchCount) & "> [G]:" & StringFormat("%7s", $searchGold) & " [E]:" & StringFormat("%7s", $searchElixir) & " [D]:" & StringFormat("%5s", $searchDark) & " [T]:" & StringFormat("%2s", $searchTrophy) & $THString, $COLOR_BLACK, "Lucida Console", 7.5)
+	SetLog(StringFormat("%3s", $SearchCount) & getLocaleString("logG") & StringFormat("%7s", $searchGold) & getLocaleString("logE") & StringFormat("%7s", $searchElixir) & getLocaleString("logDE") & StringFormat("%5s", $searchDark) & getLocaleString("logT") & StringFormat("%2s", $searchTrophy) & $THString, $COLOR_BLACK, "Lucida Console", 7.5)
 
 EndFunc   ;==>GetResources

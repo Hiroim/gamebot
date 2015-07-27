@@ -16,13 +16,13 @@
 Func isGemOpen($bNeedCaptureRegion = False)
 	_Sleep(350)
 	If _ColorCheck(_GetPixelColor(573, 256, $bNeedCaptureRegion), Hex(0xE1090E, 6), 20) Then ; Safety Check if the normal use Gem window opens
-		If $debugSetlog = 1 Then Setlog("Gemclick Red X detect")
+		If $debugSetlog = 1 Then Setlog("Gemclick Red X detect", $COLOR_PURPLE)
 		PureClickP($aTopLeftClient, 1, 0, "#0140") ; click away to close gem window
 		Return True
 	ElseIf _ColorCheck(_GetPixelColor(577, 266, $bNeedCaptureRegion), Hex(0xD80408, 6), 20) And _  ; check for the red line under the redX square of gem window
 			_ColorCheck(_GetPixelColor(586, 266, $bNeedCaptureRegion), Hex(0xD80408, 6), 20) And _
 			_ColorCheck(_GetPixelColor(595, 266, $bNeedCaptureRegion), Hex(0xD80408, 6), 20) Then
-		If $debugSetlog = 1 Then Setlog("Gemclick Red Line detect")
+		If $debugSetlog = 1 Then Setlog("Gemclick Red Line detect", $COLOR_PURPLE)
 		PureClickP($aTopLeftClient, 1, 0, "#0141")
 		Return True
 	EndIf

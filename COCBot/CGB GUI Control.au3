@@ -240,9 +240,9 @@ Func _DonateBtn($FirstControl, $LastControl)
 EndFunc   ;==>_DonateBtn
 
 ;---------------------------------------------------
-If FileExists($sProfilePath & "\profile.ini") Then
+;~ If FileExists($sProfilePath & "\profile.ini") Then
 	_GUICtrlComboBox_SetCurSel($cmbProfile, Int($sCurrProfile) - 1)
-EndIf
+;~ EndIf
 If FileExists($config) Or FileExists($building) Then
 	readConfig()
 	applyConfig()

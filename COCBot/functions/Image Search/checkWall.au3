@@ -68,9 +68,9 @@ Func CheckWall()
 					EndIf
 
 					If $debugSetlog = 1 Then
-						SetLog("Wall level: " & $icmbWalls + 4 & " • Position: [" & $WallX & "," & $WallY & "], Verifying..")
+						SetLog("Wall level: " & $icmbWalls + 4 & " • Position: [" & $WallX & "," & $WallY & "], Verifying..", $COLOR_PURPLE)
 					Else
-						SetLog("Wall level: " & $icmbWalls + 4 & ", Verifying..", $COLOR_GREEN)
+						SetLog(getLocaleString("logWallLevel") & $icmbWalls + 4 & getLocaleString("logWallLevelVerify"), $COLOR_GREEN)
 					EndIf
 					GemClick($WallX, $WallY,1,0,"#0122")
 					If _Sleep(500) Then Return
@@ -79,20 +79,20 @@ Func CheckWall()
 						If _Sleep(1000) Then Return
 						$sBldgName = getNameBuilding(250, 520) ; Get Unit name and level with OCR
 					EndIf
-					If $debugSetlog = 1 Then Setlog("Read Wall String = " & $sBldgName, $COLOR_MAROON) ;debug
+					If $debugSetlog = 1 Then Setlog("Read Wall String = " & $sBldgName, $COLOR_PURPLE) ;debug
 					$aString = StringSplit($sBldgName, "(") ; Spilt the name and building level
 					If $aString[0] = 2 Then ; If we have name and level then use it
-						If $debugSetlog = 1 Then Setlog("1st $aString = " & $aString[0] & ", " & $aString[1] & ", " & $aString[2], $COLOR_FUCHSIA) ;debug
+						If $debugSetlog = 1 Then Setlog("1st $aString = " & $aString[0] & ", " & $aString[1] & ", " & $aString[2], $COLOR_PURPLE) ;debug
 						If $aString[2] <> "" Then ; check for bad read of level
 							$sBldgLevel = $aString[2] ; store level text
 							$aString = StringSplit($sBldgLevel, ")") ;split off the closing parenthesis
 							If $aString[0] = 2 Then ; If we have "level XX" cleaned up
-								If $debugSetlog = 1 Then Setlog("2nd $aString = " & $aString[0] & ", " & $aString[1] & ", " & $aString[2], $COLOR_FUCHSIA) ;debug
+								If $debugSetlog = 1 Then Setlog("2nd $aString = " & $aString[0] & ", " & $aString[1] & ", " & $aString[2], $COLOR_PURPLE) ;debug
 								If $aString[1] <> "" Then $sBldgLevel = $aString[1] ; store "level XX"
 							EndIf
 							$aString = StringSplit($sBldgLevel, " ") ;split off the level number
 							If $aString[0] = 2 Then ; If we have level number then use it
-								If $debugSetlog = 1 Then Setlog("3rd $aString = " & $aString[0] & ", " & $aString[1] & ", " & $aString[2], $COLOR_FUCHSIA) ;debug
+								If $debugSetlog = 1 Then Setlog("3rd $aString = " & $aString[0] & ", " & $aString[1] & ", " & $aString[2], $COLOR_PURPLE) ;debug
 								If $aString[2] <> "" And Number($aString[2]) = $icmbWalls + 4 Then Return True
 							EndIf
 						EndIf
@@ -103,8 +103,8 @@ Func CheckWall()
 			Next
 	WEnd
 
-	SetLog("Cannot find Walls level " & $icmbWalls + 4 & ", function disabled ...", $COLOR_RED)
-	$NoMoreWalls = 1
+	SetLog(getLocaleString("logCantFindWalls") & $icmbWalls + 4 & getLocaleString("logCantFindWalls2"), $COLOR_RED)
+	;$NoMoreWalls = 1
 	Return False
 
 EndFunc   ;==>CheckWall
@@ -135,22 +135,22 @@ Func HitPoints()
 		If _Sleep(1000) Then Return
 		_CaptureRegion()
 		$HitPoints = Number(getOther(504, 193, "Hitpoints"))
-		SetLog("~ Verify HitPoints:" & _NumberFormat($HitPoints))
+		SetLog(getLocaleString("logWallHpVerify") & _NumberFormat($HitPoints))
 
 		If $HitPointsWall[$icmbWalls] = $HitPoints Then
-			SetLog("~ Wall HitPoints Correct.", $COLOR_GREEN)
-			Click(1, 1,1,0,"#0124")
+			SetLog(getLocaleString("logWallHpCorrect"), $COLOR_GREEN)
+			ClickP($aTopLeftClient,1,0,"#0124")
 			If _Sleep(500) Then Return
 			Return True
 		Else
-			SetLog("~ Wall HitPoints Incorrect! Not a Wall or wrong level.", $COLOR_RED)
-			Click(1, 1, 2,0,"#0139")
+			SetLog(getLocaleString("logWallHpIncorrect"), $COLOR_RED)
+			ClickP($aTopLeftClient, 2,0,"#0139")
 			If _Sleep(500) Then Return
 			Return False
 		EndIf
 	Else
-		Setlog("No Upgrade Gold Button to check HitPoints, is not a Wall...", $COLOR_RED)
-		Click(1, 1, 2,0,"#0125")
+		Setlog(getLocaleString("logIsNotWall"), $COLOR_RED)
+		ClickP($aTopLeftClient, 2,0,"#0125")
 		If _Sleep(500) Then Return
 		Return False
 	EndIf

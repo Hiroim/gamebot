@@ -66,7 +66,7 @@ EndFunc   ;==>cmbLanguage
 Func txtVillageName()
 	$iVillageName = GUICtrlRead($txtVillageName)
 	If $iVillageName = "" Then $iVillageName = getLocaleString("txtVillageName")
-	GUICtrlSetData($grpVillage, "Village: " & $iVillageName)
+	GUICtrlSetData($grpVillage, getLocaleString("grpVillage") & $iVillageName)
 	GUICtrlSetData($OrigPushB, $iVillageName)
 	GUICtrlSetData($txtVillageName, $iVillageName)
 

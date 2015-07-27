@@ -1,59 +1,59 @@
 Func NameOfTroop($kind, $plurial = 0)
 	Switch $kind
 		Case $eBarb
-			Return "Barbarians"
+			Return getLocaleString("eBarb")
 		Case $eArch
-			Return "Archers"
+			Return getLocaleString("eArch")
 		Case $eGobl
-			Return "Goblins"
+			Return getLocaleString("eGobl")
 		Case $eGiant
-			Return "Giants"
+			Return getLocaleString("eGiant")
 		Case $eWall
-			Return "Wall Breakers"
+			Return getLocaleString("eWall")
 		Case $eWiza
-			Return "Wizards"
+			Return getLocaleString("eWiza")
 		Case $eBall
-			Return "Balloons"
+			Return getLocaleString("eBall")
 	    Case $eHeal
-			Return "Healers"
+			Return getLocaleString("eHeal")
 	    Case $eDrag
-			Return "Dragons"
+			Return getLocaleString("eDrag")
 	    Case $ePekk
-			Return "Pekkas"
+			Return getLocaleString("ePekk")
 		Case $eMini
-			Return "Minions"
+			Return getLocaleString("eMini")
 		Case $eHogs
-			Return "Hog Riders"
+			Return getLocaleString("eHogs")
 		Case $eValk
-			Return "Valkyries"
+			Return getLocaleString("eValk")
 		Case $eWitc
-			Return "Witches"
+			Return getLocaleString("eWitc")
 		Case $eGole
-			Return "Golems"
+			Return getLocaleString("eGole")
 		Case $eLava
-			Return "Lava Hounds"
+			Return getLocaleString("eLava")
 		Case $eKing
-			Return "King"
+			Return getLocaleString("eKing")
 		Case $eQueen
-			Return "Queen"
+			Return getLocaleString("eQueen")
 		Case $eCastle
-			Return "Clan Castle"
+			Return getLocaleString("eCastle")
 		Case $eLSpell
-			Return "Lightning Spells"
+			Return getLocaleString("eLSpell")
 		Case $eHSpell
-			Return "Heal Spells"
+			Return getLocaleString("eHSpell")
 		Case $eRSpell
-			Return "Rage Spells"
+			Return getLocaleString("eRSpell")
 	    Case $eJSpell
-			Return "Jump Spells"
+			Return getLocaleString("eJSpell")
 		Case $eFSpell
-			Return "Freeze Spells"
+			Return getLocaleString("eFSpell")
 		Case $ePSpell
-			Return "Poison Spells"
+			Return getLocaleString("ePSpell")
 		Case $eESpell
-			Return "Earthquake Spells"
+			Return getLocaleString("eESpell")
 		Case $eHaSpell
-			Return "Haste Spells"
+			Return getLocaleString("eHaSpell")
 		Case Else
 			Return ""
 	EndSwitch

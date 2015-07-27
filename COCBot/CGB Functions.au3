@@ -135,6 +135,7 @@
 #include "functions\Search\CheckZoomOut.au3"
 #include "functions\Search\SearchTownHallloc.au3"
 
+#include "functions\Village\_TrainMoveBtn.au3"
 #include "functions\Village\BoostBarracks.au3"
 #include "functions\Village\BotDetectFirstTime.au3"
 #include "functions\Village\BotCommand.au3"
@@ -157,6 +158,7 @@
 #include "functions\Village\RequestCC.au3"
 #include "functions\Village\Spell.au3"
 #include "functions\Village\Train.au3"
+#include "functions\Village\TrainIt.au3"
 #include "functions\Village\VillageReport.au3"
 #include "functions\Village\isBarrack.au3"
 #include "functions\Village\UpgradeBuilding.au3"

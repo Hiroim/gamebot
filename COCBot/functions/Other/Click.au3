@@ -20,12 +20,20 @@ Func Click($x, $y, $times = 1, $speed = 0, $debugtxt = "")
 	EndIf
 	If $times <> 1 Then
 		For $i = 0 To ($times - 1)
-			If isProblemAffect(True) Then checkMainScreen(False)
+			If isProblemAffect(True) Then
+				checkMainScreen(False)
+				If $debugClick = 1 Then Setlog("VOIDED Click " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_RED, "Verdana", "7.5", 0)
+				Return  ; if need to clear screen do not click
+			EndIf
 			ControlClick($Title, "", "", "left", "1", $x, $y)
 			If _Sleep($speed, False) Then ExitLoop
 		Next
 	Else
-		If isProblemAffect(True) Then checkMainScreen(False)
+		If isProblemAffect(True) Then
+			checkMainScreen(False)
+			If $debugClick = 1 Then Setlog("VOIDED Click " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_RED, "Verdana", "7.5", 0)
+			Return  ; if need to clear screen do not click
+		EndIf
 		ControlClick($Title, "", "", "left", "1", $x, $y)
 	EndIf
 EndFunc   ;==>Click
@@ -63,14 +71,22 @@ Func GemClick($x, $y, $times = 1, $speed = 0, $debugtxt = "")
 	If $times <> 1 Then
 		For $i = 0 To ($times - 1)
 			If isGemOpen(True) Then Return False
-			If isProblemAffect(True) Then checkMainScreen(False)
+			If isProblemAffect(True) Then
+				checkMainScreen(False)
+				If $debugClick = 1 Then Setlog("VOIDED GemClick " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_RED, "Verdana", "7.5", 0)
+				Return  ; if need to clear screen do not click
+			EndIf
 			ControlClick($Title, "", "", "left", "1", $x, $y)
 			If isGemOpen(True) Then Return False
 			If _Sleep($speed, False) Then ExitLoop
 		Next
 	Else
 		If isGemOpen(True) Then Return False
-		If isProblemAffect(True) Then checkMainScreen(False)
+		If isProblemAffect(True) Then
+			checkMainScreen(False)
+			If $debugClick = 1 Then Setlog("VOIDED GemClick " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_RED, "Verdana", "7.5", 0)
+			Return  ; if need to clear screen do not click
+		EndIf
 		ControlClick($Title, "", "", "left", "1", $x, $y)
 		If isGemOpen(True) Then Return False
 	EndIf
@@ -89,7 +105,7 @@ Func _DecodeDebug($message)
 			Return $separator & "Away"
 		Case "#0214", "#0215", "#0216", "#0217", "#0218", "#0219", "#0220", "#0221", "#0235", "#0242", "#0267", "#0268", "#0291", "#0292", "#0295", "#0298", "#0300", "#0301", "#0302"
 			Return $separator & "Away"
-		Case "#0303", "#0306", "#0308", "#0309", "#0310", "#0311", "#0312", "#0319", "#0333", "#0252", "#0257", "#0139", "#0125", "#0251"
+		Case "#0303", "#0306", "#0308", "#0309", "#0310", "#0311", "#0312", "#0319", "#0333", "#0252", "#0257", "#0139", "#0125", "#0251", "#0333", "#0335"
 			Return $separator & "Away"
 		Case "#0121", "#0124", "#0133", "#0157", "#0161", "#0165", "#0166", "#0167", "#0170", "#0171", "#0176", "#0224", "#0234", "#0265", "#0313", "#0314", "#0319", "#0332", "#0329"
 			Return $separator & "Away"
@@ -162,6 +178,17 @@ Func _DecodeDebug($message)
 			Return $separator & "Train - Click Army Camp"
 		Case "#0294"
 			Return $separator & "Train - Open Info Army Camp"
+		Case "#0336"
+			Return $separator & "Train - Go to last barrack"
+		Case "#0337"
+			Return $separator & "Train - Click Prev Button*"
+		Case "#0338"
+			Return $separator & "Train - Click Next Button*"
+		Case "#0339"
+			Return $separator & "Train - Select Prev Barrack/SP"
+		Case "#0340"
+			Return $separator & "Train - Click Next Barrack/SP"
+
 			;DONATE
 		Case "#0168"
 			Return $separator & "Donate - Open Chat"
@@ -207,6 +234,8 @@ Func _DecodeDebug($message)
 			Return $separator & "Request - Click Select Text For Request"
 		Case "#0256"
 			Return $separator & "Request - Click Send Request"
+		Case "#0334"
+			Return $separator & "Request - Click Train Button"
 
 
 		Case "#0000"

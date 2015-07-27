@@ -19,8 +19,8 @@
 #pragma compile(FileDescription, Clash of Clans Bot - A Free Clash of Clans bot - https://gamebot.org)
 #pragma compile(ProductName, Clash Game Bot)
 
-#pragma compile(ProductVersion, 4.0.1)
-#pragma compile(FileVersion, 4.0.1)
+#pragma compile(ProductVersion, 4.1)
+#pragma compile(FileVersion, 4.1)
 #pragma compile(LegalCopyright, © http://gamebot.org)
 
 $sBotVersion = "v4.1"
@@ -28,10 +28,10 @@ $sBotTitle = "Clash Game Bot " & $sBotVersion
 Global $sBotDll = @ScriptDir & "\CGBPlugin.dll"
 Global $StartupLanguage = IniRead(@ScriptDir & "\COCBot\GUI\localization\lang.ini", "config", "language", "English")
 
-;If _Singleton($sBotTitle, 1) = 0 Then
-;	MsgBox(0, getLocaleString("msgboxWarningTitle"), getLocaleString("msgboxRun"))
-;	Exit
-;EndIf
+If _Singleton($sBotTitle, 1) = 0 Then
+	MsgBox(0, getLocaleString("msgboxWarningTitle"), getLocaleString("msgboxRun"))
+	Exit
+ EndIf
 
 If @AutoItX64 = 1 Then
 	MsgBox(0, getLocaleString("msgboxWarningTitle"), getLocaleString("msgbox_x64"))
@@ -270,7 +270,8 @@ Func Idle() ;Sequence that runs until Full Army
 		If _Sleep(200) Then Return
 		If $Restart = True Then ExitLoop
 		$TimeIdle += Round(TimerDiff($hTimer) / 1000, 2) ;In Seconds
-		SetLog(getLocaleString("logIdle") & StringFormat("%02i", Floor(Floor($TimeIdle / 60) / 60)) & ":" & StringFormat("%02i", Floor(Mod(Floor($TimeIdle / 60), 60))) & ":" & StringFormat("%02i", Floor(Mod($TimeIdle, 60))), $COLOR_GREEN)
+		SetLog(getLocaleString("logIdle") & StringFormat("%02i", Floor(Floor($TimeIdle / 60) / 60)) & ":" & StringFormat("%02i", Floor(Mod(Floor($TimeIdle / 60), 60))) & ":" & StringFormat("%02i", Floor(Mod($TimeIdle, 60))))
+		If $OutOfGold = 1 Then Return
 	WEnd
 EndFunc   ;==>Idle
 

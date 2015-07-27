@@ -6,7 +6,7 @@
 ; Parameters ....: None
 ; Return values .: None
 ; Author ........: Hervidero (2015-feb-10), Sardo (may-2015)
-; Modified ......: Sardo (may-2015), Hervidero (may-2015)
+; Modified ......: Sardo (may-2015), Hervidero (may-2015), Knowjack (July 2015)
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -16,12 +16,31 @@
 
 Func AttackReport()
 
-	$lootGold = ""		; reset previous loot won values
+	Local $iCount
+
+	$lootGold = "" ; reset previous loot won values
 	$lootElixir = ""
 	$lootDarkElixir = ""
 	$lootTrophies = ""
 
-	If _sleep(500) Then Return
+	$iCount = 0 ; Reset loop counter
+	While _CheckPixel($aEndFightSceneAvl, True) = False ; check for light gold pixle in the Gold ribbon in End of Attack Scene before reading values
+		$iCount += 1
+		If _sleep(500) Then Return
+		If $debugSetlog = 1 Then Setlog("Waiting Attack Report Ready, " & ($iCount / 2) & " Seconds.", $COLOR_PURPLE)
+		If $iCount > 30 Then ExitLoop ; wait 30*500ms = 15 seconds max for the window to render
+	WEnd
+	If $iCount > 30 Then Setlog("End of Attack scene slow to appear, attack values my not be correct", $COLOR_BLUE)
+
+	$iCount = 0 ; reset loop counter
+	While getResourcesLoot(333, 289) = "" ; check for gold value to be non-zero before reading other values as a secondary timer to make sure all values are available
+		$iCount += 1
+		If _sleep(500) Then Return
+		If $debugSetlog = 1 Then Setlog("Waiting Attack Report Ready, " & ($iCount / 2) & " Seconds.", $COLOR_PURPLE)
+		If $iCount > 20 Then ExitLoop ; wait 20*500ms = 10 seconds max before we have call the OCR read an error
+	WEnd
+	If $iCount > 20 Then Setlog("End of Attack scene read gold error, attack values my not be correct", $COLOR_BLUE)
+
 	If _ColorCheck(_GetPixelColor(459, 372, True), Hex(0x433350, 6), 20) Then ; if the color of the DE drop detected
 		$lootGold = getResourcesLoot(333, 289)
 		If _sleep(150) Then Return
@@ -130,6 +149,5 @@ Func AttackReport()
 			$iShareAttackNow = 0
 		EndIf
 	EndIf
-
 
 EndFunc   ;==>AttackReport

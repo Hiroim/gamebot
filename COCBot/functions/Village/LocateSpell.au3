@@ -61,7 +61,7 @@ Func LocateSpellFactory()
 						Return False
 				EndSelect
 			EndIf
-			$sSpellInfo = BuildingInfo(250, 520)
+			$sSpellInfo = BuildingInfo(242, 520)
 			If $sSpellInfo[0] > 1 Or $sSpellInfo[0] = "" Then
 				If  StringInStr($sSpellInfo[1], "Spell") = 0 Then
 					If $sSpellInfo[0] = "" Then

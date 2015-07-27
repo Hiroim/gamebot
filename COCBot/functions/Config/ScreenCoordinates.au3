@@ -2,7 +2,9 @@
 Global $aIsMain[4]           = [284,  28, 0x41B1CD, 20] ; Main Screen, Builder Left Eye
 Global $aIsMainGrayed[4]     = [284,  28, 0x215B69, 20] ; Main Screen Grayed, Builder Left Eye
 Global $aTopLeftClient[4]    = [  1,   1, 0x000000,  0] ; TopLeftClient: Tolerance not needed
+Global $aTopMiddleClient[4]  = [425,   1, 0x000000,  0] ; TopMiddleClient: Tolerance not needed
 Global $aTopRightClient[4]   = [850,   1, 0x000000,  0] ; TopRightClient: Tolerance not needed
+Global $aBottomRightClient[4]= [850, 675, 0x000000,  0] ; BottomRightClient: Tolerance not needed
 Global $aIsInactive[4]       = [457, 300, 0x33B5E5, 10] ; COC message : 'Anyone there?'
 Global $aReloadButton[2]     = [416, 399]               ; Reload Coc Button after Out of Sync
 Global $aAttackButton[2]     = [ 60, 614]               ; Attack Button, Main Screen
@@ -12,14 +14,15 @@ Global $aSurrenderButton[4]  = [ 70, 545, 0xC10000, 30] ; Surrender Button, Atta
 Global $aConfirmSurrender[2] = [512, 394]               ; Confirm Surrender Button, Attack Screen (no color for button as it matches grass)
 Global $aCancelFight[4]      = [822,  48, 0xD80408, 20] ; Cancel Fight Scene
 Global $aCancelFight2[4]     = [830,  59, 0xD80408, 20] ; Cancel Fight Scene 2nd pixel
-Global $aEndFightScene[4]    = [429, 519, 0xB8E35F, 20] ; Victory or defeat scene
+Global $aEndFightSceneBtn[4] = [429, 519, 0xB8E35F, 20] ; Victory or defeat scene buton = green edge
+Global $aEndFightSceneAvl[4] = [241, 196, 0xFFF090, 20] ; Victory or defeat scene left side ribbon = light gold
 Global $aReturnHomeButton[2] = [428, 544]               ; Return Home Button, End Battle Screen
 Global $aChatTab[4]          = [331, 330, 0xF0A03B, 20] ; Chat Window Open, Main Screen
 Global $aOpenChat[2]         = [ 19, 349]               ; Open Chat Windows, Main Screen
 Global $aClanTab[2]          = [189,  24]               ; Clan Tab, Chat Window, Main Screen
 Global $aArmyCampSize[2]     = [586, 193]               ; Training Window, Overview screen, Current Size/Total Size
 Global $aIsCampNotFull[4] 	  = [149, 150, 0x761714, 20] ; Training Window, Overview screen Red pixel in Exclamation mark with camp is not full
-Global $aIsCampFull[4]  	  = [151, 153, 0xFFFFFF, 10] ; Training Window, Overview screen White pixel in check mark with camp IS full (can not test for Green, as it has trees under it!)
+Global $aIsCampFull[4]  	  = [151, 154, 0xFFFFFF, 10] ; Training Window, Overview screen White pixel in check mark with camp IS full (can not test for Green, as it has trees under it!)
 Global $aArmyCampFull[4] 	  = [395, 156, 0x761714, 20] ; Training Window, Barracks Screen, Red pixel in Exclamation mark with camp is full (normally not there and off while color)
 Global $aBuildersDigits[2]   = [324,  21]               ; Main Screen, Free/Total Builders
 Global $aLanguageCheck1[4]   = [326,   8, 0xF9FAF9, 20] ; Main Screen Test Language for word 'Builders'

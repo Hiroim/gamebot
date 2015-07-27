@@ -117,3 +117,19 @@ Func chkTotalCampForced()
 		GUICtrlSetState($txtTotalCampForced, $GUI_DISABLE)
 	EndIf
 EndFunc   ;==>chkTotalCampForced
+
+Func chkDebugSetlog()
+		If GUICtrlRead($chkDebugSetlog) = $GUI_CHECKED Then
+		$DebugSetlog = 1
+	Else
+		$DebugSetlog = 0
+	EndIf
+EndFunc   ;==>chkDebugOcr
+
+Func chkDebugOcr()
+		If GUICtrlRead($chkDebugOcr) = $GUI_CHECKED Then
+		$DebugOcr = 1
+	Else
+		$DebugOcr = 0
+	EndIf
+EndFunc   ;==>chkDebugOcr

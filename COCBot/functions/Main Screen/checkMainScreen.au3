@@ -16,17 +16,20 @@
 ; ===============================================================================================================================
 Func checkMainScreen($Check = True) ;Checks if in main screen
 	If $Check = True Then
-		SetLog("Trying to locate Main Screen")
+		SetLog(getLocaleString("logLocateMainSc"))
 		_WinAPI_EmptyWorkingSet(WinGetProcess($Title)) ; Reduce BlueStacks Memory Usage
+	Else
+		If $debugsetlog = 1 Then SetLog("checkMainScreen start quiet mode")
 	EndIf
 
 	While _CheckPixel($aIsMain, $bCapturePixel) = False
 		$HWnD = WinGetHandle($Title)
-
 		If _Sleep(1000) Then Return
-		If checkObstacles() = False Then
+		$Result = checkObstacles()
+		If $debugsetlog = 1 Then Setlog("CheckObstacles Result = "&$Result, $COLOR_PURPLE)
+		If $Result = False Then
 			WinActivate($HWnD)  ; ensure bot has window focus
-			Click(126, 700, 2, 500,"#0126")  ; click on BS home button twice to clear error and go home.
+			PureClick(126, 700, 2, 500,"#0126")  ; click on BS home button twice to clear error and go home.
 			Local $RunApp = StringReplace(_WinAPI_GetProcessFileName(WinGetProcess($Title)), "Frontend", "RunApp")
 			Run($RunApp & " Android com.supercell.clashofclans com.supercell.clashofclans.GameApp")
 		Else
@@ -35,5 +38,9 @@ Func checkMainScreen($Check = True) ;Checks if in main screen
 		waitMainScreen()
 	WEnd
 	ZoomOut()
-	If $Check = True Then SetLog("Main Screen Located", $COLOR_GREEN)
+	If $Check = True Then
+		SetLog(getLocaleString("logLocatedMainSc"), $COLOR_GREEN)
+	Else
+		If $debugsetlog = 1 Then SetLog("checkMainScreen exit quiet mode")
+	EndIf
 EndFunc   ;==>checkMainScreen

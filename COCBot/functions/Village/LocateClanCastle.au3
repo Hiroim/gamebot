@@ -25,7 +25,7 @@ Func LocateClanCastle()
 
 	While 1
 		ClickP($aTopLeftClient)
-		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Arial", 500)
+		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Arial", 700)
 		$stext =  $sErrorText & @CRLF & getLocaleString("msgboxLocateCC_msg",1) & @CRLF
 		$MsgBox = _ExtMsgBox(0, getLocaleString("msgboxLocateCC_controls"), getLocaleString("msgboxLocateCC_title"), $stext, 15, $frmBot)
 		If $MsgBox = 1 Then
@@ -66,11 +66,11 @@ Func LocateClanCastle()
 			ClickP($aTopLeftClient)
 			Return
 		EndIf
-		$sInfo = BuildingInfo(250, 520)
+		$sInfo = BuildingInfo(242, 520)
 		If $sInfo[0] > 1 Or $sInfo[0] = "" Then
 			If  StringInStr($sInfo[1], "clan") = 0 Then
 				If $sInfo[0] = "" Then
-					$sLocMsg = getLocaleString("txtLocMsgNothing") 
+					$sLocMsg = getLocaleString("txtLocMsgNothing")
 				Else
 					$sLocMsg = $sInfo[1]
 				EndIf

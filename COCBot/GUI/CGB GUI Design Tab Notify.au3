@@ -93,7 +93,7 @@ $tabNotify = GUICtrlCreateTabItem(getLocaleString("tabNotify"))
 		GUICtrlSetTip(-1, getLocaleString("tipChkAlertPBOtherDevice"))
 		GUICtrlSetState(-1, $GUI_DISABLE)
 	$y = 350
-	$lblGrpPushBullet = GUICtrlCreateGroup(getLocaleString("lblGrpPushBullet"), $x - 10, $y - 20, 430, 170)
+	$lblgrppushbullet = GUICtrlCreateGroup(getLocaleString("lblGrpPushBullet"), $x - 10, $y - 20, 430, 170)
 		$lblPBdesc = GUICtrlCreateLabel(getLocaleString("lblPBdesc",1), $x, $y, -1, -1, $SS_LEFT)
 		GUICtrlCreateGroup("", -99, -99, 1, 1)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)

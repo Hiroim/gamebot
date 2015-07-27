@@ -221,6 +221,8 @@ Func ReportPushBullet()
 	If $iLastAttack = 1 Then
 		If Not ($GoldLast = "" And $ElixirLast = "") Then _PushBullet($iOrigPushB & " | Last Gain :" & "\n" & " [G]: " & _NumberFormat($GoldLast) & " [E]: " & _NumberFormat($ElixirLast) & " [D]: " & _NumberFormat($DarkLast) & "  [T]: " & _NumberFormat($TrophyLast))
 	EndIf
+	If _Sleep(500) Then Return
+   checkMainScreen(False)
 
 EndFunc   ;==>ReportPushBullet
 
