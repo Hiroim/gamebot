@@ -39,8 +39,8 @@ Func BotDetectFirstTime()
 		If IsArray($Result) Then $iTownHallLevel = 0  ; Check for error finding TH level, and reset to zero if yes
 	EndIf
 	If Number($iTownHallLevel) > 1 And Number($iTownHallLevel) < 6 Then
-		Setlog("Warning: TownHall level below 6 NOT RECOMMENDED!", $COLOR_RED)
-		Setlog("Proceed with caution as errors may occur.", $COLOR_RED)
+		Setlog(getLocaleString("logWarnTHLv6"), $COLOR_RED)
+		Setlog(getLocaleString("logWarnTHLv6_2"), $COLOR_RED)
 	EndIf
 
 	If _Sleep(100) Then Return
@@ -98,20 +98,19 @@ Func BotDetectFirstTime()
 
 	If _Sleep(100) Then Return
 
-	While 1 ; Clear the collectors using old image find to reduce collector image finding errors
-		If _Sleep(100) Or $RunState = False Then ExitLoop
-		_CaptureRegion(0, 0, 780)
-		If _ImageSearch(@ScriptDir & "\images\collect.png", 1, $collx, $colly, 20) Then
-			Click($collx, $colly, 1, 0, "#0330") ;Click collector
-			If _Sleep(100) Then Return
-			ClickP($aTopLeftClient, 1, 0, "#0329") ;Click Away
-		ElseIf $i >= 20 Then
-			ExitLoop
-		EndIf
-		$i += 1
-	WEnd
-
 	If $listResourceLocation = "" Then
+		While 1 ; Clear the collectors using old image find to reduce collector image finding errors
+			If _Sleep(100) Or $RunState = False Then ExitLoop
+			_CaptureRegion(0, 0, 780)
+			If _ImageSearch(@ScriptDir & "\images\collect.png", 1, $collx, $colly, 20) Then
+				Click($collx, $colly, 1, 0, "#0330") ;Click collector
+				If _Sleep(100) Then Return
+				ClickP($aTopLeftClient, 1, 0, "#0329") ;Click Away
+			ElseIf $i >= 20 Then
+				ExitLoop
+			EndIf
+			$i += 1
+		WEnd
 		SetLog (getLocaleString("logDetectMines"))
 		$PixelMineHere = GetLocationItem("getLocationMineExtractor")
 		If UBound($PixelMineHere) > 0 Then

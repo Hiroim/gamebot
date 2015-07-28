@@ -797,7 +797,7 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 
 	GUICtrlSetData($txtFullTroop, $fulltroop)
 	GUICtrlSetData($sldTrainITDelay, $isldTrainITDelay)
-	GUICtrlSetData($lbltxtTrainITDelay, "delay " & $isldTrainITDelay & " ms.")
+	GUICtrlSetData($lbltxtTrainITDelay, getLocaleString("trainItDelay") & $isldTrainITDelay & getLocaleString("trainItDelayMs"))
 	;barracks boost not saved (no use)
 
 
