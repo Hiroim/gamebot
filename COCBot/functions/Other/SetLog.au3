@@ -31,7 +31,7 @@ Func SetAtkLog($String, $Color = $COLOR_BLACK, $Font = "Lucida Console", $FontSi
 EndFunc   ;==>SetAtkLog
 
 Func AtkLogHead()
-	SetAtkLog(_PadStringCenter(" ATTACK LOG ", 71, "="), $COLOR_BLACK, "MS Shell Dlg", 8.5)
-	SetAtkLog("                   --------  LOOT --------       ----- BONUS ------   ")
-	SetAtkLog(" TIME|TROP.|SEARCH|   GOLD| ELIXIR|DARK EL|TR.|S|  GOLD|ELIXIR|  DE|L.")
+	SetAtkLog(_PadStringCenter(getLocaleString("txtAttackLog"), 61, "="), $COLOR_BLACK, "Lucida Console", 8.5)
+	SetAtkLog(getLocaleString("txtAttackLog2"))
+	SetAtkLog(getLocaleString("txtAttackLog3"))
 EndFunc   ;==>AtkLogHead

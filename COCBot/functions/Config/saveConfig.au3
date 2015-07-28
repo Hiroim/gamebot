@@ -15,6 +15,7 @@
 
 
 Func saveConfig() ;Saves the controls settings to the config
+	SWHTrainRevertNormal()
 	;General Settings--------------------------------------------------------------------------
 	Local $frmBotPos = WinGetPos($sBotTitle)
 	IniWrite($config, "general", "cmbProfile", _GUICtrlComboBox_GetCurSel($cmbProfile))
@@ -1050,5 +1051,10 @@ Func saveConfig() ;Saves the controls settings to the config
 	Else
 		IniWrite($config, "General", "ChkVersion", 0)
 	EndIf
+	If GUICtrlRead($chkSnipeWhileTrain) = $GUI_CHECKED Then ; Snipe While Train MOD by ChiefM3
+		IniWrite($config, "advanced", "chkSnipeWhileTrain", 1)
+		Else
+		IniWrite($config, "advanced", "chkSnipeWhileTrain", 0)
+	 EndIf
 
 EndFunc   ;==>saveConfig

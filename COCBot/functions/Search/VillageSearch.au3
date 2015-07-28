@@ -176,6 +176,16 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 				ExitLoop
 			EndIf
 		EndIf
+
+		; break every 15 searches when Snipe While Train mode is active
+		If $isSnipeWhileTrain Then
+			If $iSkipped > 13 Then
+				Click(62, 519) ; Click End Battle
+				$Restart = True ; To Prevent Initiation of Attack
+				ExitLoop
+			EndIf
+		EndIf
+
 		;If $bBtnAttackNowPressed = True Then ExitLoop
 		For $x = 0 To $iModeCount - 1
 			If ($x = $iCmbSearchMode Or $iCmbSearchMode = 2) And $iChkWeakBase[$x] = 1 And Not $isWeakBase[$x] Then

@@ -370,6 +370,12 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 		GUICtrlSetState($chkAttackTH, $GUI_UNCHECKED)
 	EndIf
 
+	If $iChkSnipeWhileTrain = 1 Then ; Snipe While Train MOD by ChiefM3
+		GUICtrlSetState($chkSnipeWhileTrain, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkSnipeWhileTrain, $GUI_UNCHECKED)
+	EndIf
+
 	;	If $iChkLightSpell = 1 Then
 	;		GUICtrlSetState($chkLightSpell, $GUI_CHECKED)
 	;	Else
@@ -797,7 +803,7 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 
 	GUICtrlSetData($txtFullTroop, $fulltroop)
 	GUICtrlSetData($sldTrainITDelay, $isldTrainITDelay)
-	GUICtrlSetData($lbltxtTrainITDelay, "delay " & $isldTrainITDelay & " ms.")
+	GUICtrlSetData($lbltxtTrainITDelay, getLocaleString("trainItDelay") & $isldTrainITDelay & getLocaleString("trainItDelayMs"))
 	;barracks boost not saved (no use)
 
 

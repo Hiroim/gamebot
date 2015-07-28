@@ -164,4 +164,9 @@ Func ReportLastTotal()
 	EndIf
 	GUICtrlSetData($lblTrophyLoot, _NumberFormat($iTrophyLoot))
 
+	GUICtrlSetData($lblHourlyStatsGold, StringFormat("%.1f", $iGoldLoot / Int(TimerDiff($sTimer)) * 3600) & getLocaleString("txtKPerH"))
+    GUICtrlSetData($lblHourlyStatsElixir, StringFormat("%.1f", $iElixirLoot / Int(TimerDiff($sTimer)) * 3600) & getLocaleString("txtKPerH"))
+    GUICtrlSetData($lblHourlyStatsDark, StringFormat("%d", $iDarkLoot / Int(TimerDiff($sTimer)) * 3600 * 1000) & getLocaleString("txtPerH"))
+    GUICtrlSetData($lblHourlyStatsTrophy, StringFormat("%.2f", $iTrophyLoot / Int(TimerDiff($sTimer)) * 3600 * 1000) & getLocaleString("txtPerH"))
+
 EndFunc   ;==>ReportLastTotal

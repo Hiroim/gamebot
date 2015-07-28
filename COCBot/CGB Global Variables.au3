@@ -212,11 +212,15 @@ Global $Wallv[8]
 Global $wallh[8]
 Global $Wall[8]
 
-;Attack Settings
-Global $TopLeft[5][2] = [[79, 281], [170, 205], [234, 162], [296, 115], [368, 66]]
-Global $TopRight[5][2] = [[480, 63], [540, 104], [589, 146], [655, 190], [779, 278]]
-Global $BottomLeft[5][2] = [[79, 342], [142, 389], [210, 446], [276, 492], [339, 539]]
-Global $BottomRight[5][2] = [[523, 537], [595, 484], [654, 440], [715, 393], [779, 344]]
+;~ Attack Settings
+;~ Global $TopLeft[5][2] = [[79, 281], [170, 205], [234, 162], [296, 115], [368, 66]]
+;~ Global $TopRight[5][2] = [[480, 63], [540, 104], [589, 146], [655, 190], [779, 278]]
+;~ Global $BottomLeft[5][2] = [[79, 342], [142, 389], [210, 446], [276, 492], [339, 539]]
+;~ Global $BottomRight[5][2] = [[523, 537], [595, 484], [654, 440], [715, 393], [779, 344]]
+Global $TopLeft[5][2] = [[79, 278], [150, 219], [220, 163], [296, 106], [383, 55]]
+Global $TopRight[5][2] = [[487, 55], [571, 106], [645, 163], [717, 219], [781, 278]]
+Global $BottomLeft[5][2] = [[79, 345], [149, 403], [220, 459], [296, 516], [383, 567]]
+Global $BottomRight[5][2] = [[488, 567], [570, 516], [645, 459], [718, 404], [782, 346]]
 Global $eThing[1] = [101]
 Global $Edges[4] = [$BottomRight, $TopLeft, $BottomLeft, $TopRight]
 
@@ -262,6 +266,10 @@ Global $delayActivateKQ ; = 9000 ;Delay before activating KQ
 Global $iDropCC[$iModeCount] ; Use Clan Castle settings
 Global $iChkUseCCBalanced ; Use Clan Castle Balanced settings
 Global $iCmbCCDonated, $iCmbCCReceived ; Use Clan Castle Balanced ratio settings
+
+Global $DidntRevert
+Global $iChkSnipeWhileTrain, $isSnipeWhileTrain
+Global $tempSnipeWhileTrain[8] = [0, 0, 0, 0, 0, 0, 0, 0]
 
 Global $THLoc
 Global $chkATH, $iChkLightSpell

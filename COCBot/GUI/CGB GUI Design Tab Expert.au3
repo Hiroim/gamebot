@@ -84,7 +84,7 @@ GUICtrlCreateGroup("", -99, -99, 1, 1)
 Local $x = 30, $y = 385
 $grpTiming = GUICtrlCreateGroup(getLocaleString("grpTiming"), $x - 20, $y - 20, 205, 50)
 $lblTrainDelay = GUICtrlCreateLabel(getLocaleString("lblTrainDelay", 1), $x, $y, -1, -1)
-$lbltxtTrainITDelay = GUICtrlCreateLabel(getLocaleString("trainItDelay"), $x + 70, $y - 5, 37, 50)
+$lbltxtTrainITDelay = GUICtrlCreateLabel(getLocaleString("trainItDelay"), $x + 65, $y - 5, 43, 50)
 GUICtrlSetTip(-1, getLocaleString("tipTrainDelay"))
 	$sldTrainITDelay = GUICtrlCreateSlider($x + 105, $y - 5, 70, 25, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS))
 GUICtrlSetTip(-1, getLocaleString("tipTrainDelay"))

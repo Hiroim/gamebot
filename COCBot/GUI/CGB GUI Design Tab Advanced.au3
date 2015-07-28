@@ -36,6 +36,8 @@
 		$y +=22
 		$chkAttackTH = GUICtrlCreateCheckbox(getLocaleString("chkAttackTH"), $x, $y, -1, -1)
 			GUICtrlSetTip(-1, getLocaleString("tipChkAttackTH",1))
+		$chkSnipeWhileTrain = GUICtrlCreateCheckbox(getLocaleString("lbSnipeWhileTraining"), $x + 200, $y, -1, -1) ; Snipe While Train MOD by ChiefM3
+			   GUICtrlSetTip(-1, getLocaleString("tipLbSnipeWhileTraining"))
 ;		$y +=22
 ;		$chkLightSpell = GUICtrlCreateCheckbox(getLocaleString("chkLightSpell"), $x, $y, -1, -1)
 ;			GUICtrlSetTip(-1, getLocaleString("tipChkLightSpell"))

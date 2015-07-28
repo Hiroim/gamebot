@@ -93,6 +93,7 @@ WEnd
 Func runBot() ;Bot that runs everything in order
 	$TotalTrainedTroops = 0
 	While 1
+		SWHTrainRevertNormal()
 		$Restart = False
 		$fullArmy = False
 		$CommandStop = -1
@@ -269,6 +270,7 @@ Func Idle() ;Sequence that runs until Full Army
 		EndIf
 		If _Sleep(200) Then Return
 		If $Restart = True Then ExitLoop
+		SnipeWhileTrain()
 		$TimeIdle += Round(TimerDiff($hTimer) / 1000, 2) ;In Seconds
 		SetLog(getLocaleString("logIdle") & StringFormat("%02i", Floor(Floor($TimeIdle / 60) / 60)) & ":" & StringFormat("%02i", Floor(Mod(Floor($TimeIdle / 60), 60))) & ":" & StringFormat("%02i", Floor(Mod($TimeIdle, 60))))
 		If $OutOfGold = 1 Then Return

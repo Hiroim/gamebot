@@ -174,6 +174,8 @@ Func readConfig() ;Reads config and sets it to the variables
 		$ichkAttackNow =  IniRead($config, "advanced", "AttackNow", "0")
 		$iAttackNowDelay = IniRead($config, "advanced", "attacknowdelay", "3")
 
+		$iChkSnipeWhileTrain = IniRead($config, "advanced", "chkSnipeWhileTrain", "0")
+
 		$chkATH = IniRead($config, "advanced", "townhall", "0")
 ;		$iChkLightSpell = IniRead($config, "advanced", "hitDElightning", "0")
 ;		$iLSpellQ = IniRead($config, "advanced", "QLSpell", "3")

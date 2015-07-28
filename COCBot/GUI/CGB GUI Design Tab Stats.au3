@@ -25,47 +25,68 @@ Global $iPrevState[$LastControlToHide + 1]
 ;~ -------------------------------------------------------------
 $tabStats = GUICtrlCreateTabItem(getLocaleString("tabStats"))
 Local $x = 30, $y = 150
-	$grpResourceOnStart = GUICtrlCreateGroup(getLocaleString("grpResourceOnStart"), $x - 20, $y - 20, 110, 105)
-		$lblResultStatsTemp = GUICtrlCreateLabel(getLocaleString("lblResultStatsTemp",1), $x - 5, $y + 5, 100, 65, BITOR($SS_LEFT, $BS_MULTILINE))
-		GUICtrlCreateIcon ($pIconLib, $eIcnGold, $x + 60, $y, 16, 16)
+	$grpResourceOnStart = GUICtrlCreateGroup(getLocaleString("grpResourceOnStart"), $x - 20, $y - 20, 95, 105)
+		$lblResultStatsTemp = GUICtrlCreateLabel(getLocaleString("lblResultStatsTemp",1), $x - 5, $y + 5, 85, 65, BITOR($SS_LEFT, $BS_MULTILINE))
+		GUICtrlCreateIcon ($pIconLib, $eIcnGold, $x + 55, $y, 16, 16)
 		$lblResultGoldStart = GUICtrlCreateLabel("", $x, $y + 2, 55, 17, $SS_RIGHT)
 			GUICtrlSetTip(-1, getLocaleString("tipResultGoldStart"))
 		$y +=20
-		GUICtrlCreateIcon ($pIconLib, $eIcnElixir, $x + 60, $y, 16, 16)
+		GUICtrlCreateIcon ($pIconLib, $eIcnElixir, $x + 55, $y, 16, 16)
 		$lblResultElixirStart = GUICtrlCreateLabel("", $x, $y + 2, 55, 17, $SS_RIGHT)
 			GUICtrlSetTip(-1, getLocaleString("tipResultElixirStart"))
 		$y +=20
-		$picResultDEStart = GUICtrlCreateIcon ($pIconLib, $eIcnDark, $x + 60, $y, 16, 16)
+		$picResultDEStart = GUICtrlCreateIcon ($pIconLib, $eIcnDark, $x + 55, $y, 16, 16)
 		$lblResultDEStart = GUICtrlCreateLabel("", $x, $y + 2, 55, 17, $SS_RIGHT)
 			GUICtrlSetTip(-1, getLocaleString("tipResultDEStart"))
 		$y +=20
-		GUICtrlCreateIcon ($pIconLib, $eIcnTrophy, $x + 60, $y, 16, 16)
+		GUICtrlCreateIcon ($pIconLib, $eIcnTrophy, $x + 55, $y, 16, 16)
 		$lblResultTrophyStart = GUICtrlCreateLabel("", $x, $y + 2, 55, 17, $SS_RIGHT)
 			GUICtrlSetTip(-1, getLocaleString("tipResultTrophyStart"))
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-	$x = 145
+	$x = 130
 	$y = 150
-	$grpLastAttack = GUICtrlCreateGroup(getLocaleString("grpLastAttack"), $x - 20, $y - 20, 110, 105)
-		$lblLastAttackTemp = GUICtrlCreateLabel(getLocaleString("lblLastAttackTemp",1), $x - 5, $y + 5, 100, 65, BITOR($SS_LEFT, $BS_MULTILINE))
-		GUICtrlCreateIcon ($pIconLib, $eIcnGold, $x + 60, $y, 16, 16)
+	$grpLastAttack = GUICtrlCreateGroup(getLocaleString("grpLastAttack"), $x - 20, $y - 20, 95, 105)
+		$lblLastAttackTemp = GUICtrlCreateLabel(getLocaleString("lblLastAttackTemp",1), $x - 5, $y + 5, 85, 65, BITOR($SS_LEFT, $BS_MULTILINE))
+		GUICtrlCreateIcon ($pIconLib, $eIcnGold, $x + 55, $y, 16, 16)
 		$lblGoldLastAttack = GUICtrlCreateLabel("", $x, $y + 2, 55, 17, $SS_RIGHT)
 			GUICtrlSetTip(-1, getLocaleString("tipGoldLastAttack"))
 		$y +=20
-		GUICtrlCreateIcon ($pIconLib, $eIcnElixir, $x + 60, $y, 16, 16)
+		GUICtrlCreateIcon ($pIconLib, $eIcnElixir, $x + 55, $y, 16, 16)
 		$lblElixirLastAttack = GUICtrlCreateLabel("", $x, $y + 2, 55, 17, $SS_RIGHT)
 			GUICtrlSetTip(-1, getLocaleString("tipElixirLastAttack"))
 		$y +=20
-		$picDarkLastAttack = GUICtrlCreateIcon ($pIconLib, $eIcnDark, $x + 60, $y, 16, 16)
+		$picDarkLastAttack = GUICtrlCreateIcon ($pIconLib, $eIcnDark, $x + 55, $y, 16, 16)
 		$lblDarkLastAttack = GUICtrlCreateLabel("", $x, $y + 2, 55, 17, $SS_RIGHT)
 			GUICtrlSetTip(-1, getLocaleString("tipDELastAttack"))
 		$y +=20
-		GUICtrlCreateIcon ($pIconLib, $eIcnTrophy, $x + 60, $y, 16, 16)
+		GUICtrlCreateIcon ($pIconLib, $eIcnTrophy, $x + 55, $y, 16, 16)
 		$lblTrophyLastAttack = GUICtrlCreateLabel("", $x, $y + 2, 55, 17, $SS_RIGHT)
 			GUICtrlSetTip(-1, getLocaleString("tipTrophyLastAttack"))
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-	$x = 260
+	$x = 230
+	$y = 150
+	$grpHourlyStats = GUICtrlCreateGroup(getLocaleString("grpHourlyStats"), $x - 20, $y - 20, 95, 105)
+		$lblHourlyStatsTemp = GUICtrlCreateLabel(getLocaleString("lblHourlyStatsTemp",1), $x - 5, $y + 5, 85, 65, BITOR($SS_LEFT, $BS_MULTILINE))
+		GUICtrlCreateIcon ($pIconLib, $eIcnGold, $x + 55, $y, 16, 16)
+		$lblHourlyStatsGold  = GUICtrlCreateLabel("", $x, $y + 2, 55, 17, $SS_RIGHT)
+			GUICtrlSetTip(-1, getLocaleString("tipHourlyStatsGold"))
+		$y +=20
+		GUICtrlCreateIcon ($pIconLib, $eIcnElixir, $x + 55, $y, 16, 16)
+		$lblHourlyStatsElixir = GUICtrlCreateLabel("", $x, $y + 2, 55, 17, $SS_RIGHT)
+			GUICtrlSetTip(-1, getLocaleString("tipHourlyStatsElixir"))
+		$y +=20
+		$picHourlyStatsDark = GUICtrlCreateIcon ($pIconLib, $eIcnDark, $x + 55, $y, 16, 16)
+		$lblHourlyStatsDark = GUICtrlCreateLabel("", $x, $y + 2, 55, 17, $SS_RIGHT)
+			GUICtrlSetTip(-1, getLocaleString("tipHourlyStatsDark"))
+		$y +=20
+		GUICtrlCreateIcon ($pIconLib, $eIcnTrophy, $x + 55, $y, 16, 16)
+		$lblHourlyStatsTrophy = GUICtrlCreateLabel("", $x, $y + 2, 55, 17, $SS_RIGHT)
+			GUICtrlSetTip(-1, getLocaleString("tipHourlyStatsTrophy"))
+	GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+	$x = 330
 	$y = 150
     $grpTotalLoot = GUICtrlCreateGroup(getLocaleString("grpTotalLoot"), $x - 20, $y - 20, 150, 105)
 		$lblTotalLootTemp = GUICtrlCreateLabel(getLocaleString("lblTotalLootTemp",1), $x - 5, $y + 5, 100, 65, BITOR($SS_LEFT, $BS_MULTILINE))
@@ -86,8 +107,8 @@ Local $x = 30, $y = 150
 			GUICtrlSetTip(-1, getLocaleString("tipTrophyLoot"))
     GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-	$x = 395
-	$y = 135
+	$x = 400
+	$y = 305
 	$btnMoreStats = GUICtrlCreateButton (getLocaleString("btnMoreStats"), $x, $y, 60,21)
 		GUICtrlSetState(-1, $GUI_DISABLE)
 	$y +=25

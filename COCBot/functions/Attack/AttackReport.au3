@@ -54,7 +54,10 @@ Func AttackReport()
 		EndIf
 		SetLog("Loot: [G]: " & _NumberFormat($lootGold) & " [E]: " & _NumberFormat($lootElixir) & " [DE]: " & _NumberFormat($lootDarkElixir) & " [T]: " & $lootTrophies, $COLOR_GREEN)
 
-		If $FirstAttack = 1 Then GUICtrlSetState($lblLastAttackTemp, $GUI_HIDE)
+		If $FirstAttack = 1 Then
+			GUICtrlSetState($lblLastAttackTemp, $GUI_HIDE)
+			GUICtrlSetState($lblHourlyStatsTemp, $GUI_HIDE)
+		EndIf
 
 		GUICtrlSetData($lblGoldLastAttack, _NumberFormat($lootGold))
 		GUICtrlSetData($lblElixirLastAttack, _NumberFormat($lootElixir))
@@ -72,7 +75,10 @@ Func AttackReport()
 		$lootDarkElixir = 0
 		SetLog("Loot: [G]: " & _NumberFormat($lootGold) & " [E]: " & _NumberFormat($lootElixir) & " [DE]: " & _NumberFormat($lootDarkElixir) & " [T]: " & $lootTrophies, $COLOR_GREEN)
 
-		If $FirstAttack = 1 Then GUICtrlSetState($lblLastAttackTemp, $GUI_HIDE)
+		If $FirstAttack = 1 Then
+			GUICtrlSetState($lblLastAttackTemp, $GUI_HIDE)
+			GUICtrlSetState($lblHourlyStatsTemp, $GUI_HIDE)
+		EndIf
 
 		GUICtrlSetData($lblGoldLastAttack, _NumberFormat($lootGold))
 		GUICtrlSetData($lblElixirLastAttack, _NumberFormat($lootElixir))
