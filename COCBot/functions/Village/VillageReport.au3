@@ -142,9 +142,9 @@ Func ReportLastTotal()
 
 
 	;find net gain / loss
-	$gainLootG = $GoldCount - $GoldStart
-	$gainLootE = $ElixirCount - $ElixirStart
-	$gainLootDarkE = $DarkCount - $DarkStart
+	$gainLootG = $CostGoldUpgrades + $GoldCount + $CostGoldWall - $GoldStart
+	$gainLootE = $CostElixirUpgrades + $ElixirCount + $CostElixirWall - $ElixirStart
+	$gainLootD = $CostDElixirUpgrades + $DarkCount - $DarkStart
 
 	; find totals earned
 	$totalLootG += $lootGold
