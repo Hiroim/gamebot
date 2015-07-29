@@ -156,6 +156,7 @@ Global $GoldVillage, $ElixirVillage, $DarkVillage, $TrophyVillage
 Global $GoldLast, $ElixirLast, $DarkLast, $TrophyLast
 Global $CostGoldWall, $CostElixirWall
 Global $CostGoldUpgrades = 0, $CostElixirUpgrades = 0, $CostDElixirUpgrades = 0
+Global $gainLootG, $gainLootE, $gainLootD, $totalLootG, $totalLootE, $totalLootD, $totalBonusG, $totalBonusE, $totalBonusD, $totalLootT
 
 ;Global $costspell
 

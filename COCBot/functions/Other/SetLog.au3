@@ -3,7 +3,7 @@ Func SetLog($String, $Color = $COLOR_BLACK, $Font = "Verdana", $FontSize = 7.5, 
 	_GUICtrlRichEdit_AppendTextColor($txtLog, Time(), 0x000000)
 	_GUICtrlRichEdit_SetFont($txtLog, $FontSize, $Font)
 	_GUICtrlRichEdit_AppendTextColor($txtLog, $String & @CRLF, _ColorConvert($Color))
-	if $statusbar = 1 Then _GUICtrlStatusBar_SetText($statLog, "Status : " & $String)
+	if $statusbar = 1 Then _GUICtrlStatusBar_SetText($statLog, getLocaleString("status") & $String)
 	_FileWriteLog($hLogFileHandle, $String)
 EndFunc   ;==>SetLog
 

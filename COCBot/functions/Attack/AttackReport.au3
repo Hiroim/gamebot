@@ -54,15 +54,12 @@ Func AttackReport()
 		EndIf
 		SetLog("Loot: [G]: " & _NumberFormat($lootGold) & " [E]: " & _NumberFormat($lootElixir) & " [DE]: " & _NumberFormat($lootDarkElixir) & " [T]: " & $lootTrophies, $COLOR_GREEN)
 
-		If $FirstAttack = 1 Then
-			GUICtrlSetState($lblLastAttackTemp, $GUI_HIDE)
-			GUICtrlSetState($lblHourlyStatsTemp, $GUI_HIDE)
-		EndIf
+		If $FirstAttack = 1 Then GUICtrlSetState($lblLastAttackTemp, $GUI_HIDE)
 
-		GUICtrlSetData($lblGoldLastAttack, _NumberFormat($lootGold))
-		GUICtrlSetData($lblElixirLastAttack, _NumberFormat($lootElixir))
-		GUICtrlSetData($lblDarkLastAttack, _NumberFormat($lootDarkElixir))
-		GUICtrlSetData($lblTrophyLastAttack, _NumberFormat($lootTrophies))
+;		GUICtrlSetData($lblGoldLastAttack, _NumberFormat($lootGold))
+;		GUICtrlSetData($lblElixirLastAttack, _NumberFormat($lootElixir))
+;		GUICtrlSetData($lblDarkLastAttack, _NumberFormat($lootDarkElixir))
+;		GUICtrlSetData($lblTrophyLastAttack, _NumberFormat($lootTrophies))
 	Else
 		$lootGold = getResourcesLoot(333, 289)
 		If _sleep(150) Then Return
@@ -70,20 +67,17 @@ Func AttackReport()
 		If _sleep(150) Then Return
 		$lootTrophies = getResourcesLootT(403, 365)
 		If _ColorCheck(_GetPixelColor(327, 189, True), Hex(0x3B321C, 6), 30) Then
-			$lootTrophies = -$lootTrophies
+;			$lootTrophies = -$lootTrophies
 		EndIf
 		$lootDarkElixir = 0
 		SetLog("Loot: [G]: " & _NumberFormat($lootGold) & " [E]: " & _NumberFormat($lootElixir) & " [DE]: " & _NumberFormat($lootDarkElixir) & " [T]: " & $lootTrophies, $COLOR_GREEN)
 
-		If $FirstAttack = 1 Then
-			GUICtrlSetState($lblLastAttackTemp, $GUI_HIDE)
-			GUICtrlSetState($lblHourlyStatsTemp, $GUI_HIDE)
-		EndIf
+		If $FirstAttack = 1 Then GUICtrlSetState($lblLastAttackTemp, $GUI_HIDE)
 
-		GUICtrlSetData($lblGoldLastAttack, _NumberFormat($lootGold))
-		GUICtrlSetData($lblElixirLastAttack, _NumberFormat($lootElixir))
-		GUICtrlSetData($lblDarkLastAttack, "")
-		GUICtrlSetData($lblTrophyLastAttack, _NumberFormat($lootTrophies))
+;		GUICtrlSetData($lblGoldLastAttack, _NumberFormat($lootGold))
+;		GUICtrlSetData($lblElixirLastAttack, _NumberFormat($lootElixir))
+;		GUICtrlSetData($lblDarkLastAttack, "")
+;		GUICtrlSetData($lblTrophyLastAttack, _NumberFormat($lootTrophies))
 	EndIf
 
 	If $lootTrophies >= 0 Then
