@@ -4,7 +4,7 @@ Func UpgradeWall()
 
 	If GUICtrlRead($chkWalls) = $GUI_CHECKED Then
 		If $FreeBuilder > 0 Then
-			SetLog("Checking Upgrade Walls", $COLOR_BLUE)
+			SetLog(getLocaleString("logWallCheckUpgrade"), $COLOR_BLUE)
 			ClickP($aTopLeftClient,1,0,"#0313") ; click away
 			$itxtWallMinGold = GUICtrlRead($txtWallMinGold)
 			$itxtWallMinElixir = GUICtrlRead($txtWallMinElixir)
@@ -23,38 +23,38 @@ Func UpgradeWall()
 			Switch $iUseStorage
 				Case 1
 					If $MinWallGold Then
-						SetLog("Upgrading Wall using Gold", $COLOR_GREEN)
+						SetLog(getLocaleString("logWallUpgradeUseGold"), $COLOR_GREEN)
 						If CheckWall() Then UpgradeWallGold()
 					Else
-						SetLog("Gold is below minimum, Skipping Upgrade", $COLOR_RED)
+						SetLog(getLocaleString("logWallUpgradeGoldBelowMin"), $COLOR_RED)
 					EndIf
 				Case 2
 					If $MinWallElixir Then
-						Setlog("Upgrading Wall using Elixir", $COLOR_GREEN)
+						Setlog(getLocaleString("logWallUpgradeUseElixir"), $COLOR_GREEN)
 						If CheckWall() Then UpgradeWallElixir()
 					Else
-						Setlog("Elixir is below minimum, Skipping Upgrade", $COLOR_RED)
+						Setlog(getLocaleString("logWallUpgradeElixirBelowMin"), $COLOR_RED)
 					EndIf
 				Case 3
 					If $MinWallElixir Then
-						SetLog("Upgrading Wall using Elixir", $COLOR_GREEN)
+						SetLog(getLocaleString("logWallUpgradeUseElixir"), $COLOR_GREEN)
 						If CheckWall() And Not UpgradeWallElixir() Then
-							SetLog("Upgrade with Elixir failed, attempt to upgrade using Gold", $COLOR_RED)
+							SetLog(getLocaleString("logWallUpgradeElixirFailed"), $COLOR_RED)
 							UpgradeWallGold()
 						EndIf
 					Else
-						SetLog("Elixir is below minimum, attempt to upgrade using Gold", $COLOR_RED)
+						SetLog(getLocaleString("logWallUpgradeElixirBelowMinTryGold"), $COLOR_RED)
 						If $MinWallGold Then
 							If CheckWall() Then UpgradeWallGold()
 						Else
-							Setlog("Gold is below minimum, Skipping Upgrade", $COLOR_RED)
+							Setlog(getLocaleString("logWallUpgradeGoldBelowMin"), $COLOR_RED)
 						EndIf
 					EndIf
 			EndSwitch
 			ClickP($aTopLeftClient,1,0,"#0314") ; click away
 			Click(820, 40,1,0,"#0315") ; Close Builder/Shop if open by accident
 		Else
-			SetLog("No free builder, Upgrade Walls skipped..", $COLOR_RED)
+			SetLog(getLocaleString("logWallNoFreeBuilder"), $COLOR_RED)
 		EndIf
 	EndIf
 	If _Sleep(500) Then Return
@@ -80,19 +80,19 @@ Func UpgradeWallGold()
 		_CaptureRegion()
 		If _ColorCheck(_GetPixelColor(685, 150), Hex(0xE1090E, 6), 20) Then ; wall upgrade window red x
 			If isNoUpgradeLoot(False) = True Then
-				SetLog("Upgrade stopped due no loot", $COLOR_RED)
+				SetLog(getLocaleString("logWallStoppedDueNoLoot"), $COLOR_RED)
 				Return False
 			Endif
 			Click(440, 480,1,0,"#0317")
 			If _Sleep(500) Then Return
-			SetLog("Upgrade complete", $COLOR_GREEN)
+			SetLog(getLocaleString("logWallUpgradeComplete"), $COLOR_GREEN)
 			PushMsg("UpgradeWithGold")
 			$wallgoldmake = $wallgoldmake + 1
 			GUICtrlSetData($lblWallgoldmake, $wallgoldmake)
 			Return True
 		EndIf
 	Else
-		Setlog("No Upgrade Gold Button", $COLOR_RED)
+		Setlog(getLocaleString("logWallUpgradeNoGoldBtn"), $COLOR_RED)
 		Pushmsg("NowUpgradeGoldButton")
 		Return False
 	EndIf
@@ -112,19 +112,19 @@ Func UpgradeWallElixir()
 		_CaptureRegion()
 		If _ColorCheck(_GetPixelColor(685, 150), Hex(0xE1090E, 6), 20) Then
 			If isNoUpgradeLoot(False) = True Then
-				SetLog("Upgrade stopped due to insufficient loot", $COLOR_RED)
+				SetLog(getLocaleString("logWallSkippedDueInsufficientLoot"), $COLOR_RED)
 				Return False
 			Endif
 			Click(440, 480,1,0,"#0318")
 			If _Sleep(500) Then Return
-			SetLog("Upgrade complete", $COLOR_GREEN)
+			SetLog(getLocaleString("logWallUpgradeComplete"), $COLOR_GREEN)
 			PushMsg("UpgradeWithElixir")
 			$wallelixirmake = $wallelixirmake + 1
 			GUICtrlSetData($lblWallelixirmake, $wallelixirmake)
 			Return True
 		EndIf
 	Else
-		Setlog("No Upgrade Elixir Button", $COLOR_RED)
+		Setlog(getLocaleString("logWallUpgradeNoElixirBtn"), $COLOR_RED)
 		Pushmsg("NowUpgradeElixirButton")
 		Return False
 	EndIf

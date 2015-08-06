@@ -21,13 +21,13 @@ Func algorithmTH() ;Attack Algorithm TH
 		$TopTHy = 30
 		$GetTHLoc = 0
 		If $THLocation = 0 Then
-			SetLog("Can't get Townhall location", $COLOR_RED)
+			SetLog(getLocaleString("logCantGetTHLoc"), $COLOR_RED)
 		ElseIf $THx > 227 And $THx < 627 And $THy > 151 And $THy < 419 And ($iMatchMode = $TS Or $chkATH = 1) Then ;if found outside
-			SetLog("Townhall location (" & $THx & ", " & $THy & ")")
-			SetLog("Townhall is in the Center of the Base. Ignore Attacking Townhall", $COLOR_RED)
+			SetLog(getLocaleString("logTHLoc") & $THx & ", " & $THy & ")")
+			SetLog(getLocaleString("logTHLocCenter"), $COLOR_RED)
 			$THLocation = 0
 		Else
-			SetLog("Townhall location (" & $THx & ", " & $THy & ")")
+			SetLog(getLocaleString("logTHLoc") & $THx & ", " & $THy & ")")
 		EndIf
 		If _Sleep(100) Then Return
 		While 1
@@ -46,7 +46,7 @@ Func algorithmTH() ;Attack Algorithm TH
 								While $atkTroops[$Barb][1] <> 0
 									Click(($THx - $LeftTHx), ($THy + $LeftTHx - 30), 1, 1, "#0002") ; BottomLeft
 									$AtkTroopTH = Number(ReadTroopQuantity($Barb))
-									SetLog("Getting Attack Townhall location...", $COLOR_BLUE)
+									SetLog(getLocaleString("logGetTHLoc"), $COLOR_BLUE)
 									$LeftTHx += 10
 									$i += 1
 									If $AtkTroopTH <> $atkTroops[$Barb][1] Or $i >= 10 Then
@@ -59,7 +59,7 @@ Func algorithmTH() ;Attack Algorithm TH
 								While $atkTroops[$Barb][1] <> 0
 									Click(($THx + $RightTHx), ($THy + $RightTHx - 10), 1, 1, "#0003") ; BottomRight
 									$AtkTroopTH = Number(ReadTroopQuantity($Barb))
-									SetLog("Getting Attack Townhall location...", $COLOR_BLUE)
+									SetLog(getLocaleString("logGetTHLoc"), $COLOR_BLUE)
 									$RightTHx += 10
 									$i += 1
 									If $AtkTroopTH <> $atkTroops[$Barb][1] Or $i >= 10 Then
@@ -73,7 +73,7 @@ Func algorithmTH() ;Attack Algorithm TH
 							While $atkTroops[$Barb][1] <> 0
 								Click(($THx + $TopTHy - 10), ($THy - $TopTHy), 1, 1, "#0004") ; TopRight
 								$AtkTroopTH = Number(ReadTroopQuantity($Barb))
-								SetLog("Getting Attack Townhall location...", $COLOR_BLUE)
+								SetLog(getLocaleString("logGetTHLoc"), $COLOR_BLUE)
 								$TopTHy += 10
 								$i += 1
 								If $AtkTroopTH <> $atkTroops[$Barb][1] Or $i >= 10 Then
@@ -86,7 +86,7 @@ Func algorithmTH() ;Attack Algorithm TH
 							While $atkTroops[$Barb][1] <> 0
 								Click(($THx - ($BottomTHy + 10)), ($THy - $BottomTHy), 1, 1, "#0005") ; TopLeft
 								$AtkTroopTH = Number(ReadTroopQuantity($Barb))
-								SetLog("Getting Attack Townhall location...", $COLOR_BLUE)
+								SetLog(getLocaleString("logGetTHLoc"), $COLOR_BLUE)
 								$BottomTHy += 10
 								$i += 1
 								If $AtkTroopTH <> $atkTroops[$Barb][1] Or $i >= 10 Then
@@ -95,7 +95,7 @@ Func algorithmTH() ;Attack Algorithm TH
 								EndIf
 							WEnd
 						EndIf
-						SetLog("Attacking Townhall with first wave Barbarians", $COLOR_BLUE)
+						SetLog(getLocaleString("logTHAtkFirstWaweBarbs"), $COLOR_BLUE)
 						For $i = 2 To 4
 							If $GetTHLoc = $i Then $numBarbPerSpot = Ceiling($numBarbPerSpot / $i)
 						Next
@@ -123,7 +123,7 @@ Func algorithmTH() ;Attack Algorithm TH
 								While $atkTroops[$Arch][1] <> 0
 									Click(($THx - $LeftTHx), ($THy + $LeftTHx - 30), 1, 1, "#0011") ; BottomLeft
 									$AtkTroopTH = Number(ReadTroopQuantity($Arch))
-									SetLog("Getting Attack Townhall location...", $COLOR_BLUE)
+									SetLog(getLocaleString("logGetTHLoc"), $COLOR_BLUE)
 									$LeftTHx += 10
 									$i += 1
 									If $AtkTroopTH <> $atkTroops[$Arch][1] Or $i >= 10 Then
@@ -136,7 +136,7 @@ Func algorithmTH() ;Attack Algorithm TH
 								While $atkTroops[$Arch][1] <> 0
 									Click(($THx + $RightTHx), ($THy + $RightTHx - 10), 1, 1, "#0012") ; BottomRight
 									$AtkTroopTH = Number(ReadTroopQuantity($Arch))
-									SetLog("Getting Attack Townhall location...", $COLOR_BLUE)
+									SetLog(getLocaleString("logGetTHLoc"), $COLOR_BLUE)
 									$RightTHx += 10
 									$i += 1
 									If $AtkTroopTH <> $atkTroops[$Arch][1] Or $i >= 10 Then
@@ -150,7 +150,7 @@ Func algorithmTH() ;Attack Algorithm TH
 							While $atkTroops[$Arch][1] <> 0
 								Click(($THx + $TopTHy - 10), ($THy - $TopTHy), 1, 1, "#0013") ; TopRight
 								$AtkTroopTH = Number(ReadTroopQuantity($Arch))
-								SetLog("Getting Attack Townhall location...", $COLOR_BLUE)
+								SetLog(getLocaleString("logGetTHLoc"), $COLOR_BLUE)
 								$TopTHy += 10
 								$i += 1
 								If $AtkTroopTH <> $atkTroops[$Arch][1] Or $i >= 10 Then
@@ -163,7 +163,7 @@ Func algorithmTH() ;Attack Algorithm TH
 							While $atkTroops[$Arch][1] <> 0
 								Click(($THx - ($BottomTHy + 10)), ($THy - $BottomTHy), 1, 1, "#0014") ; TopLeft
 								$AtkTroopTH = Number(ReadTroopQuantity($Arch))
-								SetLog("Getting Attack Townhall location...", $COLOR_BLUE)
+								SetLog(getLocaleString("logGetTHLoc"), $COLOR_BLUE)
 								$BottomTHy += 10
 								$i += 1
 								If $AtkTroopTH <> $atkTroops[$Arch][1] Or $i >= 10 Then
@@ -172,7 +172,7 @@ Func algorithmTH() ;Attack Algorithm TH
 								EndIf
 							WEnd
 						EndIf
-						SetLog("Attacking Townhall with first wave of Archers", $COLOR_BLUE)
+						SetLog(getLocaleString("logTHAtkFirstWaweArch"), $COLOR_BLUE)
 						$LeftTHx += 10
 						$RightTHx += 10
 						$BottomTHy += 10
@@ -223,15 +223,15 @@ Func AttackTHGrid($troopKind, $spots, $numperspot, $Sleep, $waveNb, $maxWaveNb, 
 		;_CaptureRegion()
 		$TroopCountBeg = Number(ReadTroopQuantity($THtroop))
 
-		If ($THtroop = -1) Or ($TroopCountBeg = 0) Then SetLog("No " & $name & " troop Found!!!")
+		If ($THtroop = -1) Or ($TroopCountBeg = 0) Then SetLog(getLocaleString("logTHAtkTroopQty") & $name & getLocaleString("logTHAtkTroopQty2"))
 		If ($THtroop = -1) Or ($TroopCountBeg = 0) Then Return False
 
-		Local $waveName = "first"
-		If $waveNb = 2 Then $waveName = "second"
-		If $waveNb = 3 Then $waveName = "third"
-		If $maxWaveNb = 1 Then $waveName = "only"
-		If $waveNb = 0 Then $waveName = "last"
-		SetLog("Dropping " & $waveName & " wave of " & $troopNb & " " & $name, $COLOR_GREEN)
+		Local $waveName = getLocaleString("txtWaveName1")
+		If $waveNb = 2 Then $waveName = getLocaleString("txtWaveName2")
+		If $waveNb = 3 Then $waveName = getLocaleString("txtWaveName3")
+		If $maxWaveNb = 1 Then $waveName = getLocaleString("txtWaveNameOnly")
+		If $waveNb = 0 Then $waveName = getLocaleString("txtWaveNameLast")
+		SetLog(getLocaleString("logDropWave") & $waveName & getLocaleString("logDropWave2") & $troopNb & " " & $name & getLocaleString("logDropWave3"), $COLOR_GREEN)
 
 		;			SetLog("Attacking TH with "&NameOfTroop($atkTroops[$THtroop][0]))
 		SelectDropTroop($THtroop) ;Select Troop
@@ -285,18 +285,18 @@ Func AttackTHGrid($troopKind, $spots, $numperspot, $Sleep, $waveNb, $maxWaveNb, 
 		If $THi > 15 Then
 			If ($THside = 1 Or $THside = 3) And $zoomedin = False Then
 				;Zoom in all the way
-				SetLog("Zooming in...")
+				SetLog(getLocaleString("logAtkTHZoomIn"))
 				While $zCount < 6
 					If _Sleep(300) Then Return
 					ControlSend($Title, "", "", "{UP}")
 					If _Sleep(100) Then Return
 					$zCount += 1
 				WEnd
-				SetLog("Done zooming.")
+				SetLog(getLocaleString("logAtkTHZoomDone"))
 				If _Sleep(500) Then Return
 
 				;Scroll to bottom
-				SetLog("Scrolling to bottom...")
+				SetLog(getLocaleString("logAtkTHScrollBottom"))
 				While $sCount < 7
 					If _Sleep(300) Then Return
 					ControlSend($Title, "", "", "{CTRLDOWN}{UP}{CTRLUP}")
@@ -337,10 +337,10 @@ Func AttackTHGrid($troopKind, $spots, $numperspot, $Sleep, $waveNb, $maxWaveNb, 
 		;_CaptureRegion()
 		;			Setlog($TroopCountBeg&" = "&Number(ReadTroopQuantity($THtroop))))
 		If $TroopCountBeg <> Number(ReadTroopQuantity($THtroop)) Then
-			SetLog("Deployment of " & $name & " Successful!")
+			SetLog(getLocaleString("logAtkTHDeployment") & $name & getLocaleString("logAtkTHDeploymentSuccess"))
 			If _Sleep($Sleep) Then Return
 		Else
-			SetLog("Deployment of " & $name & "NOT Successful!")
+			SetLog(getLocaleString("logAtkTHDeployment") & $name & getLocaleString("logAtkTHDeploymentNOTSuccess"))
 		EndIf
 
 
@@ -349,7 +349,7 @@ Func AttackTHGrid($troopKind, $spots, $numperspot, $Sleep, $waveNb, $maxWaveNb, 
 EndFunc   ;==>AttackTHGrid
 
 Func AttackTHNormal()
-	Setlog("Normal Attacking TH Outside with BAM PULSE!")
+	Setlog(getLocaleString("logAtkTHNormal1"))
 
 	;---1st wave
 	AttackTHGrid($eBarb, 3, 2, 1800, 1, 5, 0) ; deploys 6 barbarians
@@ -360,7 +360,7 @@ Func AttackTHNormal()
 		If _Sleep(1000) Then Return
 		;_CaptureRegion()
 		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
-			SetLog("Townhall has been destroyed!")
+			SetLog(getLocaleString("logTHDestroyed"))
 			Return ;exit if you get a star
 		EndIf
 		$count += 1
@@ -375,7 +375,7 @@ Func AttackTHNormal()
 		If _Sleep(1000) Then Return
 		;_CaptureRegion()
 		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
-			SetLog("Townhall has been destroyed!")
+			SetLog(getLocaleString("logTHDestroyed"))
 			Return ;exit if you get a star
 		EndIf
 		$count += 1
@@ -390,13 +390,13 @@ Func AttackTHNormal()
 		If _Sleep(1000) Then Return
 		;_CaptureRegion()
 		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
-			SetLog("Townhall has been destroyed!")
+			SetLog(getLocaleString("logTHDestroyed"))
 			Return ;exit if you get a star
 		EndIf
 		$count += 1
 	WEnd
 
-	Setlog("Normal Attacking TH Outside in FULL!")
+	Setlog(getLocaleString("logAtkTHNormal2"))
 	AttackTHGrid($eGiant, 3, 1, 1000, 1, 2, 0) ;releases 3 giants
 	AttackTHGrid($eWall, 2, 2, 1100, 1, 1, 0) ; deploys 4 wallbreakers
 	AttackTHGrid($eArch, 5, 5, 1200, 4, 4, 0) ;releases 25 archers
@@ -407,7 +407,7 @@ Func AttackTHNormal()
 		If _Sleep(1000) Then Return
 		;_CaptureRegion()
 		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
-			SetLog("Townhall has been destroyed!")
+			SetLog(getLocaleString("logTHDestroyed"))
 			Return ;exit if you get a star
 		EndIf
 		$count += 1
@@ -425,18 +425,18 @@ Func AttackTHNormal()
 		If _Sleep(1000) Then Return
 		;_CaptureRegion()
 		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
-			SetLog("Townhall has been destroyed!")
+			SetLog(getLocaleString("logTHDestroyed"))
 			Return ;exit if you get a star
 		EndIf
 		$count += 1
 	WEnd
 
-	SetLog("~Finished Attacking, waiting to finish", $COLOR_GREEN)
+	SetLog(getLocaleString("logAtkTHFinished"), $COLOR_GREEN)
 
 EndFunc   ;==>AttackTHNormal
 
 Func AttackTHXtreme()
-	Setlog("Extreme Attacking TH Outside with BAM PULSE!")
+	Setlog(getLocaleString("logAtkTHExtreme1"))
 
 	;---1st wave 15 secs
 	;		SetLog("Attacking TH with 1st wave of BAM COMBO")
@@ -448,7 +448,7 @@ Func AttackTHXtreme()
 		If _Sleep(1000) Then Return
 		;_CaptureRegion()
 		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
-			SetLog("Townhall has been destroyed!")
+			SetLog(getLocaleString("logTHDestroyed"))
 			Return ;exit if you get a star
 		EndIf
 		$count += 1
@@ -464,7 +464,7 @@ Func AttackTHXtreme()
 		If _Sleep(1000) Then Return
 		;_CaptureRegion()
 		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
-			SetLog("Townhall has been destroyed!")
+			SetLog(getLocaleString("logTHDestroyed"))
 			Return ;exit if you get a star
 		EndIf
 		$count += 1
@@ -480,14 +480,14 @@ Func AttackTHXtreme()
 		If _Sleep(1000) Then Return
 		;_CaptureRegion()
 		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
-			SetLog("Townhall has been destroyed!")
+			SetLog(getLocaleString("logTHDestroyed"))
 			Return ;exit if you get a star
 		EndIf
 		$count += 1
 	WEnd
 
 	;---4th wave
-	Setlog("Extreme Attacking TH Outside in FULL!")
+	Setlog(getLocaleString("logAtkTHExtreme2"))
 	AttackTHGrid($eGiant, 3, 1, 1000, 1, 4, 0) ;releases 3 giants
 	AttackTHGrid($eWall, 2, 2, 100, 1, 1, 0) ; deploys 4 wallbreakers
 	AttackTHGrid($eArch, 5, 5, 1200, 4, 4, 0) ;releases 25 archers
@@ -502,18 +502,18 @@ Func AttackTHXtreme()
 		If _Sleep(1000) Then Return
 		;_CaptureRegion()
 		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
-			SetLog("Townhall has been destroyed!")
+			SetLog(getLocaleString("logTHDestroyed"))
 			Return ;exit if you get a star
 		EndIf
 		$count += 1
 	WEnd
 
-	SetLog("~Finished Attacking, waiting to finish", $COLOR_GREEN)
+	SetLog(getLocaleString("logAtkTHFinished"), $COLOR_GREEN)
 
 EndFunc   ;==>AttackTHXtreme
 
 Func AttackTHGbarch()
-	Setlog("Sending 1st wave of archers.")
+	Setlog(getLocaleString("logAtkTHGBarch1"))
 	AttackTHGrid($eArch, 4, 1, 2000, 1, 4, 0) ; deploys 4 archers - take out possible bombs
 	AttackTHGrid($eArch, 3, Random(5, 6, 1), 1000, 1, 4, 0) ; deploys 15-18 archers
 	$count = 0
@@ -521,26 +521,26 @@ Func AttackTHGbarch()
 		If _Sleep(1000) Then Return
 		;_CaptureRegion()
 		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
-			SetLog("Townhall has been destroyed!")
+			SetLog(getLocaleString("logTHDestroyed"))
 			Return ;exit if you get a star
 		EndIf
 		$count += 1
 	WEnd
 
-	Setlog("Sending second wave of archers.")
+	Setlog(getLocaleString("logAtkTHGBarch2"))
 	AttackTHGrid($eArch, 4, Random(4, 5, 1), 1000, 2, 4, 0) ;deploys 16-20 archers
 	$count = 0
 	While $count < 30
 		If _Sleep(1000) Then Return
 		;_CaptureRegion()
 		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
-			SetLog("Townhall has been destroyed!")
+			SetLog(getLocaleString("logTHDestroyed"))
 			Return ;exit if you get a star
 		EndIf
 		$count += 1
 	WEnd
 
-	Setlog("Still no star - Let's send in more diverse troops!")
+	Setlog(getLocaleString("logAtkTHGBarch3"))
 	AttackTHGrid($eGiant, 2, 1, 1240, 1, 2, 0) ;deploys 2 giants in case of spring traps
 	AttackTHGrid($eGiant, 2, Random(3, 4, 1), 1500, 2, 2, 0) ;deploys 6-8 giants to take heat
 	AttackTHGrid($eBarb, 3, Random(4, 5, 1), 1000, 1, 5, 0) ; deploys up to 12-15 barbarians
@@ -552,13 +552,13 @@ Func AttackTHGbarch()
 		If _Sleep(1000) Then Return
 		;_CaptureRegion()
 		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
-			SetLog("Townhall has been destroyed!")
+			SetLog(getLocaleString("logTHDestroyed"))
 			Return ;exit if you get a star
 		EndIf
 		$count += 1
 	WEnd
 
-	Setlog("Hope the rest of your troops can finish the job!")
+	Setlog(getLocaleString("logAtkTHGBarch4"))
 	AttackTHGrid($eGiant, 2, 9, 1500, 3, 2, 1) ;deploys CC/Heroes & up to 18 giants (in case numbers are off)
 	AttackTHGrid($eBarb, 4, 8, 1200, 2, 5, 0) ; deploys up to 32 barbarians
 	AttackTHGrid($eArch, 3, 13, 1210, 4, 4, 0) ;deploys up to 39 archers
@@ -571,12 +571,13 @@ Func AttackTHGbarch()
 		If _Sleep(1000) Then Return
 		;_CaptureRegion()
 		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
-			SetLog("Townhall has been destroyed!")
+			SetLog(getLocaleString("logTHDestroyed"))
 			Return ;exit if you get a star
 		EndIf
 		$count += 1
 	WEnd
-	SetLog("All Giants, Barbs, and Archers should be deployed, in addition to Heroes & CC (if options are selected). Other troops are not meant to be deployed in this algorithm.", $COLOR_GREEN)
+	SetLog(getLocaleString("logAtkTHGBarchLast1"), $COLOR_GREEN)
+	SetLog(getLocaleString("logAtkTHGBarchLast2"), $COLOR_GREEN)
 
 EndFunc   ;==>AttackTHGbarch
 
@@ -590,14 +591,14 @@ Func ALLDropheroes($x, $y)
 
 	;Activate KQ's power
 	If $checkKPower Or $checkQPower Then
-		SetLog("Waiting " & $delayActivateKQ / 1000 & " seconds before activating King/Queen", $COLOR_ORANGE)
+		SetLog(getLocaleString("logCheckHeroPowerManual") & $delayActivateKQ / 1000 & getLocaleString("logCheckHeroPowerManual2"), $COLOR_ORANGE)
 		If _Sleep($delayActivateKQ) Then Return
 		If $checkKPower Then
-			SetLog("Activate King's power", $COLOR_BLUE)
+			SetLog(getLocaleString("logCheckKPower"), $COLOR_BLUE)
 			SelectDropTroop($King)
 		EndIf
 		If $checkQPower Then
-			SetLog("Activate Queen's power", $COLOR_BLUE)
+			SetLog(getLocaleString("logCheckQPower"), $COLOR_BLUE)
 			SelectDropTroop($Queen)
 		EndIf
 	EndIf
@@ -631,14 +632,12 @@ Func CastSpell($THSpell, $x, $y)
 
 	If ($Spell = -1) Then Return False
 	If $Spell > -1 Then
-		SetLog("Dropping " & $name & " Spell!")
+		SetLog(getLocaleString("logAtkTHDropSpell") & $name & getLocaleString("logAtkTHDropSpell2"))
 		SelectDropTroop($Spell)
 		If _Sleep(10) Then Return
 		Click($x, $y, 1, 0, "#0029")
 	Else
-		SetLog("No " & $name & " Found")
+		SetLog(getLocaleString("logTHAtkTroopQty") & $name & getLocaleString("logTHAtkTroopQty2"))
 	EndIf
 
 EndFunc   ;==>CastSpell
-
-

@@ -27,11 +27,12 @@ $sBotVersion = "v4.1"
 $sBotTitle = "Clash Game Bot " & $sBotVersion
 Global $sBotDll = @ScriptDir & "\CGBPlugin.dll"
 Global $StartupLanguage = IniRead(@ScriptDir & "\COCBot\GUI\localization\lang.ini", "config", "language", "English")
-
+#cs
 If _Singleton($sBotTitle, 1) = 0 Then
 	MsgBox(0, getLocaleString("msgboxWarningTitle"), getLocaleString("msgboxRun"))
 	Exit
- EndIf
+EndIf
+#ce
 
 If @AutoItX64 = 1 Then
 	MsgBox(0, getLocaleString("msgboxWarningTitle"), getLocaleString("msgbox_x64"))

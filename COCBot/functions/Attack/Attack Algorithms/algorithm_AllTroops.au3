@@ -65,13 +65,13 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 	EndIf
 
 	If ($iChkRedArea[$iMatchMode]) Then
-		SetLog("Calculating Smart Attack Strategy", $COLOR_BLUE)
+		SetLog(getLocaleString("logSmartAttackCalculating"), $COLOR_BLUE)
 		Local $hTimer = TimerInit()
 		_WinAPI_DeleteObject($hBitmapFirst)
 		$hBitmapFirst = _CaptureRegion2()
 		_GetRedArea()
 
-		SetLog("Calculated  (in " & Round(TimerDiff($hTimer) / 1000, 2) & " seconds) :")
+		SetLog(getLocaleString("logSmartAttackCalculatedIn") & Round(TimerDiff($hTimer) / 1000, 2) & getLocaleString("logSmartAttackCalculatedInSec"))
 		;SetLog("	[" & UBound($PixelTopLeft) & "] pixels TopLeft")
 		;SetLog("	[" & UBound($PixelTopRight) & "] pixels TopRight")
 		;SetLog("	[" & UBound($PixelBottomLeft) & "] pixels BottomLeft")
@@ -79,7 +79,7 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 
 
 		If ($iChkSmartAttack[$iMatchMode][0] = 1 Or $iChkSmartAttack[$iMatchMode][1] = 1 Or $iChkSmartAttack[$iMatchMode][2] = 1) Then
-			SetLog("Locating Mines, Collectors & Drills", $COLOR_BLUE)
+			SetLog(getLocaleString("logSmartAttackLocatingPumps"), $COLOR_BLUE)
 			$hTimer = TimerInit()
 			Global $PixelMine[0]
 			Global $PixelElixir[0]
@@ -106,10 +106,10 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 					_ArrayAdd($PixelNearCollector, $PixelDarkElixir)
 				EndIf
 			EndIf
-			SetLog("Located  (in " & Round(TimerDiff($hTimer) / 1000, 2) & " seconds) :")
-			SetLog("[" & UBound($PixelMine) & "] Gold Mines")
-			SetLog("[" & UBound($PixelElixir) & "] Elixir Collectors")
-			SetLog("[" & UBound($PixelDarkElixir) & "] Dark Elixir Drill/s")
+			SetLog(getLocaleString("logSmartAttackLocatedIn") & Round(TimerDiff($hTimer) / 1000, 2) & getLocaleString("logSmartAttackLocatedInSec"))
+			SetLog("[" & UBound($PixelMine) & getLocaleString("logSmartAttackLocatedMines"))
+			SetLog("[" & UBound($PixelElixir) & getLocaleString("logSmartAttackLocatedCollectors"))
+			SetLog("[" & UBound($PixelDarkElixir) & getLocaleString("logSmartAttackLocatedDrills"))
 		EndIf
 
 	EndIf
@@ -120,19 +120,19 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 	Local $nbSides = 0
 	Switch $iChkDeploySettings[$iMatchMode]
 		Case 0 ;Single sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			SetLog("Attacking on a single side", $COLOR_BLUE)
+			SetLog(getLocaleString("logNbSides1"), $COLOR_BLUE)
 			$nbSides = 1
 		Case 1 ;Two sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			SetLog("Attacking on two sides", $COLOR_BLUE)
+			SetLog(getLocaleString("logNbSides2"), $COLOR_BLUE)
 			$nbSides = 2
 		Case 2 ;Three sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			SetLog("Attacking on three sides", $COLOR_BLUE)
+			SetLog(getLocaleString("logNbSides3"), $COLOR_BLUE)
 			$nbSides = 3
 		Case 3 ;All sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			SetLog("Attacking on all sides", $COLOR_BLUE)
+			SetLog(getLocaleString("logNbSides4"), $COLOR_BLUE)
 			$nbSides = 4
 		Case 4 ;Four fingers style ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			SetLog("Four fingers Barch deployment style", $COLOR_BLUE)
+			SetLog(getLocaleString("logNbSides5"), $COLOR_BLUE)
 		$nbSides = 5
 	EndSwitch
 	If ($nbSides = 0) Then Return
@@ -170,7 +170,7 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 	LaunchTroop2($listInfoDeploy, $CC, $King, $Queen)
 
 	If _Sleep(100) Then Return
-	SetLog("Dropping left over troops", $COLOR_BLUE)
+	SetLog(getLocaleString("logDroopingLeft"), $COLOR_BLUE)
 	For $x = 0 To 1
 		PrepareAttack($iMatchMode, True) ;Check remaining quantities
 		For $i = $eBarb To $eLava ; lauch all remaining troops
@@ -186,20 +186,20 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 
 	;Activate KQ's power
 	If ($checkKPower Or $checkQPower) And $iActivateKQCondition = "Manual" Then
-		SetLog("Waiting " & $delayActivateKQ / 1000 & " seconds before activating Hero abilities", $COLOR_BLUE)
+		SetLog(getLocaleString("logCheckHeroPowerManual") & $delayActivateKQ / 1000 & getLocaleString("logCheckHeroPowerManual2"), $COLOR_BLUE)
 		_Sleep($delayActivateKQ)
 		If $checkKPower Then
-			SetLog("Activating King's power", $COLOR_BLUE)
+			SetLog(getLocaleString("logCheckKPower"), $COLOR_BLUE)
 			SelectDropTroop($King)
 			$checkKPower = False
 		EndIf
 		If $checkQPower Then
-			SetLog("Activating Queen's power", $COLOR_BLUE)
+			SetLog(getLocaleString("logCheckQPower"), $COLOR_BLUE)
 			SelectDropTroop($Queen)
 			$checkQPower = False
 		EndIf
 	EndIf
 
-	SetLog("Finished Attacking, waiting for the battle to end")
+	SetLog(getLocaleString("logFinishedAttacking"))
 EndFunc   ;==>algorithm_AllTroops
 

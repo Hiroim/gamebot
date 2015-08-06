@@ -17,7 +17,7 @@ Func GoldElixirChange()
 	Local $Gold1, $Gold2
 	Local $GoldChange, $ElixirChange
 	Local $Elixir1, $Elixir2
-	SetLog("Checking if the battle has finished", $COLOR_BLUE)
+	SetLog(getLocaleString("logCheckBattleFinish"), $COLOR_BLUE)
 	While 1
 		$Gold1 = getGoldVillageSearch(48, 68)
 		$Elixir1 = getElixirVillageSearch(48, 68 + 28)
@@ -49,7 +49,7 @@ Func GoldElixirChange()
 				If _Sleep(500) Then Return
 
 				If getGoldVillageSearch(48, 68) = "" And getElixirVillageSearch(48, 68 + 28) = "" Then
-					SetLog("Battle has finished", $COLOR_GREEN)
+					SetLog(getLocaleString("logBattleHasFinished"), $COLOR_GREEN)
 					ExitLoop
 				EndIf
 
@@ -61,7 +61,7 @@ Func GoldElixirChange()
 			GUICtrlSetData($lblresultvillagesattacked, GUICtrlRead($lblresultvillagesattacked) + 1)
 			Return False
 		Else
-			SetLog("Gold & Elixir change detected, waiting...", $COLOR_GREEN)
+			SetLog(getLocaleString("logGoldElixirChange"), $COLOR_GREEN)
 			Return True
 		EndIf
 		ExitLoop

@@ -17,12 +17,12 @@ Func LauchTroop($troopKind, $nbSides, $waveNb, $maxWaveNb, $slotsPerEdge = 0)
 		Return False; nothing to do => skip this wave
 	EndIf
 
-	Local $waveName = "first"
-	If $waveNb = 2 Then $waveName = "second"
-	If $waveNb = 3 Then $waveName = "third"
-	If $maxWaveNb = 1 Then $waveName = "only"
-	If $waveNb = 0 Then $waveName = "last"
-	SetLog("Dropping " & $waveName & " wave of " & $troopNb & " " & $name, $COLOR_GREEN)
+	Local $waveName = getLocaleString("txtWaveName1")
+	If $waveNb = 2 Then $waveName = getLocaleString("txtWaveName2")
+	If $waveNb = 3 Then $waveName = getLocaleString("txtWaveName3")
+	If $maxWaveNb = 1 Then $waveName = getLocaleString("txtWaveNameOnly")
+	If $waveNb = 0 Then $waveName = getLocaleString("txtWaveNameLast")
+	SetLog(getLocaleString("logDropWave") & $waveName & getLocaleString("logDropWave2") & $troopNb & " " & $name & getLocaleString("logDropWave3"), $COLOR_GREEN)
 
 	DropTroop($troop, $nbSides, $troopNb, $slotsPerEdge)
 	Return True
@@ -75,7 +75,7 @@ Func LaunchTroop2($listInfoDeploy, $CC, $King, $Queen)
 		Local $isCCDropped = False
 		Local $isHeroesDropped = False
 		If ( ($iChkSmartAttack[$iMatchMode][0] = 1 Or $iChkSmartAttack[$iMatchMode][1] = 1 Or $iChkSmartAttack[$iMatchMode][2] = 1) And UBound($PixelNearCollector) = 0) Then
-				SetLog("Error, no pixel found near collector => Normal attack near red line")
+				SetLog(getLocaleString("logErrNoPixelNearCollector"))
 		EndIf
 		If ($iCmbSmartDeploy[$iMatchMode] = 0) Then
 			For $numWave = 0 To UBound($listListInfoDeployTroopPixel) - 1
@@ -102,11 +102,11 @@ Func LaunchTroop2($listInfoDeploy, $CC, $King, $Queen)
 						If _Sleep(100) Then Return
 						SelectDropTroop($infoPixelDropTroop[0]) ;Select Troop
 						If _Sleep(100) Then Return
-						Local $waveName = "first"
-						If $numWave + 1 = 2 Then $waveName = "second"
-						If $numWave + 1 = 3 Then $waveName = "third"
-						If $numWave + 1 = 0 Then $waveName = "last"
-						SetLog("Dropping " & $waveName & " wave of " & $infoPixelDropTroop[5] & " " & $infoPixelDropTroop[4], $COLOR_GREEN)
+						Local $waveName = getLocaleString("txtWaveName1")
+						If $numWave + 1 = 2 Then $waveName = getLocaleString("txtWaveName2")
+						If $numWave + 1 = 3 Then $waveName = getLocaleString("txtWaveName3")
+						If $numWave + 1 = 0 Then $waveName = getLocaleString("txtWaveNameLast")
+						SetLog(getLocaleString("logDropWave") & $waveName & getLocaleString("logDropWave2") & $infoPixelDropTroop[5] & " " & $infoPixelDropTroop[4], $COLOR_GREEN)
 
 
 						DropOnPixel($infoPixelDropTroop[0], $infoPixelDropTroop[1], $infoPixelDropTroop[2], $infoPixelDropTroop[3])
@@ -162,7 +162,7 @@ Func LaunchTroop2($listInfoDeploy, $CC, $King, $Queen)
 									If _Sleep(100) Then Return
 									SelectDropTroop($infoTroopListArrPixel[0]) ;Select Troop
 									If _Sleep(300) Then Return
-									SetLog("Dropping " & $infoTroopListArrPixel[2] & "  of " & $infoTroopListArrPixel[5] & " => on each side (side : " & $i + 1 & ")", $COLOR_GREEN)
+									SetLog(getLocaleString("logDropWave") & $infoTroopListArrPixel[2] & getLocaleString("getLocaleString("logDropOf")") & $infoTroopListArrPixel[5] & " => on each side (side : " & $i + 1 & ")", $COLOR_GREEN)
 									Local $pixelDropTroop[1] = [$listPixel]
 									DropOnPixel($infoTroopListArrPixel[0], $pixelDropTroop, $infoTroopListArrPixel[2], $infoTroopListArrPixel[3])
 								EndIf
@@ -188,7 +188,7 @@ Func LaunchTroop2($listInfoDeploy, $CC, $King, $Queen)
 						If _Sleep(100) Then Return
 						SelectDropTroop($infoPixelDropTroop[0]) ;Select Troop
 						If _Sleep(300) Then Return
-						SetLog("Dropping last " & $numberLeft & "  of " & $infoPixelDropTroop[5], $COLOR_GREEN)
+						SetLog(getLocaleString("logDropLast") & $numberLeft & getLocaleString("getLocaleString("logDropOf")") & $infoPixelDropTroop[5], $COLOR_GREEN)
 
 						DropOnPixel($infoPixelDropTroop[0], $infoPixelDropTroop[1], Ceiling($numberLeft / UBound($infoPixelDropTroop[1])), $infoPixelDropTroop[3])
 					EndIf

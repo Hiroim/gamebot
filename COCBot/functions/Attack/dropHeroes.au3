@@ -12,7 +12,7 @@ Func dropHeroes($x, $y, $KingSlot = -1, $QueenSlot = -1) ;Drops for king and que
 		$dropQueen = True
 	EndIf
 	If $dropKing Then
-		SetLog("Dropping King", $COLOR_BLUE)
+		SetLog(getLocaleString("logDropK"), $COLOR_BLUE)
 		Click(GetXPosOfArmySlot($KingSlot, 68), 595,1,0,"#0092") ;Select King
 		If _Sleep(500) Then Return
 		Click($x, $y,1,0,"#0093")
@@ -22,7 +22,7 @@ Func dropHeroes($x, $y, $KingSlot = -1, $QueenSlot = -1) ;Drops for king and que
 	If _Sleep(300) Then Return
 
 	If $dropQueen Then
-		SetLog("Dropping Queen", $COLOR_BLUE)
+		SetLog(getLocaleString("logDropQ"), $COLOR_BLUE)
 		Click(GetXPosOfArmySlot($QueenSlot, 68), 595,1,0,"#0094") ;Select Queen
 		If _Sleep(500) Then Return
 		Click($x, $y,1,0,"#0095")
