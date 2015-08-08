@@ -18,21 +18,23 @@ Func ZoomOut() ;Zooms out
 	If _GetPixelColor($aTopLeftClient[0], $aTopLeftClient[1]) <> Hex($aTopLeftClient[2], 6) Or _
 	_GetPixelColor($aTopMiddleClient[0], $aTopMiddleClient[1]) <> Hex($aTopMiddleClient[2], 6) Or _
 	_GetPixelColor($aTopRightClient[0], $aTopRightClient[1]) <> Hex($aTopRightClient[2], 6) 	Then
-		If _Sleep(1500) Then Return
 		SetLog(getLocaleString("logZoomOut"), $COLOR_BLUE)
-		While _GetPixelColor($aTopLeftClient[0], $aTopLeftClient[1]) <> Hex($aTopLeftClient[2], 6) And _GetPixelColor($aTopRightClient[0], $aTopRightClient[1]) <> Hex($aTopRightClient[2], 6)
-			If $debugsetlog = 1 Then Setlog("Index = "&$i, $COLOR_PURPLE) ; Index=2X loop count if success, will be odd value or increment by 1 if controlsend fail
-			If _Sleep(200) Then Return
+		If _Sleep($iDelayZoomOut1) Then Return
+		While _GetPixelColor($aTopLeftClient[0], $aTopLeftClient[1]) <> Hex($aTopLeftClient[2], 6) And _
+			_GetPixelColor($aTopMiddleClient[0], $aTopMiddleClient[1]) <> Hex($aTopMiddleClient[2], 6) And _
+			_GetPixelColor($aTopRightClient[0], $aTopRightClient[1]) <> Hex($aTopRightClient[2], 6)
+			If $debugsetlog = 1 Then Setlog("Index = "&$i, $COLOR_PURPLE) ; Index=2X loop count if success, will be increment by 1 if controlsend fail
+			If _Sleep($iDelayZoomOut2) Then Return
 			$Result0 = ControlFocus($Title, "","")
 			$Result1 = ControlSend($Title, "", "", "{DOWN}")
-			If $debugsetlog = 1 Then Setlog("ControlFocus Result = "&$Result0 & ", ControlSend Result = "&$Result1& "|" & @error, $COLOR_PURPLE)
+			If $debugsetlog = 1 Then Setlog("ControlFocus Result = "&$Result0 & ", ControlSend Result = "&$Result1& "|" & "@error= " & @error, $COLOR_PURPLE)
 			If $Result1 = 1 Then
 				$i += 1
 			Else
 				Setlog("Warning ControlSend $Result = "&$Result1, $COLOR_PURPLE)
 			EndIf
 			If $i > 20 Then
-				If _Sleep(1000) Then Return
+				If _Sleep($iDelayZoomOut3) Then Return
 			EndIf
 			If $i > 80 Then Return
 			If IsProblemAffect(True) Then  ; added to catch errors during Zoomout

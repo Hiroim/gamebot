@@ -26,33 +26,33 @@ Func AttackReport()
 	$iCount = 0 ; Reset loop counter
 	While _CheckPixel($aEndFightSceneAvl, True) = False ; check for light gold pixle in the Gold ribbon in End of Attack Scene before reading values
 		$iCount += 1
-		If _sleep(500) Then Return
+		If _Sleep($iDelayAttackReport1) Then Return
 		If $debugSetlog = 1 Then Setlog("Waiting Attack Report Ready, " & ($iCount / 2) & " Seconds.", $COLOR_PURPLE)
 		If $iCount > 30 Then ExitLoop ; wait 30*500ms = 15 seconds max for the window to render
 	WEnd
-	If $iCount > 30 Then Setlog("End of Attack scene slow to appear, attack values my not be correct", $COLOR_BLUE)
+	If $iCount > 30 Then Setlog(getLocaleString("logEndOfAtkReadValue"), $COLOR_BLUE)
 
 	$iCount = 0 ; reset loop counter
 	While getResourcesLoot(333, 289) = "" ; check for gold value to be non-zero before reading other values as a secondary timer to make sure all values are available
 		$iCount += 1
-		If _sleep(500) Then Return
+		If _Sleep($iDelayAttackReport1) Then Return
 		If $debugSetlog = 1 Then Setlog("Waiting Attack Report Ready, " & ($iCount / 2) & " Seconds.", $COLOR_PURPLE)
 		If $iCount > 20 Then ExitLoop ; wait 20*500ms = 10 seconds max before we have call the OCR read an error
 	WEnd
-	If $iCount > 20 Then Setlog("End of Attack scene read gold error, attack values my not be correct", $COLOR_BLUE)
+	If $iCount > 20 Then Setlog(getLocaleString("logEndOfAtkReadValueGold"), $COLOR_BLUE)
 
-	If _ColorCheck(_GetPixelColor(459, 372, True), Hex(0x433350, 6), 20) Then ; if the color of the DE drop detected
+	If _ColorCheck(_GetPixelColor($aAtkRprtDECheck[0], $aAtkRprtDECheck[1], True), Hex($aAtkRprtDECheck[2], 6), $aAtkRprtDECheck[3]) Then ; if the color of the DE drop detected
 		$lootGold = getResourcesLoot(333, 289)
-		If _sleep(150) Then Return
+		If _Sleep($iDelayAttackReport2) Then Return
 		$lootElixir = getResourcesLoot(333, 328)
-		If _sleep(150) Then Return
+		If _Sleep($iDelayAttackReport2) Then Return
 		$lootDarkElixir = getResourcesLootDE(365, 365)
-		If _sleep(150) Then Return
+		If _Sleep($iDelayAttackReport2) Then Return
 		$lootTrophies = getResourcesLootT(403, 402)
-		If _ColorCheck(_GetPixelColor(327, 189, True), Hex(0x3B321C, 6), 30) Then
+		If _ColorCheck(_GetPixelColor($aAtkRprtTrophyCheck[0], $aAtkRprtTrophyCheck[1], True), Hex($aAtkRprtTrophyCheck[2], 6), $aAtkRprtTrophyCheck[3]) Then
 			$lootTrophies = -$lootTrophies
 		EndIf
-		SetLog("Loot: [G]: " & _NumberFormat($lootGold) & " [E]: " & _NumberFormat($lootElixir) & " [DE]: " & _NumberFormat($lootDarkElixir) & " [T]: " & $lootTrophies, $COLOR_GREEN)
+		SetLog(getLocaleString("logLootG") & _NumberFormat($lootGold) & getLocaleString("logLootE") & _NumberFormat($lootElixir) & getLocaleString("logLootDE") & _NumberFormat($lootDarkElixir) & getLocaleString("logLootT") & $lootTrophies, $COLOR_GREEN)
 
 		If $FirstAttack = 1 Then GUICtrlSetState($lblLastAttackTemp, $GUI_HIDE)
 
@@ -62,15 +62,15 @@ Func AttackReport()
 		GUICtrlSetData($lblTrophyLastAttack, _NumberFormat($lootTrophies))
 	Else
 		$lootGold = getResourcesLoot(333, 289)
-		If _sleep(150) Then Return
+		If _Sleep($iDelayAttackReport2) Then Return
 		$lootElixir = getResourcesLoot(333, 328)
-		If _sleep(150) Then Return
+		If _Sleep($iDelayAttackReport2) Then Return
 		$lootTrophies = getResourcesLootT(403, 365)
-		If _ColorCheck(_GetPixelColor(327, 189, True), Hex(0x3B321C, 6), 30) Then
+		If _ColorCheck(_GetPixelColor($aAtkRprtTrophyCheck[0], $aAtkRprtTrophyCheck[1], True), Hex($aAtkRprtTrophyCheck[2], 6), $aAtkRprtTrophyCheck[3]) Then
 			$lootTrophies = -$lootTrophies
 		EndIf
 		$lootDarkElixir = 0
-		SetLog("Loot: [G]: " & _NumberFormat($lootGold) & " [E]: " & _NumberFormat($lootElixir) & " [DE]: " & _NumberFormat($lootDarkElixir) & " [T]: " & $lootTrophies, $COLOR_GREEN)
+		SetLog(getLocaleString("logLootG") & _NumberFormat($lootGold) & getLocaleString("logLootE") & _NumberFormat($lootElixir) & getLocaleString("logLootDE") & _NumberFormat($lootDarkElixir) & getLocaleString("logLootT") & $lootTrophies, $COLOR_GREEN)
 
 		If $FirstAttack = 1 Then GUICtrlSetState($lblLastAttackTemp, $GUI_HIDE)
 
@@ -81,31 +81,31 @@ Func AttackReport()
 	EndIf
 
 	If $lootTrophies >= 0 Then
-		If _ColorCheck(_GetPixelColor(678, 418, True), Hex(0x030000, 6), 30) Then
-			If _sleep(150) Then Return
+		If _ColorCheck(_GetPixelColor($aAtkRprtDECheck2[0], $aAtkRprtDECheck2[1], True), Hex($aAtkRprtDECheck2[2], 6), $aAtkRprtDECheck2[3]) Then
+			If _Sleep($iDelayAttackReport2) Then Return
 			$BonusLeagueG = getResourcesBonus(590, 340)
 			$BonusLeagueG = StringReplace($BonusLeagueG, "+", "")
-			If _sleep(150) Then Return
+			If _Sleep($iDelayAttackReport2) Then Return
 			$BonusLeagueE = getResourcesBonus(590, 371)
 			$BonusLeagueE = StringReplace($BonusLeagueE, "+", "")
-			If _sleep(150) Then Return
+			If _Sleep($iDelayAttackReport2) Then Return
 			$BonusLeagueD = getResourcesBonus(621, 402)
 			$BonusLeagueD = StringReplace($BonusLeagueD, "+", "")
-			SetLog("Bonus [G]: " & _NumberFormat($BonusLeagueG) & " [E]: " & _NumberFormat($BonusLeagueE) & " [DE]: " & _NumberFormat($BonusLeagueD), $COLOR_GREEN)
+			SetLog(getLocaleString("logBonusG") & _NumberFormat($BonusLeagueG) & getLocaleString("logLootE") & _NumberFormat($BonusLeagueE) & getLocaleString("logLootDE") & _NumberFormat($BonusLeagueD), $COLOR_GREEN)
 		Else
-			If _sleep(150) Then Return
+			If _Sleep($iDelayAttackReport2) Then Return
 			$BonusLeagueG = getResourcesBonus(590, 340)
 			$BonusLeagueG = StringReplace($BonusLeagueG, "+", "")
-			If _sleep(150) Then Return
+			If _Sleep($iDelayAttackReport2) Then Return
 			$BonusLeagueE = getResourcesBonus(590, 371)
 			$BonusLeagueE = StringReplace($BonusLeagueE, "+", "")
-			SetLog("Bonus [G]: " & _NumberFormat($BonusLeagueG) & " [E]: " & _NumberFormat($BonusLeagueE), $COLOR_GREEN)
+			SetLog(getLocaleString("logBonusG") & _NumberFormat($BonusLeagueG) & getLocaleString("logLootE") & _NumberFormat($BonusLeagueE), $COLOR_GREEN)
 		EndIf
 		$LeagueShort = "--"
 		For $i = 0 To 15
-			If _sleep(150) Then Return
+			If _Sleep($iDelayAttackReport2) Then Return
 			If $League[$i][0] = $BonusLeagueG Then
-				SetLog("Your league level is: " & $League[$i][1])
+				SetLog(getLocaleString("logLeague") & $League[$i][1])
 				$LeagueShort = $League[$i][3]
 				ExitLoop
 			EndIf
@@ -122,7 +122,7 @@ Func AttackReport()
 	If _ColorCheck(_GetPixelColor($aWonOneStarAtkRprt[0], $aWonOneStarAtkRprt[1], True), Hex($aWonOneStarAtkRprt[2], 6), $aWonOneStarAtkRprt[3]) Then $starsearned += 1
 	If _ColorCheck(_GetPixelColor($aWonTwoStarAtkRprt[0], $aWonTwoStarAtkRprt[1], True), Hex($aWonTwoStarAtkRprt[2], 6), $aWonTwoStarAtkRprt[3]) Then $starsearned += 1
 	If _ColorCheck(_GetPixelColor($aWonThreeStarAtkRprt[0], $aWonThreeStarAtkRprt[1], True), Hex($aWonThreeStarAtkRprt[2], 6), $aWonThreeStarAtkRprt[3]) Then $starsearned += 1
-	SetLog("Stars earned: " & $starsearned)
+	SetLog(getLocaleString("logStarsEarned") & $starsearned)
 
 	Local $AtkLogTxt
 	$AtkLogTxt = "" & _NowTime(4) & "|"
@@ -142,10 +142,10 @@ Func AttackReport()
 	; Share Replay
 	If $iShareAttack = 1 Then
 		If (Number($lootGold) >= Number($iShareminGold)) And (Number($lootElixir) >= Number($iShareminElixir)) And (Number($lootDarkElixir) >= Number($iSharemindark)) Then
-			SetLog("reach miminum loots values... share Replay")
+			SetLog(getLocaleString("logShareReplay"))
 			$iShareAttackNow = 1
 		Else
-			SetLog("under miminum loots values... no share Replay")
+			SetLog(getLocaleString("logDontShareReplay"))
 			$iShareAttackNow = 0
 		EndIf
 	EndIf

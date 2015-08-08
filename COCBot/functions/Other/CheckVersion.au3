@@ -73,7 +73,7 @@ Func CheckVersionHTML()
 		; Wait for the download to complete by monitoring when the 2nd index value of InetGetInfo returns True.
 		Local $i=0
 		Do
-			Sleep(250)
+			Sleep($iDelayCheckVersionHTML1)
 			$i +=1
 		Until InetGetInfo($hDownload, $INET_DOWNLOADCOMPLETE) or $i > 10
 

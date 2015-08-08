@@ -20,9 +20,9 @@ Func DropOnPixel($troop, $listArrPixel, $number, $slotsPerEdge = 0)
 			debugRedArea("$arrPixel $UBound($arrPixel) : [" & UBound($arrPixel) & "] ")
 			If UBound($arrPixel) > 0 Then
 				Local $pixel = $arrPixel[0]
-				Click($pixel[0], $pixel[1], $number, 250,"#0096")
+				Click($pixel[0], $pixel[1], $number, $iDelayDropOnPixel2,"#0096")
 			EndIf
-			If _Sleep(50) Then Return
+			If _Sleep($iDelayDropOnPixel1) Then Return
 		Next
 	ElseIf $slotsPerEdge = 2 Then ; Drop on 2 points per edge
 		For $i = 0 To UBound($listArrPixel) - 1

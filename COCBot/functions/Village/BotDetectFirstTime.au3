@@ -2,7 +2,7 @@
 ; Name ..........: BotDetectFirstTime
 ; Description ...: This script detects your builings on the first run
 ; Author ........: HungLe (april-2015)
-; Modified ......: Hervidero (april-2015),(may-2015), HungLe (may-2015), KnowJack(July 2015)
+; Modified ......: Hervidero (april-2015),(may-2015), HungLe (may-2015), KnowJack(July 2015), Sardo 2015-08
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -16,8 +16,8 @@ Func BotDetectFirstTime()
 
 	If $Is_ClientSyncError = True Then Return ; if restart after OOS, and User stop/start bot, skip this.
 
-	ClickP($aTopLeftClient, 1, 0, "#0166") ; Click away
-	If _Sleep(1000) Then Return
+	ClickP($aAway, 1, 0, "#0166") ; Click away
+	If _Sleep($iDelayBotDetectFirstTime1) Then Return
 
 	_WinAPI_DeleteObject($hBitmapFirst)
 	$hBitmapFirst = _CaptureRegion2()
@@ -39,11 +39,11 @@ Func BotDetectFirstTime()
 		If IsArray($Result) Then $iTownHallLevel = 0  ; Check for error finding TH level, and reset to zero if yes
 	EndIf
 	If Number($iTownHallLevel) > 1 And Number($iTownHallLevel) < 6 Then
-		Setlog("Warning: TownHall level below 6 NOT RECOMMENDED!", $COLOR_RED)
-		Setlog("Proceed with caution as errors may occur.", $COLOR_RED)
+		Setlog(getLocaleString("logWarnTHLv6"), $COLOR_RED)
+		Setlog(getLocaleString("logWarnTHLv6_2"), $COLOR_RED)
 	EndIf
 
-	If _Sleep(100) Then Return
+	If _Sleep($iDelayBotDetectFirstTime3) Then Return
 
 ;~ 	If $barrackPos[0] = "" Or $barrackNum = 0 Then
 ;~ 		Local $PixelBarrackHere = GetLocationItem("getLocationBarrack")
@@ -63,7 +63,7 @@ Func BotDetectFirstTime()
 ;~ 		EndIf
 ;~ 	EndIf
 
-;~ 	If _Sleep(50) Then Return
+;~ 	If _Sleep($iDelayBotDetectFirstTime2) Then Return
 
 ;~ 	If $barrackDarkNum = 0 Then
 ;~ 		Local $PixelBarrackDarkHere = GetLocationItem("getLocationDarkBarrack")
@@ -77,42 +77,41 @@ Func BotDetectFirstTime()
 ;~ 		EndIf
 
 ;~ 	EndIf
-	If _Sleep(100) Then Return
+	If _Sleep($iDelayBotDetectFirstTime3) Then Return
 
 	If isInsideDiamond($barrackPos) = False Then
 		LocateBarrack()
 	EndIf
 
 
-	If _Sleep(100) Then Return
+	If _Sleep($iDelayBotDetectFirstTime3) Then Return
 
 	If isInsideDiamond($ArmyPos) = False Then
 		LocateBarrack(True)
 	EndIf
 
-	If _Sleep(100) Then Return
+	If _Sleep($iDelayBotDetectFirstTime3) Then Return
 
 	If isInsideDiamond($aCCPos) = False Then
 		LocateClanCastle()
 	EndIf
 
-	If _Sleep(100) Then Return
-
-	While 1 ; Clear the collectors using old image find to reduce collector image finding errors
-		If _Sleep(100) Or $RunState = False Then ExitLoop
-		_CaptureRegion(0, 0, 780)
-		If _ImageSearch(@ScriptDir & "\images\collect.png", 1, $collx, $colly, 20) Then
-			Click($collx, $colly, 1, 0, "#0330") ;Click collector
-			If _Sleep(100) Then Return
-			ClickP($aTopLeftClient, 1, 0, "#0329") ;Click Away
-		ElseIf $i >= 20 Then
-			ExitLoop
-		EndIf
-		$i += 1
-	WEnd
+	If _Sleep($iDelayBotDetectFirstTime3) Then Return
 
 	If $listResourceLocation = "" Then
-		SetLog (getLocaleString("logDetectMines"))
+		While 1 ; Clear the collectors using old image find to reduce collector image finding errors
+			If _Sleep($iDelayBotDetectFirstTime3) Or $RunState = False Then ExitLoop
+			_CaptureRegion(0, 0, 780)
+			If _ImageSearch(@ScriptDir & "\images\collect.png", 1, $collx, $colly, 20) Then
+				Click($collx, $colly, 1, 0, "#0330") ;Click collector
+				If _Sleep($iDelayBotDetectFirstTime3) Then Return
+				ClickP($aAway, 1, 0, "#0329") ;Click Away
+			ElseIf $i >= 20 Then
+				ExitLoop
+			EndIf
+			$i += 1
+		WEnd
+		SetLog(getLocaleString("logDetectMines"))
 		$PixelMineHere = GetLocationItem("getLocationMineExtractor")
 		If UBound($PixelMineHere) > 0 Then
 			SetLog(getLocaleString("logTotalMines") & UBound($PixelMineHere))
@@ -122,7 +121,7 @@ Func BotDetectFirstTime()
 			$listResourceLocation = $listResourceLocation & $pixel[0] & ";" & $pixel[1] & "|"
 			If $debugSetlog = 1 Then SetLog("- Gold Mine " & $i + 1 & ": (" & $pixel[0] & "," & $pixel[1] & ")", $COLOR_PURPLE)
 		Next
-		If _Sleep(1000) Then Return
+		If _Sleep($iDelayBotDetectFirstTime1) Then Return
 		$PixelElixirHere = GetLocationItem("getLocationElixirExtractor")
 		If UBound($PixelElixirHere) > 0 Then
 			SetLog(getLocaleString("logTotalCollectors") & UBound($PixelElixirHere))
@@ -132,7 +131,7 @@ Func BotDetectFirstTime()
 			$listResourceLocation = $listResourceLocation & $pixel[0] & ";" & $pixel[1] & "|"
 			If $debugSetlog = 1 Then SetLog("- Elixir Collector " & $i + 1 & ": (" & $pixel[0] & "," & $pixel[1] & ")", $COLOR_PURPLE)
 		Next
-		If _Sleep(1000) Then Return
+		If _Sleep($iDelayBotDetectFirstTime1) Then Return
 		$PixelDarkElixirHere = GetLocationItem("getLocationDarkElixirExtractor")
 		If UBound($PixelDarkElixirHere) > 0 Then
 			SetLog(getLocaleString("logTotalDrills") & UBound($PixelDarkElixirHere))

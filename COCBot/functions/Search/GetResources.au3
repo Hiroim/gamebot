@@ -13,7 +13,7 @@
 
 Func GetResources() ;Reads resources
 
-	If _Sleep(250) Then Return
+	If _Sleep($iDelayGetResources1) Then Return
 	$searchGold = ""
 	$searchElixir = ""
 	$searchDark = ""
@@ -22,7 +22,7 @@ Func GetResources() ;Reads resources
 	Local $i = 0
 
 	While _CheckPixel($aNoCloudsAttack, $bCapturePixel) = False ; wait for clouds to be gone
-		If _Sleep(500) Then Return
+		If _Sleep($iDelayGetResources2) Then Return
 		$i += 1
 		If $i >= 60 Or isProblemAffect(True) Then ; wait max 30 sec then restart bot
 			checkMainScreen()
@@ -43,13 +43,13 @@ Func GetResources() ;Reads resources
 		If $debugSetlog = 1 Then SetLog("Loop to clean screen without Clouds , nº :" & $i, $COLOR_PURPLE)
 	WEnd
 
-	If _Sleep(150) Then Return
+	If _Sleep($iDelayGetResources3) Then Return
 	$searchGold = getGoldVillageSearch(48, 69)
 
-	If _Sleep(150) Then Return
+	If _Sleep($iDelayGetResources3) Then Return
 	$searchElixir = getElixirVillageSearch(48, 69 + 29)
 
-	If _Sleep(150) Then Return
+	If _Sleep($iDelayGetResources3) Then Return
 	If _ColorCheck(_GetPixelColor(30, 142, True), Hex(0x07010D, 6), 10) Then ; check if the village have a Dark Elixir Storage
 		$searchDark = getDarkElixirVillageSearch(48, 69 + 57)
 		$searchTrophy = getTrophyVillageSearch(48, 69 + 99)
@@ -66,13 +66,13 @@ Func GetResources() ;Reads resources
 	If $iStuck >= 5 Then
 		checkMainScreen()
 		If $Restart Then
-			SetLog(getLocaleString("logCantLocateNextBtn"), $COLOR_RED)
+			SetLog("Cannot locate Next button, Restarting Bot...", $COLOR_RED)
 			Pushmsg("OoSResources")
 			$Is_ClientSyncError = True
 			$iStuck = 0
 			Return
 		Else
-			SetLog(getLocaleString("logStrangeProblem"), $COLOR_RED)
+			SetLog("Have strange problem can not determine, Restarting Bot...", $COLOR_RED)
 			$Is_ClientSyncError = True
 			$iStuck = 0
 			$Restart = True

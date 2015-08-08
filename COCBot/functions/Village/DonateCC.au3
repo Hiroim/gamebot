@@ -5,7 +5,7 @@
 ; Parameters ....: None
 ; Return values .: None
 ; Author ........: Zax (2015)
-; Modified ......: Safar46 (2015), Hervidero (2015-04), HungLe (2015-04)
+; Modified ......: Safar46 (2015), Hervidero (2015-04), HungLe (2015-04), Sardo 2015-08
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -44,17 +44,17 @@ Func DonateCC($Check = False)
 		EndIf
 	EndIf
 
-	ClickP($aTopLeftClient, 1, 0, "#0167") ;Click Away
+	ClickP($aAway, 1, 0, "#0167") ;Click Away
 	;_CaptureRegion()
 	If _CheckPixel($aChatTab, $bCapturePixel) = False Then ClickP($aOpenChat, 1, 0, "#0168") ; Clicks chat tab
-	If _Sleep(200) Then Return
+	If _Sleep($iDelayDonateCC1) Then Return
 	ClickP($aClanTab, 1, 0, "#0169") ; clicking clan tab
 
 	Local $Scroll, $offColors[3][3] = [[0x000000, 0, -2], [0x272926, 0, 1], [0xcfea75, 0, 17]] ; $offColors[3][3] = [[0x000000, 0, -2], [0x262926, 0, 1], [0xF8FCF0, 0, 11]]
 	Global $DonatePixel
 
 	While $Donate
-		If _Sleep(250) Then ExitLoop
+		If _Sleep($iDelayDonateCC2) Then ExitLoop
 		$DonatePixel = _MultiPixelSearch(202, $y, 203, 670, 1, 1, Hex(0x262926, 6), $offColors, 20)
 		If IsArray($DonatePixel) Then
 			$Donate = False
@@ -71,7 +71,7 @@ Func DonateCC($Check = False)
 				Else
 					$ClanString &= " " & getChatString(30, $DonatePixel[1] - 19, "coc-latinA")
 				EndIf
-				If _Sleep(250) Then ExitLoop
+				If _Sleep($iDelayDonateCC2) Then ExitLoop
 
 
 
@@ -285,7 +285,7 @@ Func DonateCC($Check = False)
 							EndIf
 							DonateTroopType($varDonateCustom[$i][0], $varDonateCustom[$i][1], True) ;;; Donate Custom Troop using DonateTroopType2
 						Next
-						ClickP($aTopLeftClient, 1, 0, "#0170")
+						ClickP($aAway, 1, 0, "#0170")
 					Case $iChkDonateAllBarbarians = 1
 						DonateTroopType($eBarb)
 					Case $iChkDonateAllArchers = 1
@@ -323,8 +323,8 @@ Func DonateCC($Check = False)
 
 			$Donate = True
 			$y = $DonatePixel[1] + 10
-			ClickP($aTopLeftClient, 1, 0, "#0171")
-			If _Sleep(250) Then ExitLoop
+			ClickP($aAway, 1, 0, "#0171")
+			If _Sleep($iDelayDonateCC2) Then ExitLoop
 		EndIf
 		$DonatePixel = _MultiPixelSearch(202, $y, 203, 670, 1, 1, Hex(0x262926, 6), $offColors, 20)
 		If IsArray($DonatePixel) Then ContinueLoop
@@ -334,18 +334,18 @@ Func DonateCC($Check = False)
 		If IsArray($Scroll) Then
 			Click($Scroll[0], $Scroll[1], 1, 0, "#0172")
 			$y = 119
-			If _Sleep(250) Then ExitLoop
+			If _Sleep($iDelayDonateCC2) Then ExitLoop
 			ContinueLoop
 		EndIf
 		$Donate = False
 	WEnd
 
 	_CaptureRegion()
-	If _ColorCheck(_GetPixelColor(331, 330), Hex(0xF0A03B, 6), 20) Then
-		Click(331, 330, 1, 0, "#0173") ;Clicks chat thing
+	If _ColorCheck(_GetPixelColor($aCloseChat[0], $aCloseChat[1]), Hex($aCloseChat[2], 6), $aCloseChat[3]) Then
+		Click($aCloseChat[0], $aCloseChat[1], 1, 0, "#0173") ;Clicks chat thing
 	EndIf
 
-	If _Sleep(250) Then Return
+	If _Sleep($iDelayDonateCC2) Then Return
 EndFunc   ;==>DonateCC
 
 Func CheckDonateTroop($Type, $aDonTroop, $aBlkTroop, $aBlackList, $ClanString)
@@ -412,13 +412,13 @@ Func DonateTroopType($Type, $quant = 8, $custom = False)
 	EndSwitch
 
 	Click($DonatePixel[0], $DonatePixel[1] + 11, 1, 0, "#0174")
-	If _Sleep(250) Then Return
+	If _Sleep($iDelayDonateTroopType1) Then Return
 	_CaptureRegion(0, 0, 766, $DonatePixel[1] + 50 + $YComp)
 	$icount = 0
 	While Not (_ColorCheck(_GetPixelColor(237 + ($Slot * 82), $DonatePixel[1] - 5 + $YComp), Hex(0x507C00, 6), 10) Or _
 			_ColorCheck(_GetPixelColor(237 + ($Slot * 82), $DonatePixel[1] - 10 + $YComp), Hex(0x507C00, 6), 10) Or _
 			_ColorCheck(_GetPixelColor(237 + ($Slot * 82), $DonatePixel[1] - 16 + $YComp), Hex(0x507C00, 6), 10))
-		If _Sleep(250) Then Return
+		If _Sleep($iDelayDonateTroopType1) Then Return
 		_CaptureRegion(0, 0, 766, $DonatePixel[1] + 50 + $YComp)
 		$icount += 1
 		If $icount = 10 Then ExitLoop
@@ -432,24 +432,24 @@ Func DonateTroopType($Type, $quant = 8, $custom = False)
 		Else
 			SetLog(getLocaleString("logDonating") & NameOfTroop($Type), $COLOR_GREEN)
 		EndIf
-		Click(237 + ($Slot * 82), $DonatePixel[1] - 10 + $YComp, $quant, 50, "#0175")
-;~		PureClick(237 + ($Slot * 82), $DonatePixel[1] - 10 + $YComp, $quant, 50)
+		Click(237 + ($Slot * 82), $DonatePixel[1] - 10 + $YComp, $quant, $iDelayDonateCC3, "#0175")
+;~		PureClick(237 + ($Slot * 82), $DonatePixel[1] - 10 + $YComp, $quant, $iDelayDonateCC3)
 		$Donate = True
 		For $i = 0 To UBound($TroopName) - 1
 			If Eval("e" & $TroopName[$i]) = $Type Then
 				If $TroopHeight[$i] <= 6 Then
-					Assign(Eval("Cur" & $TroopName[$i]), Eval("Cur" & $TroopName[$i]) + 5)
+					Assign("Cur" & $TroopName[$i], Eval("Cur" & $TroopName[$i]) + 5)
 				Else
-					Assign(Eval("Cur" & $TroopName[$i]), Eval("Cur" & $TroopName[$i]) + 1)
+					Assign("Cur" & $TroopName[$i], Eval("Cur" & $TroopName[$i]) + 1)
 				EndIf
 			EndIf
 		Next
 		For $i = 0 To UBound($TroopDarkName) - 1
 			If Eval("e" & $TroopDarkName[$i]) = $Type Then
 				If $TroopDarkHeight[$i] <= 6 Then
-					Assign(Eval("Cur" & $TroopDarkName[$i]), Eval("Cur" & $TroopDarkName[$i]) + 5)
+					Assign("Cur" & $TroopDarkName[$i], Eval("Cur" & $TroopDarkName[$i]) + 5)
 				Else
-					Assign(Eval("Cur" & $TroopDarkName[$i]), Eval("Cur" & $TroopDarkName[$i]) + 1)
+					Assign("Cur" & $TroopDarkName[$i], Eval("Cur" & $TroopDarkName[$i]) + 1)
 				EndIf
 			EndIf
 		Next
@@ -459,6 +459,6 @@ Func DonateTroopType($Type, $quant = 8, $custom = False)
 		SetLog(getLocaleString("logTroopNo") & NameOfTroop($Type) & getLocaleString("logTroopAvailable"), $COLOR_RED)
 	EndIf
 
-	ClickP($aTopLeftClient, 1, 0, "#0176")
-	If _Sleep(250) Then Return
+	ClickP($aAway, 1, 0, "#0176")
+	If _Sleep($iDelayDonateTroopType1) Then Return
 EndFunc   ;==>DonateTroopType

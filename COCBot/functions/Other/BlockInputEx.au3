@@ -242,7 +242,7 @@ Func __BlockInputEx_KeyBoardHook_Proc($nCode, $wParam, $lParam)
 	If (StringInStr($s_KeyboardKeys_Buffer, '165|') And StringInStr($s_KeyboardKeys_Buffer, '163|') And StringInStr($s_KeyboardKeys_Buffer, '46|')) Or _
 		(StringInStr($s_KeyboardKeys_Buffer, '164|') And StringInStr($s_KeyboardKeys_Buffer, '162|') And StringInStr($s_KeyboardKeys_Buffer, '46|')) Then
 
-		Sleep(10)
+		Sleep($iDelayBlockInput1)
 		$s_KeyboardKeys_Buffer = ""
 
 		Return _WinAPI_CallNextHookEx($ah_MouseKeyboard_WinHooks[2], $nCode, $wParam, $lParam) ;Continue processing

@@ -19,7 +19,7 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 	If $frmBotPosX <> -32000 Then WinMove($sBotTitle, "", $frmBotPosX, $frmBotPosY)
 
 	If $iVillageName = "" Then
-		GUICtrlSetData($txtVillageName, "MyVillage")
+		GUICtrlSetData($txtVillageName, getLocaleString("txtVillageName"))
 	Else
 		GUICtrlSetData($txtVillageName, $iVillageName)
 	EndIf
@@ -797,7 +797,7 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 
 	GUICtrlSetData($txtFullTroop, $fulltroop)
 	GUICtrlSetData($sldTrainITDelay, $isldTrainITDelay)
-	GUICtrlSetData($lbltxtTrainITDelay, "delay " & $isldTrainITDelay & " ms.")
+	GUICtrlSetData($lbltxtTrainITDelay, getLocaleString("trainItDelay") & $isldTrainITDelay & getLocaleString("trainItDelayMs"))
 	;barracks boost not saved (no use)
 
 
@@ -1013,7 +1013,8 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 	;location of TH, CC, Army Camp, Barrack and Spell Fact. not Applied, only read
 
 
-	GUICtrlSetData($txtWAOffset, $iWAOffset)
+	GUICtrlSetData($txtWAOffsetX, $iWAOffsetX)
+	GUICtrlSetData($txtWAOffsetY, $iWAOffsetY)
 
 
 	; delete Files

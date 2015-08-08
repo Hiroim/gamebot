@@ -5,7 +5,7 @@
 ; Parameters ....: None
 ; Return values .: None
 ; Author ........: Sardo (2015-06)
-; Modified ......:
+; Modified ......: Sardo 2015-08
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -22,13 +22,13 @@ Func ReplayShare($last = 1)
 	Local $txtMessage, $tNew
 	If $last = 1 Then
 		;--  open page of attacks -------------------------------------------------------------
-		ClickP($aTopLeftClient,1,0,"#0235") ;Click Away
-		If _Sleep(500) Then Return ;
-		SetLog("Share Replay: Opening Messages Page...", $COLOR_BLUE)
+		ClickP($aAway,1,0,"#0235") ;Click Away
+		If _Sleep($iDelayReplayShare2) Then Return ;
+		SetLog(getLocaleString("logShareReplayOpenMsgPage"), $COLOR_BLUE)
 		ClickP($aMessageButton, 1, 0, "#0236") ;Click Messages Button
-		If _Sleep(1000) Then Return
+		If _Sleep($iDelayReplayShare3) Then Return
 		Click(380, 94,1,0,"#0237") ; Click Attack Log Tab
-		If _Sleep(1000) Then Return
+		If _Sleep($iDelayReplayShare3) Then Return
 
 		; publish last replay ----------------------------------------------------------------
 		_CaptureRegion()
@@ -38,11 +38,11 @@ Func ReplayShare($last = 1)
 
 		If _ColorCheck(_GetPixelColor(500, 156), Hex(0x78D4E8, 6), 6) = True And Not (IsArray($FileListQueueName)) Then
 			;button replay blue
-			Setlog("Ok, sharing!")
+			Setlog(getLocaleString("logSharing"))
 			Click(500, 156,1,0,"#0238") ; Click Share Button
-			If _Sleep(250) Then Return
+			If _Sleep($iDelayReplayShare1) Then Return
 			Click(300, 120,1,0,"#0239") ;Select text for write comment
-			If _Sleep(250) Then Return
+			If _Sleep($iDelayReplayShare1) Then Return
 
 			;compose message txt
 			Local $smessage = $sShareMessage
@@ -60,7 +60,7 @@ Func ReplayShare($last = 1)
 			$txtMessage = StringReplace($txtMessage, "<n>", StringFormat("%s", $SearchCount))
 
 			ControlSend($Title, "", "", $txtMessage, 0)
-			If _Sleep(250) Then Return
+			If _Sleep($iDelayReplayShare1) Then Return
 			Click(530, 210,1,0,"#0240") ;Click Send Button
 			$tNew = _Date_Time_GetLocalTime()
 			$dLastShareDate = _Date_Time_SystemTimeToDateTimeStr($tNew, 1)
@@ -68,20 +68,20 @@ Func ReplayShare($last = 1)
 			If _ColorCheck(_GetPixelColor(500, 156), Hex(0xbbbbbb, 6), 6) = True Or IsArray($FileListQueueName) Then
 				;button replay gray.. insert village in queue
 				If IsArray($FileListQueueName) Then
-					SetLog("Others replay in queue, Share Later Last Replay")
+					SetLog(getLocaleString("logReplayInQueue"))
 				Else
-					Setlog("Cannot Share Now... retry later.")
+					Setlog(getLocaleString("logShareRetryLater"))
 				EndIf
 				_CaptureRegion(87, 149, 87 + 100, 149 + 20)
 				Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
 				Local $Time = @HOUR & "." & @MIN
 				Local $iSaveFile = _GDIPlus_ImageSaveToFile($hBitmap, $dirTemp & "Village_" & $Date & "_" & $Time & "^" & StringFormat("%s", $SearchCount) & ".png")
-				If Not ($iSaveFile) Then SetLog("An error occurred putting screenshot in queue", $COLOR_RED)
+				If Not ($iSaveFile) Then SetLog(getLocaleString("logErrNotiSaveFile"), $COLOR_RED)
 				Click(763, 86,1,0,"#0241") ; Close  page
-				If _Sleep(500) Then Return ;
+				If _Sleep($iDelayReplayShare2) Then Return ;
 			Else
 				;button not found, abort
-				Setlog("Cannot Share Now... retry later.", $COLOR_RED)
+				Setlog(getLocaleString("logShareRetryLater"), $COLOR_RED)
 			EndIf
 		EndIf
 		$iShareAttackNow = 0 ;reset variable
@@ -113,19 +113,19 @@ Func ReplayShare($last = 1)
 				;SetLog("Debug oldest filename: " & $FileListName[$FileListDate] )
 
 				;--  open page of attacks -------------------------------------------------------------
-				ClickP($aTopLeftClient,1,0,"#0242") ;Click Away
-				If _Sleep(500) Then Return ;
-				SetLog("Share Replay: Opening Messages Page...", $COLOR_BLUE)
+				ClickP($aAway,1,0,"#0242") ;Click Away
+				If _Sleep($iDelayReplayShare2) Then Return ;
+				SetLog(getLocaleString("logShareReplayOpenMsgPage"), $COLOR_BLUE)
 				ClickP($aMessageButton, 1, 0, "#0243") ; Click Messages Button
 
-				If _Sleep(1000) Then Return
+				If _Sleep($iDelayReplayShare3) Then Return
 				Click(380, 94,1,0,"#0244") ; Click Attack Log Tab
-				If _Sleep(1000) Then Return
+				If _Sleep($iDelayReplayShare3) Then Return
 
 				_CaptureRegion()
 				If _ColorCheck(_GetPixelColor(500, 156), Hex(0x78D4E8, 6), 6) = True Then
 					;button replay blue
-					Setlog("Ok, sharing!")
+					Setlog(getLocaleString("logSharing"))
 					Local $VilLoc, $VilX, $VilY, $VilTol
 					For $VilTol = 0 To 20
 						If $VilLoc = 0 Then
@@ -134,9 +134,9 @@ Func ReplayShare($last = 1)
 							If $VilLoc = 1 And $VilX > 35 And $VilY < 610 Then
 								;SetLog("Debug: Found!, position: (" & $VilX & "," & $VilY &")", $COLOR_GREEN)
 								Click(500, $VilY,1,0,"#0245") ;Click Share Button
-								If _Sleep(250) Then Return
+								If _Sleep($iDelayReplayShare1) Then Return
 								Click(300, 120,1,0,"#0246") ;Select text for write comment
-								If _Sleep(250) Then Return
+								If _Sleep($iDelayReplayShare1) Then Return
 								; read searchcount
 								Local $a = StringInStr($FileListName[$FileListDate], "^")
 								Local $b = StringInStr($FileListName[$FileListDate], ".png")
@@ -160,18 +160,18 @@ Func ReplayShare($last = 1)
 								$txtMessage = StringReplace($txtMessage, "<n>", StringFormat("%s", $SearchCount))
 
 								ControlSend($Title, "", "", $txtMessage, 0)
-								If _Sleep(250) Then Return
+								If _Sleep($iDelayReplayShare1) Then Return
 								Click(500, 210,1,0,"#0247") ;Click Send Button
 								$tNew = _Date_Time_GetLocalTime()
 								$dLastShareDate = _Date_Time_SystemTimeToDateTimeStr($tNew, 1)
 
 								;only for test copy..
 								Local $iCopy = FileCopy($dirTemp & $FileListName[$FileListDate], $dirTemp & "shared_" & $FileListName[$FileListDate])
-								If Not ($iCopy) Then Setlog("An error occurred copying a temporary file", $COLOR_RED)
+								If Not ($iCopy) Then Setlog(getLocaleString("logErrNotiCopy"), $COLOR_RED)
 								;delete
 								Local $iDelete = FileDelete($dirTemp & $FileListName[$FileListDate])
-								If Not ($iDelete) Then Setlog("An error occurred deleting a temporary file", $COLOR_RED)
-								If _Sleep(2000) Then Return
+								If Not ($iDelete) Then Setlog(getLocaleString("logErrNotiDelete"), $COLOR_RED)
+								If _Sleep($iDelayReplayShare4) Then Return
 								Return True
 							EndIf
 						EndIf
@@ -180,25 +180,25 @@ Func ReplayShare($last = 1)
 						;delete file not found
 						;only for test copy..
 						Local $iCopy = FileCopy($dirTemp & $FileListName[$FileListDate], $dirTemp & "discard_" & $FileListName[$FileListDate])
-						If Not ($iCopy) Then Setlog("An error occurred copying a temporary file", $COLOR_RED)
+						If Not ($iCopy) Then Setlog(getLocaleString("logErrNotiCopy"), $COLOR_RED)
 						;delete
 						Local $iDelete = FileDelete($dirTemp & $FileListName[$FileListDate])
-						If Not ($iDelete) Then Setlog("An error occurred deleting a temporary file", $COLOR_RED)
+						If Not ($iDelete) Then Setlog(getLocaleString("logErrNotiDelete"), $COLOR_RED)
 					EndIf
 
 				Else
 					If _ColorCheck(_GetPixelColor(500, 156), Hex(0xbbbbbb, 6), 6) = True Then
 						;button replay gray.. insert village in queue
-						Setlog("Cannot Share Now... retry later.")
+						Setlog(getLocaleString("logShareRetryLater"))
 						Click(763, 86,1,0,"#0248") ; Close  page
 						$tNew = _Date_Time_GetLocalTime()
 						$dLastShareDate = _DateAdd("n", -20, _Date_Time_SystemTimeToDateTimeStr($tNew, 1))
-						If _Sleep(500) Then Return ;
+						If _Sleep($iDelayReplayShare2) Then Return ;
 					Else
 						;button not found, abort
-						Setlog("Button Share not found, abort.", $COLOR_RED)
+						Setlog(getLocaleString("logShareBtnNotFound"), $COLOR_RED)
 						Click(763, 86,1,0,"#0249") ; Close  page
-						If _Sleep(500) Then Return ;
+						If _Sleep($iDelayReplayShare2) Then Return ;
 					EndIf
 				EndIf
 
@@ -206,7 +206,7 @@ Func ReplayShare($last = 1)
 			EndIf
 		EndIf ; >30 min
 	EndIf ;last=1
-	If _Sleep(500) Then Return
+	If _Sleep($iDelayReplayShare2) Then Return
 	checkMainScreen(False) ; check for screen errors while running function
 
 EndFunc   ;==>ReplayShare

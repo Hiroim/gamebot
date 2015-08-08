@@ -3,7 +3,7 @@ Func SetLog($String, $Color = $COLOR_BLACK, $Font = "Verdana", $FontSize = 7.5, 
 	_GUICtrlRichEdit_AppendTextColor($txtLog, Time(), 0x000000)
 	_GUICtrlRichEdit_SetFont($txtLog, $FontSize, $Font)
 	_GUICtrlRichEdit_AppendTextColor($txtLog, $String & @CRLF, _ColorConvert($Color))
-	if $statusbar = 1 Then _GUICtrlStatusBar_SetText($statLog, "Status : " & $String)
+	if $statusbar = 1 Then _GUICtrlStatusBar_SetText($statLog, getLocaleString("status") & $String)
 	_FileWriteLog($hLogFileHandle, $String)
 EndFunc   ;==>SetLog
 
@@ -31,7 +31,7 @@ Func SetAtkLog($String, $Color = $COLOR_BLACK, $Font = "Lucida Console", $FontSi
 EndFunc   ;==>SetAtkLog
 
 Func AtkLogHead()
-	SetAtkLog(_PadStringCenter(" ATTACK LOG ", 71, "="), $COLOR_BLACK, "MS Shell Dlg", 8.5)
-	SetAtkLog("                   --------  LOOT --------       ----- BONUS ------   ")
-	SetAtkLog(" TIME|TROP.|SEARCH|   GOLD| ELIXIR|DARK EL|TR.|S|  GOLD|ELIXIR|  DE|L.")
+	SetAtkLog(_PadStringCenter(getLocaleString("txtAttackLog"), 61, "="), $COLOR_BLACK, "Lucida Console", 8.5)
+	SetAtkLog(getLocaleString("txtAttackLog2"))
+	SetAtkLog(getLocaleString("txtAttackLog3"))
 EndFunc   ;==>AtkLogHead

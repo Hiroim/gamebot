@@ -7,6 +7,7 @@
 ; Return values .: None
 ; Author ........: Hervidero (2015-feb-10)
 ; Modified ......: Safar46 (2015), Hervidero (2015, KnowJack - added statistics bypasss (June-2015) , ProMac (2015)
+;                  Sardo 2015-08
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -15,8 +16,8 @@
 ; ===============================================================================================================================
 
 Func VillageReport($bBypass = False)
-	PureClickP($aTopLeftClient, 1, 0, "#0319") ;Click Away
-	If _Sleep(500) Then Return
+	PureClickP($aAway, 1, 0, "#0319") ;Click Away
+	If _Sleep($iDelayVillageReport1) Then Return
 
 	Switch $bBypass
 		Case False
@@ -68,7 +69,7 @@ Func VillageReport($bBypass = False)
 	Local $i = 0
 	While _ColorCheck(_GetPixelColor(819, 39, True), Hex(0xF8FCFF, 6), 20) = True ; wait for Builder/shop to close
 		$i += 1
-		If _Sleep(500) Then Return
+		If _Sleep($iDelayVillageReport1) Then Return
 		If $i >= 20 Then ExitLoop
 	WEnd
 

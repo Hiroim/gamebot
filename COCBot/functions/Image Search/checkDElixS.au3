@@ -26,7 +26,7 @@ Next
 Func checkDarkElix()
 If $iChkLightSpell = 1 Then
       _CaptureRegion(230,170,630,440)
-     If _Sleep(500) Then Return
+     If _Sleep($iDelaycheckDarkElix1) Then Return
      For $i = 0 To 35
 		; SetLog (" For $i =" & $i )  ; <-----  this must be deleted after all tests are
 	    $DESLoc = _ImageSearch($atkDElix[$i], 1, $DESLocx, $DESLocy, $Tolerance3)
@@ -90,9 +90,9 @@ Func DropLSpell ()
 	    If (($DESLoc = 1) And $LSpell <> -1 ) Then
 			If (Number($searchDark) >= Number($AimDark)) then
 			     If $LSpellQ >= $iLSpellQ then
-				   Click(GetXPosOfArmySlot($LSpell, 68), 595) ;Select Troop
+				   Click(GetXPosOfArmySlot($LSpell, 68), 595,1,0,"#0343") ;Select Troop
 				   If _Sleep(SetSleep(1)) Then Return
-				   Click($DESLocx, $DESLocy, $LSpellQ , 250)   ; $LSpellQ = $atkTroops[$i][1] = quantity of spells
+				   Click($DESLocx, $DESLocy, $LSpellQ , $iDelayDropLSpell1,"#0344")   ; $LSpellQ = $atkTroops[$i][1] = quantity of spells
 				   SetLog("== Attacking DE Storage with: " & $LSpellQ &" Spells ==")
 			     Else
 				   SetLog("== Not Enough Amount of Lightning Spells  ==", $COLOR_RED)
@@ -135,7 +135,7 @@ Func DEAttack()
 			$pixel[0] += 230 ; compensate CaptureRegion reduction
 			$pixel[1] += 170 ; compensate CaptureRegion reduction
 			SetLog("== DE lixir Storage : [" & $pixel[0] & "," & $pixel[1] & "] ==", $COLOR_BLUE)
-			If _Sleep(1000) Then Return
+			If _Sleep($iDelaycheckDarkElix2) Then Return
 			$DESLocx = $pixel[0] ; compensation for $x center of Storage
 			$DESLocy = $pixel[1] ; compensation for $y center of Storage
 			$DESLoc = 1

@@ -21,13 +21,13 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 	If $GoldChangeCheck = True Then
 		SetLog("Checking if the battle has finished", $COLOR_BLUE)
 		While GoldElixirChangeEBO()
-			If _Sleep(1000) Then Return
+			If _Sleep($iDelayReturnHome1) Then Return
 		WEnd
 
 		;If Heroes were not activated: Hero Ability activation before End of Battle to restore health
 		If ($checkKPower = True Or $checkQPower = True) And $iActivateKQCondition = "Auto" Then
 			;_CaptureRegion()
-			If _ColorCheck(_GetPixelColor(363, 548, True), Hex(0x78C11C, 6), 20) = False And _ColorCheck(_GetPixelColor(497, 548, True), Hex(0x79C326, 6), 20) = False Then ; If not already at Return Homescreen
+			If _ColorCheck(_GetPixelColor($aRtnHomeCheck1[0], $aRtnHomeCheck1[1], True), Hex($aRtnHomeCheck1[2], 6), $aRtnHomeCheck1[3]) = False And _ColorCheck(_GetPixelColor($aRtnHomeCheck2[0], $aRtnHomeCheck2[1], True), Hex($aRtnHomeCheck2[2], 6), $aRtnHomeCheck2[3]) = False Then ; If not already at Return Homescreen
 				If $checkKPower = True Then
 					SetLog("Activating King's power to restore some health before EndBattle", $COLOR_BLUE)
 					SelectDropTroop($King) ;If King was not activated: Boost King before EndBattle to restore some health
@@ -42,25 +42,25 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 
 	$checkKPower = False
 	$checkQPower = False
-	
+
 	If $iMatchMode = $TS And _GUICtrlComboBox_GetCurSel($cmbTroopComp) = 9 Then $FirstStart = True ;reset barracks upon return when TH sniping w/custom army
-	
+
 	SetLog("Returning Home", $COLOR_BLUE)
 	If $RunState = False Then Return
 	ClickP($aSurrenderButton, 1, 0, "#0099") ;Click Surrender
-	If _Sleep(500) Then Return
+	If _Sleep($iDelayReturnHome2) Then Return
 	ClickP($aConfirmSurrender, 1, 0, "#0100") ;Click Confirm
-	If _Sleep(500) Then Return
+	If _Sleep($iDelayReturnHome2) Then Return
 	TrayTip($sBotTitle, "", BitOR($TIP_ICONASTERISK, $TIP_NOSOUND)) ; clear village search match found message
 
 	If $GoldChangeCheck = True Then
 		$counter = 0
-		While _ColorCheck(_GetPixelColor(363, 548, True), Hex(0x78C11C, 6), 20) = False And _ColorCheck(_GetPixelColor(497, 548, True), Hex(0x79C326, 6), 20) = False ; test for Return Home Button
-			If _Sleep(500) Then ExitLoop
+		While _ColorCheck(_GetPixelColor($aRtnHomeCheck1[0], $aRtnHomeCheck1[1], True), Hex($aRtnHomeCheck1[2], 6), $aRtnHomeCheck1[3]) = False And _ColorCheck(_GetPixelColor($aRtnHomeCheck2[0], $aRtnHomeCheck2[1], True), Hex($aRtnHomeCheck2[2], 6), $aRtnHomeCheck2[3]) = False ; test for Return Home Button
+			If _Sleep($iDelayReturnHome2) Then ExitLoop
 			$counter += 1
 			If $counter > 40 Then ExitLoop
 		WEnd
-		If _Sleep(2500) Then Return ; wait for all report details
+		If _Sleep($iDelayReturnHome3) Then Return ; wait for all report details
 		_CaptureRegion(0, 0, 860, 675)
 		AttackReport()
 		GUICtrlSetData($lblresultvillagesattacked, GUICtrlRead($lblresultvillagesattacked) + 1)
@@ -91,10 +91,10 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 
 	$counter = 0
 	While 1
-		If _Sleep(2000) Then Return
+		If _Sleep($iDelayReturnHome4) Then Return
 		_CaptureRegion()
-		If _ColorCheck(_GetPixelColor(284, 28), Hex(0x41B1CD, 6), 20) Then
-			_GUICtrlEdit_SetText($txtLog, _PadStringCenter(" BOT LOG ", 71, "="))
+		If _ColorCheck(_GetPixelColor($aRtnHomeCheck3[0], $aRtnHomeCheck3[1]), Hex($aRtnHomeCheck3[2], 6), $aRtnHomeCheck3[3]) Then
+			_GUICtrlEdit_SetText($txtLog, _PadStringCenter(getLocaleString("txtBotLog"), 71, "="))
 			_GUICtrlRichEdit_SetFont($txtLog, 6, "Lucida Console")
 			_GUICtrlRichEdit_AppendTextColor($txtLog, "" & @CRLF, _ColorConvert($Color_Black))
 			Return

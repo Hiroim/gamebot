@@ -5,7 +5,7 @@
 ; Parameters ....: None
 ; Return values .:
 ; Author ........: ProMac (2015), HungLe (2015)
-; Modified ......:
+; Modified ......: Sardo (2015-08)
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -51,7 +51,7 @@ Local $WallX, $WallY
 
 Func CheckWall()
 
-	If _Sleep(500) Then Return
+	If _Sleep($iDelayCheckWall1) Then Return
 
 	_CaptureRegion()
 	Local $listArrayPoint = ""
@@ -73,10 +73,10 @@ Func CheckWall()
 						SetLog(getLocaleString("logWallLevel") & $icmbWalls + 4 & getLocaleString("logWallLevelVerify"), $COLOR_GREEN)
 					EndIf
 					GemClick($WallX, $WallY,1,0,"#0122")
-					If _Sleep(500) Then Return
+					If _Sleep($iDelayCheckWall1) Then Return
 					$sBldgName = getNameBuilding(250, 520) ; Get Unit name and level with OCR
 					If $sBldgName = "" Then ; try a 2nd time after a short delay if slow PC
-						If _Sleep(1000) Then Return
+						If _Sleep($iDelayCheckWall2) Then Return
 						$sBldgName = getNameBuilding(250, 520) ; Get Unit name and level with OCR
 					EndIf
 					If $debugSetlog = 1 Then Setlog("Read Wall String = " & $sBldgName, $COLOR_PURPLE) ;debug
@@ -97,13 +97,14 @@ Func CheckWall()
 							EndIf
 						EndIf
 					EndIf
-					If _Sleep(250) Then Return
+					If _Sleep($iDelayCheckWall3) Then Return
 					;If HitPoints() Then Return True; CheckWallLv() = 1 And CheckWallWord() = 1
 				EndIf
 			Next
 	WEnd
 
 	SetLog(getLocaleString("logCantFindWalls") & $icmbWalls + 4 & getLocaleString("logCantFindWalls2"), $COLOR_RED)
+	SetLog("Please rearrange the walls so they can be found", $COLOR_RED)
 	;$NoMoreWalls = 1
 	Return False
 
@@ -132,26 +133,26 @@ Func HitPoints()
 			Setlog("Color #1: " & _GetPixelColor($ButtonPixel[0], $ButtonPixel[1], True) & ", #2: " & _GetPixelColor($ButtonPixel[0] + 47, $ButtonPixel[1] + 37, True) & ", #3: " & _GetPixelColor($ButtonPixel[0] + 70, $ButtonPixel[1], True) & ", #4: " & _GetPixelColor($ButtonPixel[0] + 79, $ButtonPixel[1], True), $COLOR_PURPLE)
 		EndIf
 		Click($ButtonPixel[0] + 20, $ButtonPixel[1] + 20,1,0,"#0123") ; Click Upgrade Gold Button
-		If _Sleep(1000) Then Return
+		If _Sleep($iDelayCheckWall2) Then Return
 		_CaptureRegion()
 		$HitPoints = Number(getOther(504, 193, "Hitpoints"))
 		SetLog(getLocaleString("logWallHpVerify") & _NumberFormat($HitPoints))
 
 		If $HitPointsWall[$icmbWalls] = $HitPoints Then
 			SetLog(getLocaleString("logWallHpCorrect"), $COLOR_GREEN)
-			ClickP($aTopLeftClient,1,0,"#0124")
-			If _Sleep(500) Then Return
+			ClickP($aAway,1,0,"#0124")
+			If _Sleep($iDelayCheckWall1) Then Return
 			Return True
 		Else
 			SetLog(getLocaleString("logWallHpIncorrect"), $COLOR_RED)
-			ClickP($aTopLeftClient, 2,0,"#0139")
-			If _Sleep(500) Then Return
+			ClickP($aAway, 2,0,"#0139")
+			If _Sleep($iDelayCheckWall1) Then Return
 			Return False
 		EndIf
 	Else
 		Setlog(getLocaleString("logIsNotWall"), $COLOR_RED)
-		ClickP($aTopLeftClient, 2,0,"#0125")
-		If _Sleep(500) Then Return
+		ClickP($aAway, 2,0,"#0125")
+		If _Sleep($iDelayCheckWall1) Then Return
 		Return False
 	EndIf
 

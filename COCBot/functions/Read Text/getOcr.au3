@@ -64,11 +64,11 @@ Func getResourcesBonus($x_start, $y_start) ; -> Gets complete value of Gold/Elix
 EndFunc   ;==>getResourcesBonus
 
 Func getLabUpgrdResourceWht($x_start, $y_start) ; -> Gets complete value of Elixir/DE xxx,xxx for "laboratory.au3" when white text
-	Return getOcrAndCapture("coc-lab-w", $x_start, $y_start, 59, 14, True)
+	Return getOcrAndCapture("coc-lab-w", $x_start, $y_start, 60, 14, True)
 EndFunc   ;==>getLabUpgrdResourceWht
 
 Func getLabUpgrdResourceRed($x_start, $y_start) ; -> Gets complete value of Elixir/DE xxx,xxx for "laboratory.au3" when red text
-	Return getOcrAndCapture("coc-lab-r", $x_start, $y_start, 59, 14, True)
+	Return getOcrAndCapture("coc-lab-r", $x_start, $y_start, 60, 14, True)
 EndFunc   ;==>getLabUpgrdResourceRed
 
 Func getChatString($x_start, $y_start, $language) ; -> Get string chat request - Latin Alphabetic - EN "DonateCC.au3"
@@ -114,7 +114,7 @@ Func getBarracksTroopQuantity($x_start, $y_start);  -> Gets quantity of troops i
 EndFunc   ;==>getBarracksTroopQuantity
 
 Func getAttackDisable($x_start, $y_start);  -> 346, 182 - Gets red text disabled for early warning of Take-A-Break
-    Return getOcrAndCapture("coc-dis", $x_start, $y_start, 96, 24, True)
+    Return getOcrAndCapture("coc-dis", $x_start, $y_start, 118, 24, True)
 EndFunc   ;==>getAttackDisable
 
 

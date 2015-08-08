@@ -221,7 +221,7 @@ Func ReportPushBullet()
 	If $iLastAttack = 1 Then
 		If Not ($GoldLast = "" And $ElixirLast = "") Then _PushBullet($iOrigPushB & " | Last Gain :" & "\n" & " [G]: " & _NumberFormat($GoldLast) & " [E]: " & _NumberFormat($ElixirLast) & " [D]: " & _NumberFormat($DarkLast) & "  [T]: " & _NumberFormat($TrophyLast))
 	EndIf
-	If _Sleep(500) Then Return
+	If _Sleep($iDelayReportPushBullet1) Then Return
    checkMainScreen(False)
 
 EndFunc   ;==>ReportPushBullet
@@ -272,7 +272,7 @@ Func PushMsg($Message, $Source = "")
 				SetLog("Pushbullet: Last Raid screenshot has been sent!", $COLOR_GREEN)
 				_PushFile($AttackFile, "Loots", "image/jpeg", $iOrigPushB & " | Last Raid" & "\n" & $AttackFile)
 				;wait a second and then delete the file
-				If _Sleep(500) Then Return
+				If _Sleep($iDelayPushMsg1) Then Return
 				Local $iDelete = FileDelete($dirLoots & $AttackFile)
 				If Not ($iDelete) Then SetLog("Pushbullet: An error occurred deleting temporary screenshot file.", $COLOR_RED)
 			EndIf
@@ -294,7 +294,7 @@ Func PushMsg($Message, $Source = "")
 			If $pEnabled = 1 And $pRemote = 1 And $Source = "Push" Then _Push($iOrigPushB & " | Request to Pause..." & "\n" & "Your request has been received. Bot is now paused")
 		Case "Resume"
 			If $pEnabled = 1 And $pRemote = 1 And $Source = "Push" Then _Push($iOrigPushB & " | Request to Resume..." & "\n" & "Your request has been received. Bot is now resumed")
-		Case "OsSResources"
+		Case "OoSResources"
 			If $pEnabled = 1 And $pOOS = 1 Then _Push($iOrigPushB & " | Disconnected after " & StringFormat("%3s", $SearchCount) & " skip(s)" & "\n" & "Cannot locate Next button, Restarting Bot...")
 		Case "MatchFound"
 			If $pEnabled = 1 And $pMatchFound = 1 Then _Push($iOrigPushB & " | " & $sModeText[$iMatchMode] & " Match Found! after " & StringFormat("%3s", $SearchCount) & " skip(s)" & "\n" & "[G]: " & _NumberFormat($searchGold) & "; [E]: " & _NumberFormat($searchElixir) & "; [D]: " & _NumberFormat($searchDark) & "; [T]: " & $searchTrophy)
@@ -318,7 +318,7 @@ Func PushMsg($Message, $Source = "")
 			SetLog("Pushbullet: Screenshot sent!", $COLOR_GREEN)
 			$RequestScreenshot = 0
 			;wait a second and then delete the file
-			If _Sleep(1000) Then Return
+			If _Sleep($iDelayPushMsg2) Then Return
 			Local $iDelete = FileDelete($dirTemp & $Screnshotfilename)
 			If Not ($iDelete) Then SetLog("Pushbullet: An error occurred deleting the temporary screenshot file.", $COLOR_RED)
 		Case "DeleteAllPBMessages"

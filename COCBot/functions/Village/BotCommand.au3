@@ -76,7 +76,7 @@ Func BotCommand()
 		If $MeetCondStop Then
 			If $icmbBotCond <> 4 And $icmbBotCond <> 5 And $icmbBotCond <> 10 And $icmbBotCond <> 11 Then
 				If $Trophy <> "" Then SetLog($Trophy, $COLOR_GREEN)
-				If _Sleep(500) Then Return
+				If _Sleep($iDelayBotCommand1) Then Return
 			EndIf
 			Switch $icmbBotCommand
 				Case 0
@@ -88,20 +88,20 @@ Func BotCommand()
 						SetLog(getLocaleString("logHaltDonateTrain"), $COLOR_BLUE)
 					EndIf
 					$CommandStop = 0 ; Halt Attack
-					If _Sleep(500) Then Return
+					If _Sleep($iDelayBotCommand1) Then Return
 				Case 1
 					SetLog(getLocaleString("logHaltShutdown"), $COLOR_BLUE)
-					If _Sleep(500) Then Return
+					If _Sleep($iDelayBotCommand1) Then Return
 					Shutdown(5) ; Force Shutdown
 					Return True
 				Case 2
 					SetLog(getLocaleString("logHaltSleep"), $COLOR_BLUE)
-					If _Sleep(500) Then Return
+					If _Sleep($iDelayBotCommand1) Then Return
 					Shutdown(32) ; Sleep / Stand by
 					Return True
 				Case 3
 					SetLog("Reebooting PC...", $COLOR_BLUE)
-					If _Sleep(500) Then Return
+					If _Sleep($iDelayBotCommand1) Then Return
 					Shutdown($SD_REBOOT ) ; Reboot
 					Return True
 			EndSwitch

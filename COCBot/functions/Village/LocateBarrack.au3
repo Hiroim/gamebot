@@ -5,7 +5,7 @@
 ; Parameters ....: $ArmyCamp            - [optional] Flag to set if locating army camp and not barrack Default is False.
 ; Return values .: None
 ; Author ........: Code Monkey #19
-; Modified ......: KnowJack (June 2015)
+; Modified ......: KnowJack (June 2015) Sardo 2015-08
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -27,8 +27,8 @@ Func LocateBarrack($ArmyCamp = False)
 	EndIf
 
 	While 1
-		ClickP($aTopLeftClient)
-		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Arial", 700)
+		ClickP($aAway,1,0,"#0361")
+		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Lucida Sans Unicode", 700)
 		$stext =  $sErrorText & @CRLF & getLocaleString("msgboxMsg1") & $choice & getLocaleString("msgboxMsg1_2") & @CRLF & @CRLF & _
 		getLocaleString("msgboxMsg2")& @CRLF & @CRLF & getLocaleString("msgboxMsg3") & @CRLF
 		$MsgBox = _ExtMsgBox(0, getLocaleString("msgboxControlOk"), getLocaleString("msgboxControlLocate") & $choice, $stext, 15, $frmBot)
@@ -37,7 +37,7 @@ Func LocateBarrack($ArmyCamp = False)
 			If $ArmyCamp Then
 				$ArmyPos[0] = FindPos()[0]
 				$ArmyPos[1] = FindPos()[1]
-				If _Sleep(1000) Then Return
+				If _Sleep($iDelayLocateBarrack1) Then Return
 				If isInsideDiamond($ArmyPos) = False Then
 					$iStupid += 1
 					Select
@@ -56,13 +56,13 @@ Func LocateBarrack($ArmyCamp = False)
 							ContinueLoop
 						Case $iStupid > 4
 							SetLog(getLocaleString("txtOperatorErr") & $choice & getLocaleString("txtOperatorErr2") & "(" & $ArmyPos[0] & "," & $ArmyPos[1] & ")", $COLOR_RED)
-							ClickP($aTopLeftClient)
+							ClickP($aAway,1,0,"#0362")
 							Return False
 						Case Else
 							SetLog(getLocaleString("txtOperatorErr") & $choice & getLocaleString("txtOperatorErr2") & "(" & $ArmyPos[0] & "," & $ArmyPos[1] & ")", $COLOR_RED)
 							$ArmyPos[0] = -1
 							$ArmyPos[1] = -1
-							ClickP($aTopLeftClient)
+							ClickP($aAway,1,0,"#0363")
 							Return False
 					EndSelect
 				EndIf
@@ -92,7 +92,7 @@ Func LocateBarrack($ArmyCamp = False)
 								SetLog(getLocaleString("txtSillyCase4AC"), $COLOR_RED)
 								$ArmyPos[0] = -1
 								$ArmyPos[1] = -1
-								ClickP($aTopLeftClient)
+								ClickP($aAway,1,0,"#0364")
 								Return False
 						EndSelect
 					EndIf
@@ -100,7 +100,7 @@ Func LocateBarrack($ArmyCamp = False)
 					SetLog(getLocaleString("txtOperatorErr") & $choice & getLocaleString("txtOperatorErr2") & "(" & $ArmyPos[0] & "," & $ArmyPos[1] & ")", $COLOR_RED)
 					$ArmyPos[0] = -1
 					$ArmyPos[1] = -1
-					ClickP($aTopLeftClient)
+					ClickP($aAway,1,0,"#0365")
 					Return False
 				EndIf
 				SetLog($choice & ": " & "(" & $ArmyPos[0] & "," & $ArmyPos[1] & ")", $COLOR_GREEN)
@@ -125,13 +125,13 @@ Func LocateBarrack($ArmyCamp = False)
 							ContinueLoop
 						Case $iStupid > 4
 							SetLog(getLocaleString("txtOperatorErr") & $choice & getLocaleString("txtOperatorErr2") & "(" & $barrackPos[0] & "," & $barrackPos[1] & ")", $COLOR_RED)
-							ClickP($aTopLeftClient)
+							ClickP($aAway,1,0,"#0366")
 							Return False
 						Case Else
 							SetLog(getLocaleString("txtOperatorErr") & $choice & getLocaleString("txtOperatorErr2") & "(" & $barrackPos[0] & "," & $barrackPos[1] & ")", $COLOR_RED)
 							$barrackPos[0] = -1
 							$barrackPos[1] = -1
-							ClickP($aTopLeftClient)
+							ClickP($aAway,1,0,"#0367")
 							Return False
 					EndSelect
 				EndIf
@@ -161,7 +161,7 @@ Func LocateBarrack($ArmyCamp = False)
 								SetLog(getLocaleString("txtSillyCase4Barr"), $COLOR_RED)
 								$barrackPos[0] = -1
 								$barrackPos[1] = -1
-								ClickP($aTopLeftClient)
+								ClickP($aAway,1,0,"#0368")
 								Return False
 						EndSelect
 					EndIf
@@ -169,36 +169,36 @@ Func LocateBarrack($ArmyCamp = False)
 					SetLog(getLocaleString("txtOperatorErr") & $choice & getLocaleString("txtOperatorErr2") & "(" & $barrackPos[0] & "," & $barrackPos[1] & ")", $COLOR_RED)
 					$barrackPos[0] = -1
 					$barrackPos[1] = -1
-					ClickP($aTopLeftClient)
+					ClickP($aAway,1,0,"#0369")
 					Return False
 				EndIf
 				SetLog(getLocaleString("logLocateSuccess") & $choice & ": " & "(" & $barrackPos[0] & "," & $barrackPos[1] & ")", $COLOR_GREEN)
 			EndIf
 		Else
 			SetLog(getLocaleString("logLocateCancelled") & $choice & getLocaleString("logLocateCancelled2"), $COLOR_BLUE)
-			ClickP($aTopLeftClient)
+			ClickP($aAway,1,0,"#0370")
 			Return
 		EndIf
 		ExitLoop
 	WEnd
 	If $ArmyCamp Then
 		$TotalCamp = 0 ; reset total camp number to get it updated
-		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Arial", 500)
+		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Lucida Sans Unicode", 500)
 		$stext = getLocaleString("msgboxMsgAC")
 		$MsgBox = _ExtMsgBox(48, getLocaleString("msgboxMsgACControls"), getLocaleString("msgboxMsgACTitle"), $stext, 15, $frmBot)
-		If _Sleep(1000) Then Return
+		If _Sleep($iDelayLocateBarrack1) Then Return
 
-		ClickP($aTopLeftClient) ;Click Away
-		If _Sleep(100) Then Return
+		ClickP($aAway,1,0,"#0371") ;Click Away
+		If _Sleep($iDelayLocateBarrack3) Then Return
 
-		Click($aArmyTrainButton[0], $aArmyTrainButton[1]) ;Click Army Camp
-		If _Sleep(1000) Then Return
+		Click($aArmyTrainButton[0], $aArmyTrainButton[1],1,0,"#0372") ;Click Army Camp
+		If _Sleep($iDelayLocateBarrack1) Then Return
 
 		$iCount = 0  ; reset loop counter
 		$sArmyInfo = getArmyCampCap(212, 144) ; OCR read army trained and total
 		If $debugSetlog = 1 Then Setlog("$sArmyInfo = " & $sArmyInfo, $COLOR_PURPLE)
 		While $sArmyInfo = ""  ; In case the CC donations recieved msg are blocking, need to keep checking numbers for 10 seconds
-			If _Sleep(2000) Then Return
+			If _Sleep($iDelayLocateBarrack2) Then Return
 			$sArmyInfo = getArmyCampCap(212, 144) ; OCR read army trained and total
 			If $debugSetlog = 1 Then Setlog(" $sArmyInfo = " & $sArmyInfo, $COLOR_PURPLE)
 			$iCount += 1
@@ -224,6 +224,6 @@ Func LocateBarrack($ArmyCamp = False)
 			EndIf
 		EndIf
 	EndIf
-	ClickP($aTopLeftClient, 1, 0, "#0206")
+	ClickP($aAway, 1, 0, "#0206")
 
 EndFunc   ;==>LocateBarrack

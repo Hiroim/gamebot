@@ -7,9 +7,9 @@ Func DropTroop($troop, $nbSides, $number, $slotsPerEdge = 0, $indexToAttack = -1
 
 	If ($iChkRedArea[$iMatchMode]) Then
 		If $slotsPerEdge = 0 Or $number < $slotsPerEdge Then $slotsPerEdge = $number
-		If _Sleep(100) Then Return
+		If _Sleep($iDelayDropTroop1) Then Return
 		SelectDropTroop($troop) ;Select Troop
-		If _Sleep(300) Then Return
+		If _Sleep($iDelayDropTroop2) Then Return
 
 		If $nbSides < 1 Then Return
 		Local $nbTroopsLeft = $number
@@ -90,9 +90,9 @@ Func DropTroop2($troop, $nbSides, $number, $slotsPerEdge = 0, $name = "")
 
 	If ($iChkRedArea[$iMatchMode]) Then
 		If $slotsPerEdge = 0 Or $number < $slotsPerEdge Then $slotsPerEdge = $number
-		;If _Sleep(100) Then Return
+		;If _Sleep($iDelayDropTroop1) Then Return
 		;SelectDropTroop($troop) ;Select Troop
-		;If _Sleep(300) Then Return
+		;If _Sleep($iDelayDropTroop2) Then Return
 
 		If $nbSides < 1 Then Return
 		Local $nbTroopsLeft = $number

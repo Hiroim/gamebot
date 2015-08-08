@@ -1,14 +1,14 @@
 
 Func DropOnEdge($troop, $edge, $number, $slotsPerEdge = 0, $edge2 = -1, $x = -1)
 	If $number = 0 Then Return
-	If _Sleep(100) Then Return
+	If _Sleep($iDelayDropOnEdge1) Then Return
 	SelectDropTroop($troop) ;Select Troop
-	If _Sleep(300) Then Return
+	If _Sleep($iDelayDropOnEdge2) Then Return
 	If $slotsPerEdge = 0 Or $number < $slotsPerEdge Then $slotsPerEdge = $number
 	If $number = 1 Or $slotsPerEdge = 1 Then ; Drop on a single point per edge => on the middle
-		Click($edge[2][0], $edge[2][1], $number, 250,"#0102")
-		If $edge2 <> -1 Then Click($edge2[2][0], $edge2[2][1], $number, 250,"#0103")
-		If _Sleep(50) Then Return
+		Click($edge[2][0], $edge[2][1], $number, $iDelayDropOnEdge1,"#0102")
+		If $edge2 <> -1 Then Click($edge2[2][0], $edge2[2][1], $number, $iDelayDropOnEdge1,"#0103")
+		If _Sleep($iDelayDropOnEdge3) Then Return
 	ElseIf $slotsPerEdge = 2 Then ; Drop on 2 points per edge
 		Local $half = Ceiling($number / 2)
 		Click($edge[1][0], $edge[1][1], $half,0,"#0104")

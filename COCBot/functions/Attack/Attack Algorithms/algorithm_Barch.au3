@@ -32,76 +32,76 @@ Func Barch() ;Attack Algorithm for Barch
 			EndIf
 		Next
 
-		If _Sleep(500) Then ExitLoop
+		If _Sleep($iDelayBarch2) Then ExitLoop
 		Switch $iChkDeploySettings[$iMatchMode]
 			Case 0 ;Two sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-				SetLog("~Attacking from two sides...")
-				If _Sleep(1000) Then ExitLoop
+				SetLog(getLocaleString("logBarchTwoSides"))
+				If _Sleep($iDelayBarch3) Then ExitLoop
 				Local $numBarbPerSpot = Ceiling((($atkTroops[$Barb][1] / 2) / 5) / 2)
 				Local $numArchPerSpot = Ceiling((($atkTroops[$Arch][1] / 2) / 5) / 2)
 
-				SetLog("Dropping first wave of Barbarians", $COLOR_BLUE)
+				SetLog(getLocaleString("logBarchDropFirsWaveBarb"), $COLOR_BLUE)
 				For $i = 0 To 4 ;Drop first round of Barbarians
 					Click(GetXPosOfArmySlot($Barb, 68), 595,1,0,"#0032") ;Select Troop
-					If _Sleep(100) Then ExitLoop (2)
+					If _Sleep($iDelayBarch1) Then ExitLoop (2)
 					Click($TopLeft[$i][0], $TopLeft[$i][1], $numBarbPerSpot, 1,"#0033")
 					Click($BottomRight[$i][0], $BottomRight[$i][1], $numBarbPerSpot, 1,"#0034")
 				Next
 
-				If _Sleep(1000) Then ExitLoop
+				If _Sleep($iDelayBarch3) Then ExitLoop
 
-				SetLog("Dropping first wave of Archers", $COLOR_BLUE)
+				SetLog(getLocaleString("logBarchDropFirsWaveArch"), $COLOR_BLUE)
 				For $i = 0 To 4 ;Drop first round of Archers
 					Click(GetXPosOfArmySlot($Arch, 68), 595,1,0,"#0035") ;Select Troop
-					If _Sleep(100) Then ExitLoop (2)
+					If _Sleep($iDelayBarch1) Then ExitLoop (2)
 					Click($TopLeft[$i][0], $TopLeft[$i][1], $numArchPerSpot, 1,"#0036")
 					Click($BottomRight[$i][0], $BottomRight[$i][1], $numArchPerSpot, 1,"#0037")
 				Next
 
 				If _Sleep(2000) Then ExitLoop ;-------------------------------------------
 
-				SetLog("Dropping second wave of Barbarians", $COLOR_BLUE)
+				SetLog(getLocaleString("logBarchDropSecondWaveBarb"), $COLOR_BLUE)
 				For $i = 0 To 4 ;Drop second round of Barbarians
 					Click(GetXPosOfArmySlot($Barb, 68), 595,1,0,"#0038") ;Select Troop
-					If _Sleep(100) Then ExitLoop (2)
+					If _Sleep($iDelayBarch1) Then ExitLoop (2)
 					Click($TopLeft[$i][0], $TopLeft[$i][1], $numBarbPerSpot, 1,"#0039")
 					Click($BottomRight[$i][0], $BottomRight[$i][1], $numBarbPerSpot, 1,"#0040")
 				Next
 
-				If _Sleep(1000) Then ExitLoop
+				If _Sleep($iDelayBarch3) Then ExitLoop
 
-				SetLog("Dropping second wave of Archers", $COLOR_BLUE)
+				SetLog(getLocaleString("logBarchDropSecondWaveArch"), $COLOR_BLUE)
 				For $i = 0 To 4 ;Drop second round of Archers
 					Click(GetXPosOfArmySlot($Arch, 68), 595,1,0,"#0041") ;Select Troop
-					If _Sleep(100) Then ExitLoop (2)
+					If _Sleep($iDelayBarch1) Then ExitLoop (2)
 					Click($TopLeft[$i][0], $TopLeft[$i][1], $numArchPerSpot, 1,"#0042")
 					Click($BottomRight[$i][0], $BottomRight[$i][1], $numArchPerSpot, 1,"#0043")
 				Next
 
 				dropHeroes($TopLeft[3][0], $TopLeft[3][1], $King, $Queen)
-				If _Sleep(1000) Then ExitLoop
+				If _Sleep($iDelayBarch3) Then ExitLoop
 				dropCC($TopLeft[3][0], $TopLeft[3][1], $CC)
 			Case 1 ;Three sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-				SetLog("~Attacking from three sides...")
-				If _Sleep(1000) Then ExitLoop
+				SetLog(getLocaleString("logBarchThreeSides"))
+				If _Sleep($iDelayBarch3) Then ExitLoop
 				Local $numBarbPerSpot = Ceiling((($atkTroops[$Barb][1] / 3) / 5) / 2)
 				Local $numArchPerSpot = Ceiling((($atkTroops[$Arch][1] / 3) / 5) / 2)
 
-				SetLog("Dropping first wave of Barbarians", $COLOR_BLUE)
+				SetLog(getLocaleString("logBarchDropFirsWaveBarb"), $COLOR_BLUE)
 				For $i = 0 To 4 ;Drop first round of Barbarians
 					Click(GetXPosOfArmySlot($Barb, 68), 595,1,0,"#0044") ;Select Troop
-					If _Sleep(100) Then ExitLoop (2)
+					If _Sleep($iDelayBarch1) Then ExitLoop (2)
 					Click($TopLeft[$i][0], $TopLeft[$i][1], $numBarbPerSpot, 1,"#0045")
 					Click($TopRight[$i][0], $TopRight[$i][1], $numBarbPerSpot, 1,"#0046")
 					Click($BottomRight[$i][0], $BottomRight[$i][1], $numBarbPerSpot, 1,"#0047")
 				Next
 
-				If _Sleep(1000) Then ExitLoop
+				If _Sleep($iDelayBarch3) Then ExitLoop
 
-				SetLog("Dropping first wave of Archers", $COLOR_BLUE)
+				SetLog(getLocaleString("logBarchDropFirsWaveArch"), $COLOR_BLUE)
 				For $i = 0 To 4 ;Drop first round of Archers
 					Click(GetXPosOfArmySlot($Arch, 68), 595,1,0,"#0048") ;Select Troop
-					If _Sleep(100) Then ExitLoop (2)
+					If _Sleep($iDelayBarch1) Then ExitLoop (2)
 					Click($TopLeft[$i][0], $TopLeft[$i][1], $numArchPerSpot, 1,"#0049")
 					Click($TopRight[$i][0], $TopRight[$i][1], $numArchPerSpot, 1,"#0050")
 					Click($BottomRight[$i][0], $BottomRight[$i][1], $numArchPerSpot, 1,"#0051")
@@ -109,51 +109,51 @@ Func Barch() ;Attack Algorithm for Barch
 
 				If _Sleep(2000) Then ExitLoop ;-------------------------------------------
 
-				SetLog("Dropping second wave of Barbarians", $COLOR_BLUE)
+				SetLog(getLocaleString("logBarchDropSecondWaveBarb"), $COLOR_BLUE)
 				For $i = 0 To 4 ;Drop second round of Barbarians
 					Click(GetXPosOfArmySlot($Barb, 68), 595,1,0,"#0052") ;Select Troop
-					If _Sleep(100) Then ExitLoop (2)
+					If _Sleep($iDelayBarch1) Then ExitLoop (2)
 					Click($TopLeft[$i][0], $TopLeft[$i][1], $numBarbPerSpot, 1,"#0053")
 					Click($TopRight[$i][0], $TopRight[$i][1], $numBarbPerSpot, 1,"#0054")
 					Click($BottomRight[$i][0], $BottomRight[$i][1], $numBarbPerSpot, 1,"#0055")
 				Next
 
-				If _Sleep(1000) Then ExitLoop
+				If _Sleep($iDelayBarch3) Then ExitLoop
 
-				SetLog("Dropping second wave of Archers", $COLOR_BLUE)
+				SetLog(getLocaleString("logBarchDropSecondWaveArch"), $COLOR_BLUE)
 				For $i = 0 To 4 ;Drop second round of Archers
 					Click(GetXPosOfArmySlot($Arch, 68), 595,1,0,"#0085") ;Select Troop
-					If _Sleep(100) Then ExitLoop (2)
+					If _Sleep($iDelayBarch1) Then ExitLoop (2)
 					Click($TopLeft[$i][0], $TopLeft[$i][1], $numArchPerSpot, 1,"#0056")
 					Click($TopRight[$i][0], $TopRight[$i][1], $numArchPerSpot, 1,"#0057")
 					Click($BottomRight[$i][0], $BottomRight[$i][1], $numArchPerSpot, 1,"#0058")
 				Next
 
 				dropHeroes($TopRight[3][0], $TopRight[3][1], $King, $Queen)
-				If _Sleep(1000) Then ExitLoop
+				If _Sleep($iDelayBarch3) Then ExitLoop
 				dropCC($TopRight[3][0], $TopRight[3][1], $CC)
 			Case 2 ;Four sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-				SetLog("~Attacking from all sides...")
-				If _Sleep(1000) Then ExitLoop
+				SetLog(getLocaleString("logBarchAllSides"))
+				If _Sleep($iDelayBarch3) Then ExitLoop
 				Local $numBarbPerSpot = Ceiling((($atkTroops[$Barb][1] / 4) / 5) / 2)
 				Local $numArchPerSpot = Ceiling((($atkTroops[$Arch][1] / 4) / 5) / 2)
 
-				SetLog("Dropping first wave of Barbarians", $COLOR_BLUE)
+				SetLog(getLocaleString("logBarchDropFirsWaveBarb"), $COLOR_BLUE)
 				For $i = 0 To 4 ;Drop first round of Barbarians
 					Click(GetXPosOfArmySlot($Barb, 68), 595,1,0,"#0059") ;Select Troop
-					If _Sleep(100) Then ExitLoop (2)
+					If _Sleep($iDelayBarch1) Then ExitLoop (2)
 					Click($TopLeft[$i][0], $TopLeft[$i][1], $numBarbPerSpot, 1,"#0060")
 					Click($TopRight[$i][0], $TopRight[$i][1], $numBarbPerSpot, 1,"#0061")
 					Click($BottomLeft[$i][0], $BottomLeft[$i][1], $numBarbPerSpot, 1,"#0062")
 					Click($BottomRight[$i][0], $BottomRight[$i][1], $numBarbPerSpot, 1,"#0063")
 				Next
 
-				If _Sleep(1000) Then ExitLoop
+				If _Sleep($iDelayBarch3) Then ExitLoop
 
-				SetLog("Dropping first wave of Archers", $COLOR_BLUE)
+				SetLog(getLocaleString("logBarchDropFirsWaveArch"), $COLOR_BLUE)
 				For $i = 0 To 4 ;Drop first round of Archers
 					Click(GetXPosOfArmySlot($Arch, 68), 595,1,0,"#0064") ;Select Troop
-					If _Sleep(100) Then ExitLoop (2)
+					If _Sleep($iDelayBarch1) Then ExitLoop (2)
 					Click($TopLeft[$i][0], $TopLeft[$i][1], $numArchPerSpot, 1,"#0065")
 					Click($TopRight[$i][0], $TopRight[$i][1], $numArchPerSpot, 1,"#0066")
 					Click($BottomLeft[$i][0], $BottomLeft[$i][1], $numArchPerSpot, 1,"#0067")
@@ -162,22 +162,22 @@ Func Barch() ;Attack Algorithm for Barch
 
 				If _Sleep(2000) Then ExitLoop ;-------------------------------------------
 
-				SetLog("Dropping second wave of Barbarians", $COLOR_BLUE)
+				SetLog(getLocaleString("logBarchDropSecondWaveBarb"), $COLOR_BLUE)
 				For $i = 0 To 4 ;Drop second round of Barbarians
 					Click(GetXPosOfArmySlot($Barb, 68), 595,1,0,"#0069") ;Select Troop
-					If _Sleep(100) Then ExitLoop (2)
+					If _Sleep($iDelayBarch1) Then ExitLoop (2)
 					Click($TopLeft[$i][0], $TopLeft[$i][1], $numBarbPerSpot, 1,"#0070")
 					Click($TopRight[$i][0], $TopRight[$i][1], $numBarbPerSpot, 1,"#0071")
 					Click($BottomLeft[$i][0], $BottomLeft[$i][1], $numBarbPerSpot, 1,"#0072")
 					Click($BottomRight[$i][0], $BottomRight[$i][1], $numBarbPerSpot, 1,"#0073")
 				Next
 
-				If _Sleep(1000) Then ExitLoop
+				If _Sleep($iDelayBarch3) Then ExitLoop
 
-				SetLog("Dropping second wave of Archers", $COLOR_BLUE)
+				SetLog(getLocaleString("logBarchDropSecondWaveArch"), $COLOR_BLUE)
 				For $i = 0 To 4 ;Drop second round of Archers
 					Click(GetXPosOfArmySlot($Arch, 68), 595,1,0,"#0074") ;Select Troop
-					If _Sleep(100) Then ExitLoop (2)
+					If _Sleep($iDelayBarch1) Then ExitLoop (2)
 					Click($TopLeft[$i][0], $TopLeft[$i][1], $numArchPerSpot, 1,"#0075")
 					Click($TopRight[$i][0], $TopRight[$i][1], $numArchPerSpot, 1,"#0076")
 					Click($BottomLeft[$i][0], $BottomLeft[$i][1], $numArchPerSpot, 1,"#0077")
@@ -185,12 +185,12 @@ Func Barch() ;Attack Algorithm for Barch
 				Next
 
 				dropHeroes($BottomLeft[3][0], $BottomLeft[3][1], $King, $Queen)
-				If _Sleep(1000) Then ExitLoop
+				If _Sleep($iDelayBarch3) Then ExitLoop
 				dropCC($BottomLeft[3][0], $BottomLeft[3][1], $CC)
 		EndSwitch
 
-		If _Sleep(100) Then ExitLoop
-		SetLog("Dropping left over troops", $COLOR_BLUE)
+		If _Sleep($iDelayBarch1) Then ExitLoop
+		SetLog(getLocaleString("logDroopingLeft"), $COLOR_BLUE)
 		$atkTroops[$Barb][1] = Number(ReadTroopQuantity($Barb))
 		$atkTroops[$Arch][1] = Number(ReadTroopQuantity($Arch))
 
@@ -201,7 +201,7 @@ Func Barch() ;Attack Algorithm for Barch
 			$atkTroops[$Barb][1] = Number(ReadTroopQuantity($Barb))
 		WEnd
 
-		If _Sleep(1000) Then ExitLoop
+		If _Sleep($iDelayBarch3) Then ExitLoop
 
 		While $atkTroops[$Arch][1] <> 0
 			Click(GetXPosOfArmySlot($Arch, 68), 595,1,0,"#0081")
@@ -210,23 +210,23 @@ Func Barch() ;Attack Algorithm for Barch
 			$atkTroops[$Arch][1] = Number(ReadTroopQuantity($Arch))
 		WEnd
 
-		If _Sleep(100) Then ExitLoop
+		If _Sleep($iDelayBarch1) Then ExitLoop
 
 		;Activate KQ's power
 		If $checkKPower = True Or $checkQPower = True Then
-			SetLog("Waiting " & $delayActivateKQ / 1000 & " seconds before activating Hero abilities", $COLOR_GREEN)
+			SetLog(getLocaleString("logCheckHeroPowerManual") & $delayActivateKQ / 1000 & getLocaleString("logCheckHeroPowerManual2"), $COLOR_GREEN)
 			_Sleep($delayActivateKQ)
 			If $checkKPower = True Then
-				SetLog("Activate King's power", $COLOR_BLUE)
+				SetLog(getLocaleString("logCheckKPower"), $COLOR_BLUE)
 				Click(GetXPosOfArmySlot($King, 68), 595,1,0,"#0083")
 			EndIf
 			If $checkQPower = True Then
-				SetLog("Activate Queen's power", $COLOR_BLUE)
+				SetLog(getLocaleString("logCheckQPower"), $COLOR_BLUE)
 				Click(GetXPosOfArmySlot($Queen, 68), 595,1,0,"#0084")
 			EndIf
 		EndIf
 
-		SetLog("~Finished Attacking, waiting to finish")
+		SetLog(getLocaleString("logFinishedAttacking"))
 		ExitLoop
 	WEnd
 EndFunc   ;==>Barch

@@ -5,37 +5,13 @@
 ; Parameters ....: None
 ; Return values .: None
 ; Author ........: GkevinOD (2014)
-; Modified ......: Hervidero (2015)
+; Modified ......: Hervidero (2015), KnowJack(July 2015)
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-
-Func Open()
-
-	SetLog(getLocaleString("logBSLaunch"), $COLOR_GREEN)
-
-	If $64Bit Then ;If 64-Bit
-		ShellExecute(@ProgramFilesDir & "\BlueStacks\HD-StartLauncher.exe")
-	Else ;If 32-Bit
-		ShellExecute(@ProgramFilesDir & "\BlueStacks\HD-StartLauncher.exe")
-	EndIf
-
-	Local $hTimer = TimerInit()
-	While IsArray(ControlGetPos($Title, "_ctl.Window", "[CLASS:BlueStacksApp; INSTANCE:1]")) = False
-		If _Sleep(1000) Then ExitLoop
-	WEnd
-
-	If IsArray(ControlGetPos($Title, "_ctl.Window", "[CLASS:BlueStacksApp; INSTANCE:1]")) Then
-		SetLog(getLocaleString("logBSLaunched") & Round(TimerDiff($hTimer) / 1000, 2) & "s.", $COLOR_GREEN)
-		DisableBS($HWnD, $SC_MINIMIZE)
-		DisableBS($HWnD, $SC_CLOSE)
-		Initiate()
-	EndIf
-
-EndFunc   ;==>Open
 
 Func Initiate()
 
@@ -52,17 +28,17 @@ Func Initiate()
 		If $iDisposeWindows = 1 Then
 			Switch $icmbDisposeWindowsPos
 				Case 0
-					WindowsArrange("BS-BOT", $iWAOffset)
+					WindowsArrange("BS-BOT",  $iWAOffsetX, $iWAOffsetY)
 				Case 1
-					WindowsArrange("BOT-BS", $iWAOffset)
+					WindowsArrange("BOT-BS",  $iWAOffsetX, $iWAOffsetY)
 				Case 2
-					WindowsArrange("SNAP-TR", $iWAOffset)
+					WindowsArrange("SNAP-TR", $iWAOffsetX, $iWAOffsetY)
 				Case 3
-					WindowsArrange("SNAP-TL", $iWAOffset)
+					WindowsArrange("SNAP-TL", $iWAOffsetX, $iWAOffsetY)
 				Case 4
-					WindowsArrange("SNAP-BR", $iWAOffset)
+					WindowsArrange("SNAP-BR", $iWAOffsetX, $iWAOffsetY)
 				Case 5
-					WindowsArrange("SNAP-BL", $iWAOffset)
+					WindowsArrange("SNAP-BL", $iWAOffsetX, $iWAOffsetY)
 			EndSwitch
 		EndIf
 		If $BSx <> 860 Or $BSy <> 720 Then
@@ -88,6 +64,7 @@ Func Initiate()
 		If $DebugSetlog = 1 Or $DebugOcr = 1 Or $debugRedArea = 1 Or $DevMode = 1 Then
 			SetLog(_PadStringCenter(" Warning Debug Mode Enabled! Setlog: " & $DebugSetlog &" OCR: "& $DebugOcr & " RedArea: " & $debugRedArea & " ", 55, "-"), $COLOR_RED)
 		EndIf
+
 		$AttackNow = False
 		$FirstStart = True
 		$Checkrearm = True
@@ -190,12 +167,12 @@ Func btnStart()
 		_GUICtrlRichEdit_SetFont($txtLog, 6, "Lucida Console")
 		_GUICtrlRichEdit_AppendTextColor($txtLog, "" & @CRLF, _ColorConvert($Color_Black))
 
-		If WinExists($Title) Then
+		If WinExists($Title) Then  ;Is BlueSatcks open?
 			DisableBS($HWnD, $SC_MINIMIZE)
 			DisableBS($HWnD, $SC_CLOSE)
 			Initiate()
-		Else
-			Open()
+		Else  ; If BlueStacks is not open, then wait for it to open
+			OpenBS()
 		EndIf
 	EndIf
 EndFunc   ;==>btnStart
@@ -324,3 +301,11 @@ Func btnSearchMode()
 	WEnd
 EndFunc   ;==>btnSearchMode
 
+Func GetFont()
+	Local $i, $sText = "", $DefaultFont
+		$DefaultFont = __EMB_GetDefaultFont()
+		For $i = 0 To UBound($DefaultFont) - 1
+			$sText &= " $DefaultFont[" & $i & "]= " & $DefaultFont[$i] & ", "
+		Next
+		Setlog($sText,$COLOR_PURPLE)
+EndFunc

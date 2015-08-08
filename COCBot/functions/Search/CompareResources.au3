@@ -5,7 +5,7 @@
 ; Parameters ....:
 ; Return values .: True if compaired resources match the search conditions, False if not
 ; Author ........: (2014)
-; Modified ......: AtoZ, Hervidero (2015)
+; Modified ......: AtoZ, Hervidero (2015), kaganus (June 2015, August 2015)
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......: VillageSearch, GetResources
@@ -13,7 +13,7 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
-Func CompareResources($pMode, $bIsWeakBase) ;Compares resources and returns true if conditions meet, otherwise returns false
+Func CompareResources($pMode) ;Compares resources and returns true if conditions meet, otherwise returns false
 
 	If $iChkSearchReduction = 1 Then
 		If ($iChkEnableAfter[$pMode] = 0 And $SearchCount <> 0 And Mod($SearchCount, $ReduceCount) = 0) Or ($iChkEnableAfter[$pMode] = 1 And $SearchCount - $iEnableAfterCount[$pMode] > 0 And Mod($SearchCount - $iEnableAfterCount[$pMode], $ReduceCount) = 0) Then
@@ -59,9 +59,9 @@ Func CompareResources($pMode, $bIsWeakBase) ;Compares resources and returns true
 
 
 	If $iChkMeetOne[$pMode] = 1 Then
-		If $iChkWeakBase[$pMode] = 1 Then
-			If $bIsWeakBase Then Return True
-		EndIf
+		;		If $iChkWeakBase[$pMode] = 1 Then
+		;			If $bIsWeakBase Then Return True
+		;		EndIf
 
 		If $iCmbMeetGE[$pMode] = 0 Then
 			If $G = True And $E = True Then Return True
@@ -93,9 +93,9 @@ Func CompareResources($pMode, $bIsWeakBase) ;Compares resources and returns true
 
 		Return False
 	Else
-		If $iChkWeakBase[$pMode] = 1 Then
-			If Not $bIsWeakBase Then Return False
-		EndIf
+		;		If $iChkWeakBase[$pMode] = 1 Then
+		;			If Not $bIsWeakBase Then Return False
+		;		EndIf
 
 		If $iCmbMeetGE[$pMode] = 0 Then
 			If $G = False Or $E = False Then Return False

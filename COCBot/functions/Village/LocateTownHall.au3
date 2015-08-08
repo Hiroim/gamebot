@@ -6,7 +6,7 @@
 ; Parameters ....:
 ; Return values .: None
 ; Author ........:
-; Modified ......: KnowJack (July 2015)
+; Modified ......: KnowJack (July 2015) Sardo 2015-08
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -26,15 +26,15 @@ Func LocateTownHall($bLocationOnly = False)
 	EndIf
 
 	While 1
-		ClickP($aTopLeftClient)
-		_ExtMsgBoxSet(1 + 64, 1, 0x004080, 0xFFFF00, 12, "Arial", 700)
+		ClickP($aAway,1,0,"#0391")
+		_ExtMsgBoxSet(1 + 64, 1, 0x004080, 0xFFFF00, 12, "Lucida Sans Unicode", 700)
 		$stext = $sErrorText & @CRLF & getLocaleString("msgboxLocateTH_msg",1) & @CRLF
 		$MsgBox = _ExtMsgBox(0, getLocaleString("msgboxLocateTH_controls"), getLocaleString("msgboxLocateTH_title"), $stext, 30, $frmBot)
 		If $MsgBox = 1 Then
 			WinActivate($HWnD)
 			$TownHallPos[0] = FindPos()[0]
 			$TownHallPos[1] = FindPos()[1]
-			If _Sleep(1000) Then Return
+			If _Sleep($iDelayLocateTownHall1) Then Return
 			If isInsideDiamond($TownHallPos) = False Then
 				$iStupid += 1
 				Select
@@ -55,14 +55,14 @@ Func LocateTownHall($bLocationOnly = False)
 						SetLog(getLocaleString("txtOperatorErrTH") & "(" & $TownHallPos[0] & "," & $TownHallPos[1] & ")", $COLOR_RED)
 						$TownHallPos[0] = -1
 						$TownHallPos[1] = -1
-						ClickP($aTopLeftClient)
+						ClickP($aAway,1,0,"#0392")
 						Return False
 				EndSelect
 			EndIf
 			SetLog(getLocaleString("logPosTH") & "(" & $TownHallPos[0] & "," & $TownHallPos[1] & ")", $COLOR_GREEN)
 		Else
 			SetLog(getLocaleString("logLocateCancelledTH"), $COLOR_BLUE)
-			ClickP($aTopLeftClient)
+			ClickP($aAway,1,0,"#0393")
 			Return
 		EndIf
 		If $bLocationOnly = False Then
@@ -91,7 +91,7 @@ Func LocateTownHall($bLocationOnly = False)
 						SetLog(getLocaleString("txtSillyCase4TH"), $COLOR_RED)
 						$TownHallPos[0] = -1
 						$TownHallPos[1] = -1
-						ClickP($aTopLeftClient)
+						ClickP($aAway,1,0,"#0394")
 						Return False
 				EndSelect
 			Else
@@ -101,6 +101,6 @@ Func LocateTownHall($bLocationOnly = False)
 		ExitLoop
 	WEnd
 
-	ClickP($aTopLeftClient, 1, 50, "#0209")
+	ClickP($aAway, 1, 50, "#0209")
 
 EndFunc   ;==>LocateTownHall

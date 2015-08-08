@@ -22,6 +22,7 @@
 #include <GUIEdit.au3>
 #include <GUIComboBox.au3>
 #include <GuiSlider.au3>
+#Include <GuiToolBar.au3>
 #include <StaticConstants.au3>
 #include <TabConstants.au3>
 ;#include <WindowsConstants.au3> ; included on CGB Bot.au3
@@ -40,9 +41,10 @@
 #include <GuiTab.au3>
 #include <String.au3>
 #include <IE.au3>
+#include <Process.au3>
 
 ;debugging
-Global $debugSearchArea = 0, $debugOcr = 0, $debugRedArea = 0, $debugSetlog = 0
+Global $debugSearchArea = 0, $debugOcr = 0, $debugRedArea = 0, $debugSetlog = 0, $debugDeadBaseImage = 0
 
 Global Const $COLOR_ORANGE = 0xFF7700
 Global Const $bCapturePixel = True, $bNoCapturePixel = False
@@ -88,7 +90,7 @@ Global Enum $eIcnArcher = 1, $eIcnDonArcher, $eIcnBalloon, $eIcnDonBalloon, $eIc
 		$eIcnTrap, $eIcnGoblin, $eIcnDonGoblin, $eIcnGold, $eIcnGolem, $eIcnDonGolem, $eIcnHealer, $eIcnDonHealer, $eIcnHogRider, $eIcnDonHogRider, $eIcnHealSpell, $eIcnInferno, $eIcnJumpSpell, $eIcnLavaHound, $eIcnDonLavaHound, $eIcnLightSpell, $eIcnMinion, $eIcnDonMinion, $eIcnPekka, $eIcnDonPekka, _
 		$eIcnQueen, $eIcnRageSpell, $eIcnTroops, $eIcnHourGlass, $eIcnTH1, $eIcnTH10, $eIcnTrophy, $eIcnValkyrie, $eIcnDonValkyrie, $eIcnWall, $eIcnWallBreaker, $eIcnDonWallBreaker, $eIcnWitch, $eIcnDonWitch, $eIcnWizard, $eIcnDonWizard, $eIcnXbow, $eIcnBarrackBoost, $eIcnMine, $eIcnCamp, _
 		$eIcnBarrack, $eIcnSpellFactory, $eIcnDonBlacklist, $eIcnSpellFactoryBoost, $eIcnMortar, $eIcnWizTower, $eIcnPayPal, $eIcnPushBullet, $eIcnGreenLight, $eIcnLaboratory, $eIcnRedLight, $eIcnBlank, $eIcnYellowLight, $eIcnDonCustom, $eIcnTombstone, $eIcnSilverStar, $eIcnGoldStar, $eIcnDarkBarrack, _
-		$eIcnCollectorLocate, $eIcnDrillLocate, $eIcnMineLocate, $eIcnBarrackLocate, $eIcnDarkBarrackLocate, $eIcnDarkSpellFactoryLocate, $eIcnDarkSpellFactory
+		$eIcnCollectorLocate, $eIcnDrillLocate, $eIcnMineLocate, $eIcnBarrackLocate, $eIcnDarkBarrackLocate, $eIcnDarkSpellFactoryLocate, $eIcnDarkSpellFactory, $eIcnEarthQuakeSpell, $eIcnHasteSpell, $eIcnPoisonSpell, $eIcnBldgTarget, $eIcnBldgX, $eIcnRecycle, $eIcnHeros
 Global $eIcnDonBlank = $eIcnDonBlacklist
 Global $aDonIcons[17] = [$eIcnDonBarbarian, $eIcnDonArcher, $eIcnDonGiant, $eIcnDonGoblin, $eIcnDonWallBreaker, $eIcnDonBalloon, $eIcnDonWizard, $eIcnDonHealer, $eIcnDonDragon, $eIcnDonPekka, $eIcnDonMinion, $eIcnDonHogRider, $eIcnDonValkyrie, $eIcnDonGolem, $eIcnDonWitch, $eIcnDonLavaHound, $eIcnDonBlank]
 Global $sLogPath ; `Will create a new log file every time the start button is pressed
@@ -513,18 +515,18 @@ Global Const $aLabTroops[25][5] = [ _
 		[550, 417, 0, getLocaleString("sNamePekka"), $eIcnPekka], _
 		[657, 311, 0, getLocaleString("sNameLightningSpell"), $eIcnLightSpell], _
 		[657, 417, 0, getLocaleString("sNameHealingSpell"), $eIcnHealSpell], _
-		[105, 311, 1, getLocaleString("sNameRageSpell"), $eIcnRageSpell], _
-		[105, 417, 1, getLocaleString("sNameJumpSpell"), $eIcnJumpSpell], _
-		[211, 311, 1, getLocaleString("sNameFreezeSpell"), $eIcnFreezeSpell], _
-		[211, 417, 1, getLocaleString("sNamePoisonSpell"), $eIcnHourGlass], _
-		[317, 311, 1, "Earthquake Spell", $eIcnHourGlass], _
-		[317, 417, 1, "Haste Spell", $eIcnHourGlass], _
-		[424, 311, 1, "Minion", $eIcnMinion], _
-		[424, 417, 1, "Hog Rider", $eIcnHogRider], _
-		[531, 311, 1, "Valkyrie", $eIcnValkyrie], _
-		[531, 417, 1, "Golem", $eIcnGolem], _
-		[637, 311, 1, "Witch", $eIcnWitch], _
-		[637, 417, 1, "Lava Hound", $eIcnLavaHound]]
+		[108, 311, 1, getLocaleString("sNameRageSpell"), $eIcnRageSpell], _
+		[108, 417, 1, getLocaleString("sNameJumpSpell"), $eIcnJumpSpell], _
+		[214, 311, 1, getLocaleString("sNameFreezeSpell"), $eIcnFreezeSpell], _
+		[214, 417, 1, getLocaleString("sNamePoisonSpell"), $eIcnPoisonSpell], _
+		[320, 311, 1, getLocaleString("sNameEarthquakeSpell"), $eIcnEarthQuakeSpell], _
+		[320, 417, 1, getLocaleString("sNameHasteSpell"), $eIcnHasteSpell], _
+		[427, 311, 1, getLocaleString("sNameMinion"), $eIcnMinion], _
+		[427, 417, 1, getLocaleString("sNameHogRider"), $eIcnHogRider], _
+		[534, 311, 1, getLocaleString("sNameValkyrie"), $eIcnValkyrie], _
+		[534, 417, 1, getLocaleString("sNameGolem"), $eIcnGolem], _
+		[640, 311, 1, getLocaleString("sNameWitch"), $eIcnWitch], _
+		[640, 417, 1, getLocaleString("sNameLavaHound"), $eIcnLavaHound]]
 
 ;deletefiles
 Global $ichkDeleteLogs = 0
@@ -538,7 +540,8 @@ Global $iDeleteLootsDays = 7
 Global $idisposewindows
 Global $icmbDisposeWindowsPos
 
-Global $iWAOffset = 0
+Global $iWAOffsetX = 0
+Global $iWAOffsetY = 0
 
 ;Planned hours
 Global $iPlannedDonateHours[24]
@@ -587,7 +590,7 @@ Global $numFactoryDarkSpellAvaiables = 0
 ;position of barakcs
 Global $btnpos = [[114, 535], [228, 535], [288, 535], [348, 535], [409, 535], [494, 535], [555, 535], [637, 535], [698, 535]]
 ;barracks and spells avaiables
-Global $Trainviable = [1, 0, 0, 0, 0, 0, 0, 0, 0]
+Global $Trainavailable = [1, 0, 0, 0, 0, 0, 0, 0, 0]
 
 ; Attack Report
 Global $BonusLeagueG, $BonusLeagueE, $BonusLeagueD, $LeagueShort

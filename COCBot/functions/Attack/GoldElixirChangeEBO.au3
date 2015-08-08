@@ -28,7 +28,7 @@ Func GoldElixirChangeEBO()
 	$Elixir1 = getElixirVillageSearch(48, 68 + 28)
 	$Trophies = getTrophyVillageSearch(48, 167)
 	If $Trophies <> "" Then ; If trophy value found, then base has Dark Elixir
-		If _Sleep(500) Then Return
+		If _Sleep($iDelayGoldElixirChangeEBO1) Then Return
 		$DarkElixir1 = getDarkElixirVillageSearch(48, 125)
 	Else
 		$DarkElixir1 = ""
@@ -69,21 +69,21 @@ Func GoldElixirChangeEBO()
 		;HEALT HEROES
 		CheckHeroesHealth()
 		If $checkKPower Or $checkQPower Then
-			If _Sleep(500) Then Return
+			If _Sleep($iDelayGoldElixirChangeEBO1) Then Return
 		Else
-			If _Sleep(1000) Then Return
+			If _Sleep($iDelayGoldElixirChangeEBO2) Then Return
 		EndIf
 
 		;READ RESOURCE n.2
 		$Gold2 = getGoldVillageSearch(48, 68)
 		If $Gold2 = "" Then
-			If _Sleep(500) Then Return
+			If _Sleep($iDelayGoldElixirChangeEBO1) Then Return
 			$Gold2 = getGoldVillageSearch(48, 68)
 		EndIf
 		$Elixir2 = getElixirVillageSearch(48, 68 + 28)
 		$Trophies = getTrophyVillageSearch(48, 167)
 		If $Trophies <> "" Then ; If trophy value found, then base has Dark Elixir
-			If _Sleep(500) Then Return
+			If _Sleep($iDelayGoldElixirChangeEBO1) Then Return
 			$DarkElixir2 = getDarkElixirVillageSearch(48, 125)
 		Else
 			$DarkElixir2 = ""
@@ -109,7 +109,7 @@ Func GoldElixirChangeEBO()
 		;EXIT IF RESOURCES = 0
 		If $ichkEndNoResources = 1 And Number($Gold2) = 0 And Number($Elixir2) = 0 And Number($DarkElixir2) = 0 Then
 			SetLog("Gold & Elixir & DE = 0, end battle ", $COLOR_GREEN)
-			If _Sleep(Random(500, 2500, 1)) Then Return ;wait random seconds... antiban purpose...
+			If _Sleep($iDelayGoldElixirChangeEBO2) Then Return
 			ExitLoop
 		EndIf
 
@@ -142,13 +142,13 @@ Func GoldElixirChangeEBO()
 
 	;FIRST CHECK... EXIT FOR ONE STAR REACH
 	If $ichkEndOneStar = 1 And $exitOneStar = 1 Then
-		If _Sleep(Random(500, 2500, 1)) Then Return ;wait random seconds... antiban purpose...
+		If _Sleep($iDelayGoldElixirChangeEBO2) Then Return
 		Return False
 	EndIf
 
 	;SECOND CHECK... EXIT FOR TWO STARS REACH
 	If $ichkEndTwoStars = 1 And $exitTwoStars = 1 Then
-		If _Sleep(Random(500, 2500, 1)) Then Return ;wait random seconds... antiban purpose...
+		If _Sleep($iDelayGoldElixirChangeEBO2) Then Return
 		Return False
 	EndIf
 
@@ -161,7 +161,7 @@ Func GoldElixirChangeEBO()
 	;FOURTH CHECK... IF RESOURCES = 0 THEN EXIT
 	If $ichkEndNoResources = 1 And Number($Gold2) = 0 And Number($Elixir2) = 0 And Number($DarkElixir2) = 0 Then
 		SetLog("Gold & Elixir & DE = 0, end battle ", $COLOR_GREEN)
-		If _Sleep(Random(500, 2500, 1)) Then Return ;wait random seconds... antiban purpose...
+		If _Sleep($iDelayGoldElixirChangeEBO2) Then Return
 		Return False
 	EndIf
 

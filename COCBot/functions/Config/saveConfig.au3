@@ -907,7 +907,8 @@ Func saveConfig() ;Saves the controls settings to the config
 		IniWrite($config, "pushbullet", "DeleteOldPushes", 0)
 	EndIf
 
-	IniWrite($config, "other", "WAOffset", GUICtrlRead($txtWAOffset))
+	IniWrite($config, "other", "WAOffsetX", GUICtrlRead($txtWAOffsetX))
+	IniWrite($config, "other", "WAOffsetY", GUICtrlRead($txtWAOffsetY))
 
 
 	; delete Files
