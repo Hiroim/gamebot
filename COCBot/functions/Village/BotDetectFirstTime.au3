@@ -98,6 +98,12 @@ Func BotDetectFirstTime()
 
 	If _Sleep($iDelayBotDetectFirstTime3) Then Return
 
+	If isInsideDiamond($aLabPos) = False Then
+		LocateLab()
+	EndIf
+
+	If _Sleep($iDelayBotDetectFirstTime3) Then Return
+
 	If $listResourceLocation = "" Then
 		While 1 ; Clear the collectors using old image find to reduce collector image finding errors
 			If _Sleep($iDelayBotDetectFirstTime3) Or $RunState = False Then ExitLoop

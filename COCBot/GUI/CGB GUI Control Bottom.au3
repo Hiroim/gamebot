@@ -60,7 +60,7 @@ Func Initiate()
 		SetLog(_PadStringCenter(" " & $sBotTitle & getLocaleString("logPoweredBy"), 50, "~"), $COLOR_PURPLE)
 		SetLog($Compiled & getLocaleString("logRunningOn") & @OSVersion & " " & @OSServicePack & " " & @OSArch)
 		SetLog(_PadStringCenter(getLocaleString("logBotStart"), 50, "="), $COLOR_GREEN)
-		SetLog(_PadStringCenter("  Current Profile: " & $sCurrProfile & " ", 73, "-"), $COLOR_BLUE)
+		SetLog(_PadStringCenter(getLocaleString("logCurProfile") & $sCurrProfile & " ", 73, "-"), $COLOR_BLUE)
 		If $DebugSetlog = 1 Or $DebugOcr = 1 Or $debugRedArea = 1 Or $DevMode = 1 Then
 			SetLog(_PadStringCenter(" Warning Debug Mode Enabled! Setlog: " & $DebugSetlog &" OCR: "& $DebugOcr & " RedArea: " & $debugRedArea & " ", 55, "-"), $COLOR_RED)
 		EndIf
