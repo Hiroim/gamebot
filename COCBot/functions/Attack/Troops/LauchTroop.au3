@@ -99,9 +99,9 @@ Func LaunchTroop2($listInfoDeploy, $CC, $King, $Queen)
 							$isHeroesDropped = True
 						EndIf
 					Else
-						If _Sleep(100) Then Return
+						If _Sleep($iDelayLaunchTroop21) Then Return
 						SelectDropTroop($infoPixelDropTroop[0]) ;Select Troop
-						If _Sleep(100) Then Return
+						If _Sleep($iDelayLaunchTroop21) Then Return
 						Local $waveName = getLocaleString("txtWaveName1")
 						If $numWave + 1 = 2 Then $waveName = getLocaleString("txtWaveName2")
 						If $numWave + 1 = 3 Then $waveName = getLocaleString("txtWaveName3")
@@ -112,7 +112,7 @@ Func LaunchTroop2($listInfoDeploy, $CC, $King, $Queen)
 						DropOnPixel($infoPixelDropTroop[0], $infoPixelDropTroop[1], $infoPixelDropTroop[2], $infoPixelDropTroop[3])
 					EndIf
 					If ($isHeroesDropped) Then
-						If _sleep (1000) then return ; delay Queen Image  has to be at maximum size : CheckHeroesHealth checks the y = 573
+						If _Sleep($iDelayLaunchTroop22) then return ; delay Queen Image  has to be at maximum size : CheckHeroesHealth checks the y = 573
 						CheckHeroesHealth()
 					EndIf
 					If _Sleep(SetSleep(1)) Then Return
@@ -159,10 +159,10 @@ Func LaunchTroop2($listInfoDeploy, $CC, $King, $Queen)
 									$infoListArrPixel = $infoTroopListArrPixel[1]
 									$listPixel = $infoListArrPixel[$i]
 									;infoPixelDropTroop : First element in array contains troop and list of array to drop troop
-									If _Sleep(100) Then Return
+									If _Sleep($iDelayLaunchTroop21) Then Return
 									SelectDropTroop($infoTroopListArrPixel[0]) ;Select Troop
-									If _Sleep(300) Then Return
-									SetLog(getLocaleString("logDropWave") & $infoTroopListArrPixel[2] & getLocaleString("getLocaleString("logDropOf")") & $infoTroopListArrPixel[5] & " => on each side (side : " & $i + 1 & ")", $COLOR_GREEN)
+									If _Sleep($iDelayLaunchTroop23) Then Return
+									SetLog(getLocaleString("logDropWave") & $infoTroopListArrPixel[2] & getLocaleString("logDropOf") & $infoTroopListArrPixel[5] & " => on each side (side : " & $i + 1 & ")", $COLOR_GREEN)
 									Local $pixelDropTroop[1] = [$listPixel]
 									DropOnPixel($infoTroopListArrPixel[0], $pixelDropTroop, $infoTroopListArrPixel[2], $infoTroopListArrPixel[3])
 								EndIf
@@ -185,10 +185,10 @@ Func LaunchTroop2($listInfoDeploy, $CC, $King, $Queen)
 					Local $numberLeft = ReadTroopQuantity($infoPixelDropTroop[0])
 					;SetLog("NumberLeft : " & $numberLeft)
 					If ($numberLeft > 0) Then
-						If _Sleep(100) Then Return
+						If _Sleep($iDelayLaunchTroop21) Then Return
 						SelectDropTroop($infoPixelDropTroop[0]) ;Select Troop
-						If _Sleep(300) Then Return
-						SetLog(getLocaleString("logDropLast") & $numberLeft & getLocaleString("getLocaleString("logDropOf")") & $infoPixelDropTroop[5], $COLOR_GREEN)
+						If _Sleep($iDelayLaunchTroop23) Then Return
+						SetLog(getLocaleString("logDropLast") & $numberLeft & getLocaleString("logDropOf") & $infoPixelDropTroop[5]& getLocaleString("logDropLast2"), $COLOR_GREEN)
 
 						DropOnPixel($infoPixelDropTroop[0], $infoPixelDropTroop[1], Ceiling($numberLeft / UBound($infoPixelDropTroop[1])), $infoPixelDropTroop[3])
 					EndIf

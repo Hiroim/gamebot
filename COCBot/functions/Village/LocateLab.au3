@@ -5,7 +5,7 @@
 ; Parameters ....:
 ; Return values .: None
 ; Author ........: KnowJack (June 2015)
-; Modified ......:
+; Modified ......: Sardo 2015-08
 ; Remarks .......:This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -23,8 +23,8 @@ Func LocateLab()
 	EndIf
 
 	While 1
-		ClickP($aTopLeftClient)
-		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Arial", 700)
+		ClickP($aAway,1,0,"#0379")
+		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Lucida Sans Unicode", 700)
 		$stext =  $sErrorText & @CRLF& getLocaleString("msgboxLocateLab_msg",1) & @CRLF
 		$MsgBox = _ExtMsgBox(0, getLocaleString("msgboxLocateLab_controls") , getLocaleString("msgboxLocateLab_title") , $stext, 15, $frmBot)
 		If $MsgBox = 1 Then
@@ -49,19 +49,19 @@ Func LocateLab()
 						ContinueLoop
 					Case $iStupid > 4
 						SetLog(getLocaleString("txtOperatorErrCC") & "(" & $SFPos[0] & "," &$SFPos[1] & ")", $COLOR_RED)
-						ClickP($aTopLeftClient)
+						ClickP($aAway,1,0,"#0380")
 						Return False
 					Case Else
 						SetLog(getLocaleString("txtOperatorErrCC") & "(" & $SFPos[0] & "," &$SFPos[1] & ")", $COLOR_RED)
 						$aLabPos[0] = -1
 						$aLabPos[1] = -1
-						ClickP($aTopLeftClient)
+						ClickP($aAway,1,0,"#0381")
 						Return False
 				EndSelect
 			EndIf
 		Else
 			SetLog(getLocaleString("logLocateCancelledLab"), $COLOR_BLUE)
-			ClickP($aTopLeftClient)
+			ClickP($aAway,1,0,"#0382")
 			Return
 		EndIf
 		$sLabInfo = BuildingInfo(242, 520)
@@ -90,7 +90,7 @@ Func LocateLab()
 						SetLog(getLocaleString("txtSillyCase4Lab"), $COLOR_RED)
 						$aLabPos[0] = -1
 						$aLabPos[1] = -1
-						ClickP($aTopLeftClient)
+						ClickP($aAway,1,0,"#0383")
 						Return False
 				EndSelect
 			EndIf
@@ -98,12 +98,12 @@ Func LocateLab()
 			SetLog(getLocaleString("txtOperatorErrCC") & "(" & $aLabPos[0] & "," & $aLabPos[1] & ")", $COLOR_RED)
 			$aLabPos[0] = -1
 			$aLabPos[1] = -1
-			ClickP($aTopLeftClient)
+			ClickP($aAway,1,0,"#0384")
 			Return False
 		EndIf
 		SetLog(getLocaleString("logPosLab") & "(" & $aLabPos[0] & "," & $aLabPos[1] & ")", $COLOR_GREEN)
 		ExitLoop
 	WEnd
-	Clickp($aTopLeftClient, 2, 0, "#0207")
+	Clickp($aAway, 2, 0, "#0207")
 
 EndFunc   ;==>LocateLab

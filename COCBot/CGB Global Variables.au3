@@ -22,6 +22,7 @@
 #include <GUIEdit.au3>
 #include <GUIComboBox.au3>
 #include <GuiSlider.au3>
+#Include <GuiToolBar.au3>
 #include <StaticConstants.au3>
 #include <TabConstants.au3>
 ;#include <WindowsConstants.au3> ; included on CGB Bot.au3
@@ -40,9 +41,10 @@
 #include <GuiTab.au3>
 #include <String.au3>
 #include <IE.au3>
+#include <Process.au3>
 
 ;debugging
-Global $debugSearchArea = 0, $debugOcr = 0, $debugRedArea = 0, $debugSetlog = 0
+Global $debugSearchArea = 0, $debugOcr = 0, $debugRedArea = 0, $debugSetlog = 0, $debugDeadBaseImage = 0
 
 Global Const $COLOR_ORANGE = 0xFF7700
 Global Const $bCapturePixel = True, $bNoCapturePixel = False
@@ -88,7 +90,7 @@ Global Enum $eIcnArcher = 1, $eIcnDonArcher, $eIcnBalloon, $eIcnDonBalloon, $eIc
 		$eIcnTrap, $eIcnGoblin, $eIcnDonGoblin, $eIcnGold, $eIcnGolem, $eIcnDonGolem, $eIcnHealer, $eIcnDonHealer, $eIcnHogRider, $eIcnDonHogRider, $eIcnHealSpell, $eIcnInferno, $eIcnJumpSpell, $eIcnLavaHound, $eIcnDonLavaHound, $eIcnLightSpell, $eIcnMinion, $eIcnDonMinion, $eIcnPekka, $eIcnDonPekka, _
 		$eIcnQueen, $eIcnRageSpell, $eIcnTroops, $eIcnHourGlass, $eIcnTH1, $eIcnTH10, $eIcnTrophy, $eIcnValkyrie, $eIcnDonValkyrie, $eIcnWall, $eIcnWallBreaker, $eIcnDonWallBreaker, $eIcnWitch, $eIcnDonWitch, $eIcnWizard, $eIcnDonWizard, $eIcnXbow, $eIcnBarrackBoost, $eIcnMine, $eIcnCamp, _
 		$eIcnBarrack, $eIcnSpellFactory, $eIcnDonBlacklist, $eIcnSpellFactoryBoost, $eIcnMortar, $eIcnWizTower, $eIcnPayPal, $eIcnPushBullet, $eIcnGreenLight, $eIcnLaboratory, $eIcnRedLight, $eIcnBlank, $eIcnYellowLight, $eIcnDonCustom, $eIcnTombstone, $eIcnSilverStar, $eIcnGoldStar, $eIcnDarkBarrack, _
-		$eIcnCollectorLocate, $eIcnDrillLocate, $eIcnMineLocate, $eIcnBarrackLocate, $eIcnDarkBarrackLocate, $eIcnDarkSpellFactoryLocate, $eIcnDarkSpellFactory
+		$eIcnCollectorLocate, $eIcnDrillLocate, $eIcnMineLocate, $eIcnBarrackLocate, $eIcnDarkBarrackLocate, $eIcnDarkSpellFactoryLocate, $eIcnDarkSpellFactory, $eIcnEarthQuakeSpell, $eIcnHasteSpell, $eIcnPoisonSpell, $eIcnBldgTarget, $eIcnBldgX, $eIcnRecycle, $eIcnHeros
 Global $eIcnDonBlank = $eIcnDonBlacklist
 Global $aDonIcons[17] = [$eIcnDonBarbarian, $eIcnDonArcher, $eIcnDonGiant, $eIcnDonGoblin, $eIcnDonWallBreaker, $eIcnDonBalloon, $eIcnDonWizard, $eIcnDonHealer, $eIcnDonDragon, $eIcnDonPekka, $eIcnDonMinion, $eIcnDonHogRider, $eIcnDonValkyrie, $eIcnDonGolem, $eIcnDonWitch, $eIcnDonLavaHound, $eIcnDonBlank]
 Global $sLogPath ; `Will create a new log file every time the start button is pressed
@@ -174,6 +176,7 @@ Global $ReduceCount, $ReduceGold, $ReduceElixir, $ReduceGoldPlusElixir, $ReduceD
 Global $iChkEnableAfter[$iModeCount], $iCmbMeetGE[$iModeCount], $iChkMeetDE[$iModeCount], $iChkMeetTrophy[$iModeCount], $iChkMeetTH[$iModeCount], $iChkMeetTHO[$iModeCount], $iChkMeetOne[$iModeCount], $iCmbTH[$iModeCount], $iChkWeakBase[$iModeCount]
 Global $THLocation
 Global $THx = 0, $THy = 0
+Global $Defx = 0, $Defy = 0
 Global $DESLoc
 Global $DESLocx = 0
 Global $DESLocy = 0
@@ -183,6 +186,12 @@ $THText[1] = "7"
 $THText[2] = "8"
 $THText[3] = "9"
 $THText[4] = "10"
+Global $DefText[5] ; Text of Defense Type
+$DefText[0] = getLocaleString("defTxtInferno")
+$DefText[1] = getLocaleString("defTxtWizTower")
+$DefText[2] = getLocaleString("defTxtMortar")
+$DefText[3] = getLocaleString("defTxtTesla")
+$DefText[4] = getLocaleString("defTxtAirDef")
 Global $SearchCount = 0 ;Number of searches
 Global $THaddtiles, $THside, $THi
 Global $SearchTHLResult = 0
@@ -193,6 +202,13 @@ Global $ATBullyMode
 Global $YourTH
 Global $iTHBullyAttackMode
 Global $AttackTHType
+Global $skipMortar, $skipWiz, $skipInferno, $skipTesla, $skipAir, $grdTroops, $airTroops
+Global $allTroops = False, $skipBase = False
+Global $searchDef
+Global $thinfo
+Global $DidntRevert
+Global $iChkSnipeWhileTrain, $isSnipeWhileTrain
+Global $tempSnipeWhileTrain[8] = [0,0,0,0,0,0,0,0]
 ;Global $chklightspell
 ;Global $iLSpellQ
 
@@ -213,11 +229,7 @@ Global $Wallv[8]
 Global $wallh[8]
 Global $Wall[8]
 
-;~ Attack Settings
-;~ Global $TopLeft[5][2] = [[79, 281], [170, 205], [234, 162], [296, 115], [368, 66]]
-;~ Global $TopRight[5][2] = [[480, 63], [540, 104], [589, 146], [655, 190], [779, 278]]
-;~ Global $BottomLeft[5][2] = [[79, 342], [142, 389], [210, 446], [276, 492], [339, 539]]
-;~ Global $BottomRight[5][2] = [[523, 537], [595, 484], [654, 440], [715, 393], [779, 344]]
+;Attack Settings
 Global $TopLeft[5][2] = [[79, 278], [150, 219], [220, 163], [296, 106], [383, 55]]
 Global $TopRight[5][2] = [[487, 55], [571, 106], [645, 163], [717, 219], [781, 278]]
 Global $BottomLeft[5][2] = [[79, 345], [149, 403], [220, 459], [296, 516], [383, 567]]
@@ -267,10 +279,6 @@ Global $delayActivateKQ ; = 9000 ;Delay before activating KQ
 Global $iDropCC[$iModeCount] ; Use Clan Castle settings
 Global $iChkUseCCBalanced ; Use Clan Castle Balanced settings
 Global $iCmbCCDonated, $iCmbCCReceived ; Use Clan Castle Balanced ratio settings
-
-Global $DidntRevert
-Global $iChkSnipeWhileTrain, $isSnipeWhileTrain
-Global $tempSnipeWhileTrain[8] = [0, 0, 0, 0, 0, 0, 0, 0]
 
 Global $THLoc
 Global $chkATH, $iChkLightSpell
@@ -522,18 +530,18 @@ Global Const $aLabTroops[25][5] = [ _
 		[550, 417, 0, getLocaleString("sNamePekka"), $eIcnPekka], _
 		[657, 311, 0, getLocaleString("sNameLightningSpell"), $eIcnLightSpell], _
 		[657, 417, 0, getLocaleString("sNameHealingSpell"), $eIcnHealSpell], _
-		[105, 311, 1, getLocaleString("sNameRageSpell"), $eIcnRageSpell], _
-		[105, 417, 1, getLocaleString("sNameJumpSpell"), $eIcnJumpSpell], _
-		[211, 311, 1, getLocaleString("sNameFreezeSpell"), $eIcnFreezeSpell], _
-		[211, 417, 1, getLocaleString("sNamePoisonSpell"), $eIcnHourGlass], _
-		[317, 311, 1, "Earthquake Spell", $eIcnHourGlass], _
-		[317, 417, 1, "Haste Spell", $eIcnHourGlass], _
-		[424, 311, 1, "Minion", $eIcnMinion], _
-		[424, 417, 1, "Hog Rider", $eIcnHogRider], _
-		[531, 311, 1, "Valkyrie", $eIcnValkyrie], _
-		[531, 417, 1, "Golem", $eIcnGolem], _
-		[637, 311, 1, "Witch", $eIcnWitch], _
-		[637, 417, 1, "Lava Hound", $eIcnLavaHound]]
+		[108, 311, 1, getLocaleString("sNameRageSpell"), $eIcnRageSpell], _
+		[108, 417, 1, getLocaleString("sNameJumpSpell"), $eIcnJumpSpell], _
+		[214, 311, 1, getLocaleString("sNameFreezeSpell"), $eIcnFreezeSpell], _
+		[214, 417, 1, getLocaleString("sNamePoisonSpell"), $eIcnPoisonSpell], _
+		[320, 311, 1, getLocaleString("sNameEarthquakeSpell"), $eIcnEarthQuakeSpell], _
+		[320, 417, 1, getLocaleString("sNameHasteSpell"), $eIcnHasteSpell], _
+		[427, 311, 1, getLocaleString("sNameMinion"), $eIcnMinion], _
+		[427, 417, 1, getLocaleString("sNameHogRider"), $eIcnHogRider], _
+		[534, 311, 1, getLocaleString("sNameValkyrie"), $eIcnValkyrie], _
+		[534, 417, 1, getLocaleString("sNameGolem"), $eIcnGolem], _
+		[640, 311, 1, getLocaleString("sNameWitch"), $eIcnWitch], _
+		[640, 417, 1, getLocaleString("sNameLavaHound"), $eIcnLavaHound]]
 
 ;deletefiles
 Global $ichkDeleteLogs = 0
@@ -547,7 +555,8 @@ Global $iDeleteLootsDays = 7
 Global $idisposewindows
 Global $icmbDisposeWindowsPos
 
-Global $iWAOffset = 0
+Global $iWAOffsetX = 0
+Global $iWAOffsetY = 0
 
 ;Planned hours
 Global $iPlannedDonateHours[24]
@@ -596,7 +605,7 @@ Global $numFactoryDarkSpellAvaiables = 0
 ;position of barakcs
 Global $btnpos = [[114, 535], [228, 535], [288, 535], [348, 535], [409, 535], [494, 535], [555, 535], [637, 535], [698, 535]]
 ;barracks and spells avaiables
-Global $Trainviable = [1, 0, 0, 0, 0, 0, 0, 0, 0]
+Global $Trainavailable = [1, 0, 0, 0, 0, 0, 0, 0, 0]
 
 ; Attack Report
 Global $BonusLeagueG, $BonusLeagueE, $BonusLeagueD, $LeagueShort

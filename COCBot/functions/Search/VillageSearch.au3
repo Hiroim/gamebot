@@ -6,7 +6,7 @@
 ; Parameters ....:
 ; Return values .: None
 ; Author ........: Code Monkey #6
-; Modified ......: KGNS (June 2015)
+; Modified ......: kaganus (June 2015), Sardo 2015-07, kaganus (August 2015)
 ; Remarks .......:This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -16,8 +16,13 @@
 Func VillageSearch() ;Control for searching a village that meets conditions
 	$iSkipped = 0
 
+	If $debugDeadBaseImage = 1 Then
+		If DirGetSize(@ScriptDir & "\SkippedZombies\") = -1 Then DirCreate(@ScriptDir & "\SkippedZombies\")
+		If DirGetSize(@ScriptDir & "\Zombies\") = -1 Then DirCreate(@ScriptDir & "\Zombies\")
+	EndIf
+
 	If $Is_ClientSyncError = False Then
-		For $i = 0 to $iModeCount - 1
+		For $i = 0 To $iModeCount - 1
 			$iAimGold[$i] = $iMinGold[$i]
 			$iAimElixir[$i] = $iMinElixir[$i]
 			$iAimGoldPlusElixir[$i] = $iMinGoldPlusElixir[$i]
@@ -28,12 +33,12 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 
 	_WinAPI_EmptyWorkingSet(WinGetProcess($Title))
 
-	If _Sleep(1000) Then Return
+	If _Sleep($iDelayVillageSearch1) Then Return
 
-;	; Check Break Shield button again
-;	If _CheckPixel($aBreakShield, $bCapturePixel) Then
-;		ClickP($aBreakShield, 1, 0, "#0154");Click Okay To Break Shield
-;	EndIf
+	;	; Check Break Shield button again
+	;	If _CheckPixel($aBreakShield, $bCapturePixel) Then
+	;		ClickP($aBreakShield, 1, 0, "#0154");Click Okay To Break Shield
+	;	EndIf
 
 	For $x = 0 To $iModeCount - 1
 		If $x = $iCmbSearchMode Or $iCmbSearchMode = 2 Then
@@ -112,54 +117,73 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 			If _Sleep(1000 * $iVSDelay) Then Return
 		EndIf
 
+		Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
+		Local $Time = @HOUR & "." & @MIN & "." & @SEC
+
 		If $Restart = True Then Return ; exit func
 		GetResources() ;Reads Resource Values
 		If $Restart = True Then Return ; exit func
 		$bBtnAttackNowPressed = False
-		;If $bBtnAttackNowPressed = True Then ExitLoop
 
 		If Mod(($iSkipped + 1), 100) = 0 Then
 			_WinAPI_EmptyWorkingSet(WinGetProcess($Title)) ; reduce BS memory
-			If _Sleep(1000) Then Return
+			If _Sleep($iDelayVillageSearch1) Then Return
 			If CheckZoomOut() = False Then Return
 		EndIf
 
 		Local $noMatchTxt = ""
 		Local $dbBase = False
-		Local $matchDB = False
-		Local $matchLB = False
-		Local $isWeakBase[$iModeCount]
-		For $x = 0 To $iModeCount - 1
-			$isWeakBase[$x] = False
-			If ($x = $iCmbSearchMode Or $iCmbSearchMode = 2) And $iChkWeakBase[$x] = 1 Then
-				_WinAPI_DeleteObject($hBitmapFirst)
-				$hBitmapFirst = _CaptureRegion2()
-				Local $resultHere = DllCall($pFuncLib, "str", "CheckConditionForWeakBase", "ptr", $hBitmapFirst, "int", ($iCmbWeakMortar[$x] + 1), "int", ($iCmbWeakWizTower[$x] + 1), "int", 10)
-				If $resultHere[0] = "Y" Then
-					$isWeakBase[$x] = True
+		Local $match[$iModeCount]
+		Local $isModeActive[$iModeCount]
+		For $i = 0 To $iModeCount - 1
+			$match[$i] = False
+			$isModeActive[$i] = False
+		Next
+
+		If $iCmbSearchMode = 0 Then
+			$isModeActive[$DB] = True
+			$match[$DB] = CompareResources($DB)
+		ElseIf $iCmbSearchMode = 1 Then
+			$isModeActive[$LB] = True
+			$match[$LB] = CompareResources($LB)
+		ElseIf $iCmbSearchMode = 2 Then
+			For $i = 0 To $iModeCount - 1
+				$isModeActive[$i] = IsSearchModeActive($i)
+				If $isModeActive[$i] Then
+					$match[$i] = CompareResources($i)
+				EndIf
+			Next
+		EndIf
+
+		For $i = 0 To $iModeCount - 1
+			If ($match[$i] And $iChkWeakBase[$i] = 1 And $iChkMeetOne[$i] <> 1) Or ($isModeActive[$i] And Not $match[$i] And $iChkWeakBase[$i] = 1 And $iChkMeetOne[$i] = 1) Then
+				If IsWeakBase($i) Then
+					$match[$i] = True
+				Else
+					$match[$i] = False
+					$noMatchTxt &= getLocaleString("logNotWeakBase") & $sModeText[$i]
 				EndIf
 			EndIf
 		Next
-		If $iCmbSearchMode = 0 Then
-			$matchDB = CompareResources($DB, $isWeakBase[$DB])
-		ElseIf $iCmbSearchMode = 1 Then
-			$matchLB = CompareResources($LB, $isWeakBase[$LB])
-		Else
-			If IsSearchModeActive($DB) Then $matchDB = CompareResources($DB, $isWeakBase[$DB])
-			If IsSearchModeActive($LB) Then $matchLB = CompareResources($LB, $isWeakBase[$LB])
-		EndIf
-		If $matchDB Or $matchLB Then
+
+		If $match[$DB] Or $match[$LB] Then
 			$dbBase = checkDeadBase()
 		EndIf
-		If $matchDB And $dbBase Then
+
+		If $match[$DB] And $dbBase Then
 			SetLog(_PadStringCenter(getLocaleString("logDBFound"), 50, "~"), $COLOR_GREEN)
 			$iMatchMode = $DB
+			If $debugDeadBaseImage = 1 Then
+				_CaptureRegion()
+				_GDIPlus_ImageSaveToFile($hBitmap, @ScriptDir & "\Zombies\" & $Date & " at " & $Time & ".jpg")
+				_WinAPI_DeleteObject($hBitmap)
+			EndIf
 			ExitLoop
-		ElseIf $matchLB And Not $dbBase Then
+		ElseIf $match[$LB] And Not $dbBase Then
 			SetLog(_PadStringCenter(getLocaleString("logLBFound"), 50, "~"), $COLOR_GREEN)
 			$iMatchMode = $LB
 			ExitLoop
-		ElseIf $matchLB Or $matchDB Then
+		ElseIf $match[$LB] Or $match[$DB] Then
 			If $OptBullyMode = 1 And ($SearchCount >= $ATBullyMode) Then
 				If $SearchTHLResult = 1 Then
 					SetLog(_PadStringCenter(getLocaleString("logTBFound"), 50, "~"), $COLOR_GREEN)
@@ -168,53 +192,86 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 				EndIf
 			EndIf
 		EndIf
-		;If $bBtnAttackNowPressed = True Then ExitLoop
+
 		If $OptTrophyMode = 1 Then ;Enables Triple Mode Settings ;---compare resources
 			If SearchTownHallLoc() Then ; attack this base anyway because outside TH found to snipe
-				SetLog(_PadStringCenter(getLocaleString("logTHOFound"), 50, "~"), $COLOR_GREEN)
-				$iMatchMode = $TS
-				ExitLoop
+				If $skipBase = False Then
+					SetLog(_PadStringCenter(getLocaleString("logTHOFound"), 50, "~"), $COLOR_GREEN)
+					$iMatchMode = $TS
+					ExitLoop
+				Else
+                	SetLog(getLocaleString("logTrapFound"), $COLOR_RED)
+                EndIf
 			EndIf
 		EndIf
 
-		; break every 15 searches when Snipe While Train mode is active
+		; break every 10 searches when Snipe While Train mode is active
 		If $isSnipeWhileTrain Then
-			If $iSkipped > 13 Then
+			If $iSkipped > 8 Then
 				Click(62, 519) ; Click End Battle
 				$Restart = True ; To Prevent Initiation of Attack
 				ExitLoop
 			EndIf
 		EndIf
 
-		;If $bBtnAttackNowPressed = True Then ExitLoop
-		For $x = 0 To $iModeCount - 1
-			If ($x = $iCmbSearchMode Or $iCmbSearchMode = 2) And $iChkWeakBase[$x] = 1 And Not $isWeakBase[$x] Then
-				$noMatchTxt &= getLocaleString("logNotWeakBase") & $sModeText[$x]
+		If $match[$DB] And Not $dbBase Then
+			$noMatchTxt &= getLocaleString("logNotA") & $sModeText[$DB] & getLocaleString("logNotA2")
+			If $debugDeadBaseImage = 1 Then
+				_CaptureRegion()
+				_GDIPlus_ImageSaveToFile($hBitmap, @ScriptDir & "\SkippedZombies\" & $Date & " at " & $Time & ".jpg")
+				_WinAPI_DeleteObject($hBitmap)
 			EndIf
-		Next
-		If $matchDB And Not $dbBase Then
-			$noMatchTxt &= getLocaleString("logNotDB") & $sModeText[$DB] & getLocaleString("logNotDB2")
-		ElseIf $matchLB And $dbBase Then
-			$noMatchTxt &= getLocaleString("logNotLB") & $sModeText[$LB] & getLocaleString("logNotLB2")
+		ElseIf $match[$LB] And $dbBase Then
+			$noMatchTxt &= getLocaleString("logNotA") & $sModeText[$LB] & getLocaleString("logNotA2")
 		EndIf
- 		If $noMatchTxt <> "" Then
+
+		If $noMatchTxt <> "" Then
 			SetLog(_PadStringCenter(" " & StringMid($noMatchTxt, 3) & " ", 50, "~"), $COLOR_PURPLE)
 		EndIf
-		;If $bBtnAttackNowPressed = True Then ExitLoop
+
 		If $iChkAttackNow = 1 Then
 			If _Sleep(1000 * $iAttackNowDelay) Then Return ; add human reaction time on AttackNow button function
 		EndIf
+
 		If $bBtnAttackNowPressed = True Then ExitLoop
-		ClickP($NextBtn,1,0,"#0155") ;Click Next
-		If _Sleep(500) Then Return
+
+		Local $i = 0
+		While $i < 100
+			$i += 1
+			If ( _ColorCheck(_GetPixelColor($NextBtn[0], $NextBtn[1], True), Hex($NextBtn[2], 6), $NextBtn[3])) Then
+				ClickP($NextBtn, 1, 0, "#0155") ;Click Next
+				ExitLoop
+			Else
+				If $debugsetlog = 1 Then SetLog("Wait to see Next Button... " & $i, $COLOR_PURPLE)
+			EndIf
+			If $i >= 99 Then ; if we can't find the next button or there is an error, then restart
+				$Restart = True
+				$Is_ClientSyncError = True
+				$iStuck = 0
+				$Restart = True
+				If isProblemAffect(True) Then
+					SetLog(getLocaleString("logCantLocateNextBtn"), $COLOR_RED)
+					Pushmsg("OoSResources")
+					Return
+				Else
+					SetLog(getLocaleString("logStrangeProblem"), $COLOR_RED)
+					Return
+				EndIf
+		EndIf
+			_Sleep($iDelayVillageSearch2)
+		WEnd
+
+		If _Sleep($iDelayVillageSearch3) Then Return
+
 		If isGemOpen(True) = True Then
 			Setlog(getLocaleString("logOutOfGoldSearching"), $COLOR_RED)
-			Click(585, 252,1,0,"#0156")  ; Click close gem window "X"
-			If _Sleep(500) Then Return
-			$OutOfGold = 1  ; Set flag for out of gold to search for attack
+			Click(585, 252, 1, 0, "#0156") ; Click close gem window "X"
+			If _Sleep($iDelayVillageSearch3) Then Return
+			$OutOfGold = 1 ; Set flag for out of gold to search for attack
 			ReturnHome(False, False)
 			Return
 		EndIf
+
 		$iSkipped = $iSkipped + 1
 		GUICtrlSetData($lblresultvillagesskipped, GUICtrlRead($lblresultvillagesskipped) + 1)
 	WEnd
@@ -270,4 +327,11 @@ Func IsSearchModeActive($pMode)
 	If $SearchCount = $iEnableAfterCount[$pMode] Then SetLog(_PadStringCenter(" " & $sModeText[$pMode] & getLocaleString("logSearchModeActivated"), 50, "~"), $COLOR_BLUE)
 	If $SearchCount >= $iEnableAfterCount[$pMode] Then Return True
 	Return False
-EndFunc
+EndFunc   ;==>IsSearchModeActive
+
+Func IsWeakBase($pMode)
+	_WinAPI_DeleteObject($hBitmapFirst)
+	$hBitmapFirst = _CaptureRegion2()
+	Local $resultHere = DllCall($pFuncLib, "str", "CheckConditionForWeakBase", "ptr", $hBitmapFirst, "int", ($iCmbWeakMortar[$pMode] + 1), "int", ($iCmbWeakWizTower[$pMode] + 1), "int", 10)
+	Return $resultHere[0] = "Y"
+EndFunc   ;==>IsWeakBase

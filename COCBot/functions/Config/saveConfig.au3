@@ -383,6 +383,42 @@ Func saveConfig() ;Saves the controls settings to the config
 
 	IniWrite($config, "advanced", "THaddTiles", GUICtrlRead($txtTHaddtiles))
 	IniWrite($config, "advanced", "AttackTHType", _GUICtrlComboBox_GetCurSel($cmbAttackTHType))
+	
+	If GUICtrlRead($chkMortar) = $GUI_CHECKED Then
+		IniWrite($config, "advanced", "skipMortar", 1)
+	Else
+		IniWrite($config, "advanced", "skipMortar", 0)
+	EndIf	
+	If GUICtrlRead($chkWiz) = $GUI_CHECKED Then
+		IniWrite($config, "advanced", "skipWiz", 1)
+	Else
+		IniWrite($config, "advanced", "skipWiz", 0)
+	EndIf	
+	If GUICtrlRead($chkInferno) = $GUI_CHECKED Then
+		IniWrite($config, "advanced", "skipInferno", 1)
+	Else
+		IniWrite($config, "advanced", "skipInferno", 0)
+	EndIf	
+	If GUICtrlRead($chkTesla) = $GUI_CHECKED Then
+		IniWrite($config, "advanced", "skipTesla", 1)
+	Else
+		IniWrite($config, "advanced", "skipTesla", 0)
+	EndIf	
+	If GUICtrlRead($chkAir) = $GUI_CHECKED Then
+		IniWrite($config, "advanced", "skipAir", 1)
+	Else
+		IniWrite($config, "advanced", "skipAir", 0)
+	EndIf	
+	If GUICtrlRead($chkGrdTroops) = $GUI_CHECKED Then
+		IniWrite($config, "advanced", "grdTroops", 1)
+	Else
+		IniWrite($config, "advanced", "grdTroops", 0)
+	EndIf	
+	If GUICtrlRead($chkAirTroops) = $GUI_CHECKED Then
+		IniWrite($config, "advanced", "airTroops", 1)
+	Else
+		IniWrite($config, "advanced", "airTroops", 0)
+	EndIf
 
 	If GUICtrlRead($chkAlertPBVillage) = $GUI_CHECKED Then
 		IniWrite($config, "advanced", "AlertPBVillage", 1)
@@ -908,7 +944,8 @@ Func saveConfig() ;Saves the controls settings to the config
 		IniWrite($config, "pushbullet", "DeleteOldPushes", 0)
 	EndIf
 
-	IniWrite($config, "other", "WAOffset", GUICtrlRead($txtWAOffset))
+	IniWrite($config, "other", "WAOffsetX", GUICtrlRead($txtWAOffsetX))
+	IniWrite($config, "other", "WAOffsetY", GUICtrlRead($txtWAOffsetY))
 
 
 	; delete Files

@@ -19,20 +19,19 @@
 #pragma compile(FileDescription, Clash of Clans Bot - A Free Clash of Clans bot - https://gamebot.org)
 #pragma compile(ProductName, Clash Game Bot)
 
-#pragma compile(ProductVersion, 4.1)
-#pragma compile(FileVersion, 4.1)
+#pragma compile(ProductVersion, 4.1.1)
+#pragma compile(FileVersion, 4.1.1)
 #pragma compile(LegalCopyright, © http://gamebot.org)
 
-$sBotVersion = "v4.1"
+$sBotVersion = "v4.1.1"
 $sBotTitle = "Clash Game Bot " & $sBotVersion
 Global $sBotDll = @ScriptDir & "\CGBPlugin.dll"
 Global $StartupLanguage = IniRead(@ScriptDir & "\COCBot\GUI\localization\lang.ini", "config", "language", "English")
-#cs
+
 If _Singleton($sBotTitle, 1) = 0 Then
 	MsgBox(0, getLocaleString("msgboxWarningTitle"), getLocaleString("msgboxRun"))
 	Exit
-EndIf
-#ce
+ EndIf
 
 If @AutoItX64 = 1 Then
 	MsgBox(0, getLocaleString("msgboxWarningTitle"), getLocaleString("msgbox_x64"))
@@ -75,7 +74,7 @@ debugCGBFunctions($debugSearchArea, $debugRedArea, $debugOcr) ; set debug levels
 AdlibRegister("PushBulletRemoteControl", $PBRemoteControlInterval)
 AdlibRegister("PushBulletDeleteOldPushes", $PBDeleteOldPushesInterval)
 
-CheckVersion() ; check latest version on gamebot.org site
+; CheckVersion() ; check latest version on gamebot.org site
 
 ;AutoStart Bot if request
 AutoStart()
@@ -98,33 +97,22 @@ Func runBot() ;Bot that runs everything in order
 		$Restart = False
 		$fullArmy = False
 		$CommandStop = -1
-		If _Sleep(1000) Then Return
+		If _Sleep($iDelayRunBot1) Then Return
 		checkMainScreen()
+		If $Restart = True Then ContinueLoop
 		If $Is_ClientSyncError = False Then
 			If BotCommand() Then btnStop()
-			If _Sleep(800) Then Return
+			If _Sleep($iDelayRunBot2) Then Return
 			checkMainScreen(False)
 				If $Restart = True Then ContinueLoop
-			If $iChkUseCCBalanced = 1 then
-			    ProfileReport()
-			    If _Sleep(800) Then Return
-			    checkMainScreen(False)
-			    If $Restart = True Then ContinueLoop
-			EndIf
+			;If $iChkUseCCBalanced = 1 then
+			;    ProfileReport()
+			;    If _Sleep($iDelayRunBot2) Then Return
+			;    checkMainScreen(False)
+			;    If $Restart = True Then ContinueLoop
+			;EndIf
 			if $RequestScreenshot = 1 then PushMsg("RequestScreenshot")
-				If _Sleep(200) Then Return
-			Collect()
-				If _Sleep(1000) Then Return
-				If $Restart = True Then ContinueLoop
-			CheckTombs()
-				If _Sleep(200) Then Return
-				If $Restart = True Then ContinueLoop
-			ReArm()
-				If _Sleep(200) Then Return
-				If $Restart = True Then ContinueLoop
-			ReplayShare($iShareAttackNow)
-				If _Sleep(200) Then Return
-				If $Restart = True Then ContinueLoop
+				If _Sleep($iDelayRunBot3) Then Return
 			VillageReport()
 				If $OutOfGold = 1  And ($GoldCount >= $itxtRestartGold) Then  ; check if enough gold to begin searching again
 					$OutOfGold = 0  ; reset out of gold flag
@@ -138,18 +126,30 @@ Func runBot() ;Bot that runs everything in order
 					$ichkBotStop = 0  ; reset halt attack variable
 					ContinueLoop ; Restart bot loop to reset $CommandStop
 				EndIf
-				If _Sleep(500) Then Return
+				If _Sleep($iDelayRunBot5) Then Return
 				checkMainScreen(False)
 				If $Restart = True Then ContinueLoop
+			Collect()
+				If _Sleep($iDelayRunBot1) Then Return
+				If $Restart = True Then ContinueLoop
+			CheckTombs()
+				If _Sleep($iDelayRunBot3) Then Return
+				If $Restart = True Then ContinueLoop
+			ReArm()
+				If _Sleep($iDelayRunBot3) Then Return
+				If $Restart = True Then ContinueLoop
+			ReplayShare($iShareAttackNow)
+				If _Sleep($iDelayRunBot3) Then Return
+				If $Restart = True Then ContinueLoop
 			ReportPushBullet()
-				If _Sleep(200) Then Return
+				If _Sleep($iDelayRunBot3) Then Return
 				If $Restart = True Then ContinueLoop
 			DonateCC()
-				If _Sleep(1000) Then Return
+				If _Sleep($iDelayRunBot1) Then Return
 			    checkMainScreen(False)  ; required here due to many possible exits
 				If $Restart = True Then ContinueLoop
 			Train()
-				If _Sleep(1000) Then Return
+				If _Sleep($iDelayRunBot1) Then Return
 			    checkMainScreen(False)
 				If $Restart = True Then ContinueLoop
 			BoostBarracks()
@@ -157,24 +157,24 @@ Func runBot() ;Bot that runs everything in order
 			BoostSpellFactory()
 				If $Restart = True Then ContinueLoop
 			RequestCC()
-				If _Sleep(1000) Then Return
+				If _Sleep($iDelayRunBot1) Then Return
 				checkMainScreen(False) ; required here due to many possible exits
 				If $Restart = True Then ContinueLoop
 			If $iUnbreakableMode >= 1 Then
 				If Unbreakable() = True Then ContinueLoop
 			Endif
 			Laboratory()
-				If _Sleep(200) Then Return
+				If _Sleep($iDelayRunBot3) Then Return
 				checkMainScreen(False)  ; required here due to many possible exits
 				If $Restart = True Then ContinueLoop
 			UpgradeBuilding()
-				If _Sleep(200) Then Return
+				If _Sleep($iDelayRunBot3) Then Return
 				If $Restart = True Then ContinueLoop
 			UpgradeWall()
-				If _Sleep(2100) Then Return
+				If _Sleep($iDelayRunBot3) Then Return
 				If $Restart = True Then ContinueLoop
 			Idle()
-				If _Sleep(200) Then Return
+				If _Sleep($iDelayRunBot3) Then Return
 				If $Restart = True Then ContinueLoop
 			If $CommandStop <> 0 And $CommandStop <> 3 Then
 				AttackMain()
@@ -185,7 +185,7 @@ Func runBot() ;Bot that runs everything in order
 					$FirstStart = True  ; reset First time flag to ensure army balancing when returns to training
 					ContinueLoop
 				Endif
-				If _Sleep(1000) Then Return
+				If _Sleep($iDelayRunBot1) Then Return
 				If $Restart = True Then ContinueLoop
 			EndIf
 				;
@@ -193,6 +193,7 @@ Func runBot() ;Bot that runs everything in order
 			SetLog(getLocaleString("logOOS"), $COLOR_RED)
 			PushMsg("OutOfSync")
 			checkMainScreen(False)
+			If $Restart = True Then ContinueLoop
 			AttackMain()
 			If $OutOfGold = 1  Then
 				Setlog(getLocaleString("logReturnHaltAttack"), $COLOR_RED)
@@ -202,7 +203,7 @@ Func runBot() ;Bot that runs everything in order
 				$Is_ClientSyncError = False  ; reset fast restart flag to stop OOS mode and start collecting resources
 				ContinueLoop
 			Endif
-			If _Sleep(500) Then Return
+			If _Sleep($iDelayRunBot5) Then Return
 			If $Restart = True Then ContinueLoop
 		EndIf
 	WEnd
@@ -213,17 +214,17 @@ Func Idle() ;Sequence that runs until Full Army
 	If $debugSetlog = 1 Then SetLog("Func Idle ", $COLOR_PURPLE)
 	While $fullArmy = False
 		if $RequestScreenshot = 1 then PushMsg("RequestScreenshot")
-		If _Sleep(200) Then Return
+		If _Sleep($iDelayIdle1) Then Return
 		If $CommandStop = -1 Then SetLog(getLocaleString("logArmyWait"), $COLOR_GREEN)
 		Local $hTimer = TimerInit()
 		Local $iReHere = 0
 		While $iReHere < 7
 			$iReHere += 1
 			DonateCC(True)
-			If _Sleep(1500) Then ExitLoop
+			If _Sleep($iDelayIdle2) Then ExitLoop
 			If $Restart = True Then ExitLoop
 		WEnd
-		If _Sleep(200) Then ExitLoop
+		If _Sleep($iDelayIdle1) Then ExitLoop
 		checkMainScreen(False) ; required here due to many possible exits
 		If ($CommandStop = 3 Or $CommandStop = 0) Then
 			CheckOverviewFullArmy(True)
@@ -233,27 +234,27 @@ Func Idle() ;Sequence that runs until Full Army
 			EndIf
 		EndIf
 		ReplayShare($iShareAttackNow)
-		If _Sleep(200) Then Return
+		If _Sleep($iDelayIdle1) Then Return
 		If $Restart = True Then ExitLoop
 		If $iCollectCounter > $COLLECTATCOUNT Then ; This is prevent from collecting all the time which isn't needed anyway
 			Collect()
 			If $Restart = True Then ExitLoop
-			If _Sleep(200) Or $RunState = False Then ExitLoop
+			If _Sleep($iDelayIdle1) Or $RunState = False Then ExitLoop
 			$iCollectCounter = 0
 		EndIf
 		$iCollectCounter = $iCollectCounter + 1
 		if $CommandStop <> 0 Or $CommandStop <> 3 Then
 			Train()
 			If $Restart = True Then ExitLoop
-			If _Sleep(200) Then ExitLoop
+			If _Sleep($iDelayIdle1) Then ExitLoop
 			checkMainScreen(False)
 		endif
-		If _Sleep(200) Then Return
+		If _Sleep($iDelayIdle1) Then Return
 		If $CommandStop = 0 And $bTrainEnabled = True Then
 			If Not($fullarmy) Then
 				Train()
 				If $Restart = True Then ExitLoop
-				If _Sleep(200) Then ExitLoop
+				If _Sleep($iDelayIdle1) Then ExitLoop
 				checkMainScreen(False)
 				If $fullArmy Then
 					SetLog(getLocaleString("logArmyFull"), $COLOR_ORANGE)
@@ -261,15 +262,15 @@ Func Idle() ;Sequence that runs until Full Army
 				EndIf
 			EndIf
 		EndIf
-		If _Sleep(200) Then Return
+		If _Sleep($iDelayIdle1) Then Return
 		If $CommandStop = -1 Then
 			DropTrophy()
 			If $Restart = True Then ExitLoop
 			If $fullArmy Then ExitLoop
-			If _Sleep(200) Then ExitLoop
+			If _Sleep($iDelayIdle1) Then ExitLoop
 			checkMainScreen(False)
 		EndIf
-		If _Sleep(200) Then Return
+		If _Sleep($iDelayIdle1) Then Return
 		If $Restart = True Then ExitLoop
 		SnipeWhileTrain()
 		$TimeIdle += Round(TimerDiff($hTimer) / 1000, 2) ;In Seconds
@@ -282,9 +283,9 @@ Func AttackMain() ;Main control for attack functions
    ;launch profilereport() only if option balance D/R it's activated
 	If $iChkUseCCBalanced = 1 then
 		ProfileReport()
+		If _Sleep($iDelayAttackMain1) Then Return
 		checkMainScreen(False)
 		If $Restart = True Then Return
-		If _Sleep(1000) Then Return
 	EndIf
 	PrepareSearch()
 		If $OutOfGold = 1  Then Return ; Check flag for enough gold to search
@@ -300,7 +301,7 @@ Func AttackMain() ;Main control for attack functions
 	Attack()
 		If $Restart = True Then Return
 	ReturnHome($TakeLootSnapShot)
-		If _Sleep(1500) Then Return
+		If _Sleep($iDelayAttackMain2) Then Return
 	Return True
 EndFunc   ;==>AttackMain
 

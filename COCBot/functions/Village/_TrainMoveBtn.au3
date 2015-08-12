@@ -44,12 +44,12 @@ Func _TrainMoveBtn($direction)
 	If $i = 9 Then
 		;if unknow position move with arrows
 		If $direction = -1 And IsArray($PrevPos) Then
-			Click($PrevPos[0], $PrevPos[1], 1, 250, "#0337")
+			Click($PrevPos[0], $PrevPos[1], 1, $iDelayTrainMoveBtn1, "#0337")
 		Else
 			If $debugSetlog = 1 And Not (IsArray($PrevPos)) Then Setlog("CANNOT FIND PREV BUTTON", $COLOR_RED)
 		EndIf
 		If $direction = +1 And IsArray($NextPos) Then
-			Click($NextPos[0], $NextPos[1], 1, 250, "#0338")
+			Click($NextPos[0], $NextPos[1], 1, $iDelayTrainMoveBtn1, "#0338")
 		Else
 			If $debugSetlog = 1 And Not (IsArray($NextPos)) Then Setlog("CANNOT FIND PREV BUTTON", $COLOR_RED)
 
@@ -59,25 +59,25 @@ Func _TrainMoveBtn($direction)
 		If $direction = -1 Then
 			Local $j = $i - 1
 			If $j <= 0 Then $j = 8
-			While (($Trainviable[$j] = 0) And ($j <> $i))
+			While (($Trainavailable[$j] = 0) And ($j <> $i))
 				If $j = 1 Then
 					$j = 8
 				Else
 					$j -= 1
 				EndIf
 			WEnd
-			Click($tabpos[$j][0], $tabpos[$j][1], 1, 250, "#0339")
+			Click($tabpos[$j][0], $tabpos[$j][1], 1, $iDelayTrainMoveBtn1, "#0339")
 		Else
 			Local $j = $i + 1
 			If $j = 9 Then $j = 1
-			While (($Trainviable[$j] = 0) And ($j <> $i))
+			While (($Trainavailable[$j] = 0) And ($j <> $i))
 				If $j = 8 Then
 					$j = 1
 				Else
 					$j += 1
 				EndIf
 			WEnd
-			Click($tabpos[$j][0], $tabpos[$j][1], 1, 250, "#0340")
+			Click($tabpos[$j][0], $tabpos[$j][1], 1, $iDelayTrainMoveBtn1, "#0340")
 		EndIf
 	EndIf
 

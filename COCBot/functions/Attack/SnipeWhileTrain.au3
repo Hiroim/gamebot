@@ -27,8 +27,7 @@ Func SnipeWhileTrain()
 			Return False
 		EndIf
 
-         If Not($fullArmy) And Not($CurCamp >= ($TotalCamp * $fulltroop * 90/100)) Then
-
+		If Not($fullArmy) And Not($CurCamp >= StringLeft(($TotalCamp * $fulltroop * 90/100),3)) Then
 			; Swap variables to pure TH snipe mode
 			$tempSnipeWhileTrain[0] = $iChkMeetTrophy[$DB]
 			$tempSnipeWhileTrain[1] = $iChkMeetTrophy[$LB]

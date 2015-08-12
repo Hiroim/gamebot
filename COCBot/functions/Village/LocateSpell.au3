@@ -6,7 +6,7 @@
 ; Parameters ....:
 ; Return values .: None
 ; Author ........: saviart
-; Modified ......: KnowJack (June 2015)
+; Modified ......: KnowJack (June 2015) Sardo 2015-08
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -24,7 +24,7 @@ Func LocateSpellFactory()
 	EndIf
 
 	While 1
-		ClickP($aTopLeftClient)
+		ClickP($aAway,1,0,"#0385")
 		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Comic Sans MS", 500)
 		$stext = $sErrorText & @CRLF & "Click OK then click on your Spell Factory" & @CRLF & @CRLF & _
 		"Do not move mouse quickly after clicking location"& @CRLF & @CRLF & "Make sure the building name is visible for me!" & @CRLF
@@ -51,13 +51,13 @@ Func LocateSpellFactory()
 						ContinueLoop
 					Case $iStupid > 4
 						SetLog(" Operator Error - Bad Spell Factory Location: " & "(" & $SFPos[0] & "," &$SFPos[1] & ")", $COLOR_RED)
-						ClickP($aTopLeftClient)
+						ClickP($aAway,1,0,"#0386")
 						Return False
 					Case Else
 						SetLog(" Operator Error - Bad Spell Factory Location: " & "(" & $SFPos[0] & "," &$SFPos[1] & ")", $COLOR_RED)
 						$SFPos[0] = -1
 						$SFPos[1] = -1
-						ClickP($aTopLeftClient)
+						ClickP($aAway,1,0,"#0387")
 						Return False
 				EndSelect
 			EndIf
@@ -87,7 +87,7 @@ Func LocateSpellFactory()
 							SetLog("Quit joking, Click the Army Camp, or restart bot and try again", $COLOR_RED)
 							$SFPos[0] = -1
 							$SFPos[1] = -1
-							ClickP($aTopLeftClient)
+							ClickP($aAway,1,0,"#0388")
 							Return False
 					EndSelect
 				EndIf
@@ -95,18 +95,18 @@ Func LocateSpellFactory()
 				SetLog(" Operator Error - Bad Spell Factory Location: " & "(" & $SFPos[0] & "," & $SFPos[1] & ")", $COLOR_RED)
 				$SFPos[0] = -1
 				$SFPos[1] = -1
-				ClickP($aTopLeftClient)
+				ClickP($aAway,1,0,"#0389")
 				Return False
 			EndIf
 			SetLog("Locate Spell Factory Success: " & "(" & $SFPos[0] & "," & $SFPos[1] & ")", $COLOR_GREEN)
 		Else
 			SetLog("Locate Spell Factory Cancelled", $COLOR_BLUE)
-			ClickP($aTopLeftClient)
+			ClickP($aAway,1,0,"#0390")
 			Return
 		EndIf
 		ExitLoop
 	WEnd
 
-	ClickP($aTopLeftClient, 2, 200, "#0208")
+	ClickP($aAway, 2, 200, "#0208")
 
 EndFunc   ;==>LocateSpellFactory

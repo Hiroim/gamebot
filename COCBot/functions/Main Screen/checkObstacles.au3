@@ -5,8 +5,8 @@
 ; Syntax ........: checkObstacles()
 ; Parameters ....:
 ; Return values .: Returns True when there is something blocking
-; Author ........:
-; Modified ......:
+; Author ........: Hungle (2014)
+; Modified ......: KnowJack (2015) Sardo 2015-08
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -17,7 +17,6 @@
 Func checkObstacles() ;Checks if something is in the way for mainscreen
 	Local $x, $y
 	_CaptureRegion()
-	;coded by hungle from gamebot.org
 	If _ImageSearchArea($device, 0, 237, 321, 293, 346, $x, $y, 80) Then
 		If $sTimeWakeUp > 3600 Then
 			SetLog(getLocaleString("logAnotherDevice") & Floor(Floor($sTimeWakeUp / 60) / 60) & getLocaleString("logAdHours") & Floor(Mod(Floor($sTimeWakeUp / 60), 60)) & getLocaleString("logAdMinutes") & Floor(Mod($sTimeWakeUp, 60)) & getLocaleString("logAdSeconds"), $COLOR_RED)
@@ -30,7 +29,6 @@ Func checkObstacles() ;Checks if something is in the way for mainscreen
 			PushMsg("AnotherDevice")
 		EndIf
 		If _SleepStatus($sTimeWakeUp * 1000) Then Return ; 2 Minutes
-		$iTimeTroops = 0
 		PureClickP($aReloadButton, 1, 0, "#0127");Check for "Another device" message
 		If _Sleep(2000) Then Return
 		Return True
@@ -38,25 +36,26 @@ Func checkObstacles() ;Checks if something is in the way for mainscreen
 	If _ImageSearch($break, 0, $x, $y, 80) Then
 		SetLog(getLocaleString("logTakeABreak"), $COLOR_RED)
 		PushMsg("TakeBreak")
-		If _SleepStatus(120000) Then Return ; 2 Minutes
+		If _SleepStatus($iDelaycheckObstacles4) Then Return ; 2 Minutes
 		PureClickP($aReloadButton, 1, 0, "#0128");Check for "Take a break" message
 		Return True
 	EndIf
 	If _ImageSearchArea($CocStopped, 0, 250, 328, 618, 402, $x, $y, 70) Then
 		SetLog(getLocaleString("logCocStopped"), $COLOR_RED)
 		PushMsg("CoCError")
-		If _Sleep(1000) Then Return
+		If _Sleep($iDelaycheckObstacles1) Then Return
 		PureClick(250 + $x, 328 + $y, 1, 0, "#0129");Check for "CoC has stopped error, looking for OK message" on screen
-		If _Sleep(2000) Then Return
-		PureClick(126, 700, 1, 500, "#0130")
+		If _Sleep($iDelaycheckObstacles2) Then Return
+		PureClick(126, 700, 1, $iDelaycheckObstacles5, "#0130")
 		Local $RunApp = StringReplace(_WinAPI_GetProcessFileName(WinGetProcess($Title)), "Frontend", "RunApp")
 		Run($RunApp & " Android com.supercell.clashofclans com.supercell.clashofclans.GameApp")
+		If _Sleep(10000) Then Return ; Give it some time to restart
 		Return True
 	EndIf
 	$Message = _PixelSearch($aIsInactive[0], $aIsInactive[1], $aIsInactive[0] + 1, $aIsInactive[1] + 30, Hex($aIsInactive[2], 6), $aIsInactive[3])
 	If IsArray($Message) Then
 		PureClickP($aReloadButton, 1, 0, "#0131");Check for out of sync or inactivity
-		If _Sleep(5000) Then Return
+		If _Sleep($iDelaycheckObstacles3) Then Return
 		Return True
 	EndIf
 	_CaptureRegion()
@@ -65,7 +64,7 @@ Func checkObstacles() ;Checks if something is in the way for mainscreen
 		Return True
 	EndIf
 	If _CheckPixel($aIsMainGrayed, $bNoCapturePixel) Then
-		PureClickP($aTopLeftClient, 1, 0, "#0133") ;Click away If things are open
+		PureClickP($aAway, 1, 0, "#0133") ;Click away If things are open
 		Return True
 	EndIf
 	If _ColorCheck(_GetPixelColor(819, 55), Hex(0xD80400, 6), 20) Then
@@ -78,7 +77,7 @@ Func checkObstacles() ;Checks if something is in the way for mainscreen
 	EndIf
 	If _CheckPixel($aChatTab, $bNoCapturePixel) Then
 		PureClickP($aChatTab, 1, 0, "#0136") ;Clicks chat tab
-		If _Sleep(1000) Then Return
+		If _Sleep($iDelaycheckObstacles1) Then Return
 		Return True
 	EndIf
 	If _CheckPixel($aEndFightSceneBtn, $bNoCapturePixel) Then
@@ -92,7 +91,7 @@ Func checkObstacles() ;Checks if something is in the way for mainscreen
 	$Message = _PixelSearch(19, 565, 104, 580, Hex(0xD9DDCF, 6), 10)
 	If IsArray($Message) Then
 		PureClick(67, 602, 1, 0, "#0138");Check if Return Home button available
-		If _Sleep(2000) Then Return
+		If _Sleep($iDelaycheckObstacles2) Then Return
 		Return True
 	EndIf
 

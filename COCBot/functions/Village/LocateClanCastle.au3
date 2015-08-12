@@ -6,7 +6,7 @@
 ; Parameters ....:
 ; Return values .: None
 ; Author ........: Code Monkey #69
-; Modified ......: KnowJack (June 2015)
+; Modified ......: KnowJack (June 2015) Sardo 2015-08
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -24,8 +24,8 @@ Func LocateClanCastle()
 	EndIf
 
 	While 1
-		ClickP($aTopLeftClient)
-		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Arial", 700)
+		ClickP($aAway,1,0,"#0373")
+		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Lucida Sans Unicode", 700)
 		$stext =  $sErrorText & @CRLF & getLocaleString("msgboxLocateCC_msg",1) & @CRLF
 		$MsgBox = _ExtMsgBox(0, getLocaleString("msgboxLocateCC_controls"), getLocaleString("msgboxLocateCC_title"), $stext, 15, $frmBot)
 		If $MsgBox = 1 Then
@@ -50,20 +50,20 @@ Func LocateClanCastle()
 						ContinueLoop
 					Case $iStupid > 4
 						SetLog(getLocaleString("txtOperatorErrCC")  & "(" & $aCCPos[0] & "," & $aCCPos[1] & ")", $COLOR_RED)
-						ClickP($aTopLeftClient)
+						ClickP($aAway,1,0,"#0374")
 						Return False
 					Case Else
 						SetLog(getLocaleString("txtOperatorErrCC")  & "(" & $aCCPos[0] & "," & $aCCPos[1] & ")", $COLOR_RED)
 						$aCCPos[0] = -1
 						$aCCPos[1] = -1
-						ClickP($aTopLeftClient)
+						ClickP($aAway,1,0,"#0375")
 						Return False
 				EndSelect
 			EndIf
 			SetLog(getLocaleString("logPosCC")  & "(" & $aCCPos[0] & "," & $aCCPos[1] & ")", $COLOR_GREEN)
 		Else
 			SetLog(getLocaleString("logLocateCancelledCC") , $COLOR_BLUE)
-			ClickP($aTopLeftClient)
+			ClickP($aAway,1,0,"#0376")
 			Return
 		EndIf
 		$sInfo = BuildingInfo(242, 520)
@@ -92,7 +92,7 @@ Func LocateClanCastle()
 						SetLog(getLocaleString("txtSillyCase4CC") , $COLOR_RED)
 						$aCCPos[0] = -1
 						$aCCPos[1] = -1
-						ClickP($aTopLeftClient)
+						ClickP($aAway,1,0,"#0377")
 						Return False
 				EndSelect
 			EndIf
@@ -100,12 +100,12 @@ Func LocateClanCastle()
 			SetLog(getLocaleString("txtOperatorErrCC")  & "(" & $aCCPos[0] & "," & $aCCPos[1] & ")", $COLOR_RED)
 			$aCCPos[0] = -1
 			$aCCPos[1] = -1
-			ClickP($aTopLeftClient)
+			ClickP($aAway,1,0,"#0378")
 			Return False
 		EndIf
 		ExitLoop
 	WEnd
 
-	ClickP($aTopLeftClient, 1, 200, "#0327")
+	ClickP($aAway, 1, 200, "#0327")
 
 EndFunc   ;==>LocateClanCastle

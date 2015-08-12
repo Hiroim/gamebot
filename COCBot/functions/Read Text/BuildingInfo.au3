@@ -5,7 +5,7 @@ Func BuildingInfo($iXstart, $iYstart)
 
 	$sBldgText = getNameBuilding($iXstart, $iYstart) ; Get Unit name and level with OCR
 	If $sBldgText = "" Then ; try a 2nd time after a short delay if slow PC
-		If _Sleep(1500) Then Return
+		If _Sleep($iDelayBuildingInfo1) Then Return
 		$sBldgText = getNameBuilding($iXstart, $iYstart) ; Get Unit name and level with OCR
 	EndIf
 	If $debugSetlog = 1 Then Setlog("Read building Name String = " & $sBldgText, $COLOR_PURPLE) ;debug

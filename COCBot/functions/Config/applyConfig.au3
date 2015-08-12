@@ -19,7 +19,7 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 	If $frmBotPosX <> -32000 Then WinMove($sBotTitle, "", $frmBotPosX, $frmBotPosY)
 
 	If $iVillageName = "" Then
-		GUICtrlSetData($txtVillageName, "MyVillage")
+		GUICtrlSetData($txtVillageName, getLocaleString("txtVillageName"))
 	Else
 		GUICtrlSetData($txtVillageName, $iVillageName)
 	EndIf
@@ -407,6 +407,55 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 	GUICtrlSetData($txtTHaddTiles, $THaddTiles)
 	_GUICtrlComboBox_SetCurSel($cmbAttackTHType, $AttackTHType)
 	chkSnipeMode()
+	
+	If $skipMortar = 1 Then
+		GUICtrlSetState($chkMortar, $GUI_CHECKED)
+	ElseIf $skipMortar = 0 Then
+		GUICtrlSetState($chkMortar, $GUI_UNCHECKED)
+	EndIf
+	chkMortar()
+	
+	If $skipWiz = 1 Then
+		GUICtrlSetState($chkWiz, $GUI_CHECKED)
+	ElseIf $skipWiz = 0 Then
+		GUICtrlSetState($chkWiz, $GUI_UNCHECKED)
+	EndIf
+	chkWiz()
+	
+	If $skipInferno = 1 Then
+		GUICtrlSetState($chkInferno, $GUI_CHECKED)
+	ElseIf $skipInferno = 0 Then
+		GUICtrlSetState($chkInferno, $GUI_UNCHECKED)
+	EndIf
+	chkInferno()
+	
+	If $skipTesla = 1 Then
+		GUICtrlSetState($chkTesla, $GUI_CHECKED)
+	ElseIf $skipTesla = 0 Then
+		GUICtrlSetState($chkTesla, $GUI_UNCHECKED)
+	EndIf
+	chkTesla()
+	
+	If $skipAir = 1 Then
+		GUICtrlSetState($chkAir, $GUI_CHECKED)
+	ElseIf $skipAir = 0 Then
+		GUICtrlSetState($chkAir, $GUI_UNCHECKED)
+	EndIf
+	chkAir()
+	
+	If $grdTroops = 1 Then
+		GUICtrlSetState($chkGrdTroops, $GUI_CHECKED)
+	ElseIf $grdTroops = 0 Then
+		GUICtrlSetState($chkGrdTroops, $GUI_UNCHECKED)
+	EndIf
+	chkGrdTroops()
+
+	If $airTroops = 1 Then
+		GUICtrlSetState($chkAirTroops, $GUI_CHECKED)
+	ElseIf $airTroops = 0 Then
+		GUICtrlSetState($chkAirTroops, $GUI_UNCHECKED)
+	EndIf
+	chkAirTroops()
 
 	If $iAlertPBVillage = 1 Then
 		GUICtrlSetState($chkAlertPBVillage, $GUI_CHECKED)
@@ -1019,7 +1068,8 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 	;location of TH, CC, Army Camp, Barrack and Spell Fact. not Applied, only read
 
 
-	GUICtrlSetData($txtWAOffset, $iWAOffset)
+	GUICtrlSetData($txtWAOffsetX, $iWAOffsetX)
+	GUICtrlSetData($txtWAOffsetY, $iWAOffsetY)
 
 
 	; delete Files

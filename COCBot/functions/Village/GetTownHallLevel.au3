@@ -5,7 +5,7 @@
 ; Parameters ....: $bFirstTime          - a boolean value True = first time the bot has run
 ; Return values .: None
 ; Author ........: KNowJack (July 2015)
-; Modified ......:
+; Modified ......: Sardo 2015-08
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -20,12 +20,12 @@ Func GetTownHallLevel($bFirstTime = False)
 	If isInsideDiamond($TownHallPos) = False Then  ; If TH pos is not known or is outside village then get new position
 		LocateTownHall(True)  ; Set flag = true for location only, or repeated loop happens
 		If isInsideDiamond($TownHallPos) Then SaveConfig()  ; save new location
-		If _Sleep(1000) Then Return
+		If _Sleep($iDelayGetTownHallLevel1) Then Return
 	EndIf
 
 	If $bFirstTime = True Then
-		Click($TownHallPos[0], $TownHallPos[1] + 5)
-		If _Sleep(1500) Then Return
+		Click($TownHallPos[0], $TownHallPos[1] + 5,1,0,"#0349")
+		If _Sleep($iDelayGetTownHallLevel2) Then Return
 	EndIf
 
 	If $debugSetlog = 1 Then DebugImageSave("GetTHLevelView")
@@ -43,16 +43,16 @@ Func GetTownHallLevel($bFirstTime = False)
 			SetLog (getLocaleString("logTHInfo2") & $iTownHallLevel, $COLOR_GREEN)
 		Else
 			SetLog (getLocaleString("logTHInfoLocateManually") & $iTownHallLevel, $COLOR_BLUE)
-			ClickP($aTopLeftClient)  ; Unselect TH
+			ClickP($aAway,1,0,"#0350")  ; Unselect TH
 			Return False
 		EndIf
 	Else
 	  SetLog (getLocaleString("logTHInfoLocateManually") & $iTownHallLevel, $COLOR_BLUE)
-	  ClickP($aTopLeftClient)  ; Unselect TH
+	  ClickP($aAway,1,0,"#0351")  ; Unselect TH
 	  Return False
 	EndIf
 
-	ClickP($aTopLeftClient, 2, 200)  ; Unselect TH
+	ClickP($aAway, 2, $iDelayGetTownHallLevel3,"#0352")  ; Unselect TH
 	Return True
 
 	EndFunc

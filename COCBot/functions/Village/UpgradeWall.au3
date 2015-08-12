@@ -1,11 +1,26 @@
+; #FUNCTION# ====================================================================================================================
+; Name ..........: UpgradeWall.au3
+; Description ...:
+; Syntax ........:
+; Parameters ....:
+; Return values .:
+; Author ........:
+; Modified ......: Sardo 2015-08
+; Remarks .......: This file is part of ClashGameBot. Copyright 2015
+;                  ClashGameBot is distributed under the terms of the GNU GPL
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+
 Func UpgradeWall()
 
-	If $NoMoreWalls = 1 Then Return
+	;If $NoMoreWalls = 1 Then Return
 
 	If GUICtrlRead($chkWalls) = $GUI_CHECKED Then
 		If $FreeBuilder > 0 Then
 			SetLog(getLocaleString("logWallCheckUpgrade"), $COLOR_BLUE)
-			ClickP($aTopLeftClient,1,0,"#0313") ; click away
+			ClickP($aAway,1,0,"#0313") ; click away
 			$itxtWallMinGold = GUICtrlRead($txtWallMinGold)
 			$itxtWallMinElixir = GUICtrlRead($txtWallMinElixir)
 
@@ -51,13 +66,13 @@ Func UpgradeWall()
 						EndIf
 					EndIf
 			EndSwitch
-			ClickP($aTopLeftClient,1,0,"#0314") ; click away
+			ClickP($aAway,1,0,"#0314") ; click away
 			Click(820, 40,1,0,"#0315") ; Close Builder/Shop if open by accident
 		Else
 			SetLog(getLocaleString("logWallNoFreeBuilder"), $COLOR_RED)
 		EndIf
 	EndIf
-	If _Sleep(500) Then Return
+	If _Sleep($iDelayUpgradeWall1) Then Return
 	checkMainScreen(False) ; Check for errors during function
 
 EndFunc   ;==>UpgradeWall
@@ -66,7 +81,7 @@ EndFunc   ;==>UpgradeWall
 Func UpgradeWallGold()
 
 	;Click($WallxLOC, $WallyLOC)
-	If _Sleep(600) Then Return
+	If _Sleep($iDelayUpgradeWallGold1) Then Return
 
 	Local $offColors[3][3] = [[0xD6714B, 47, 37], [0xF0E850, 70, 0], [0xF4F8F2, 79, 0]] ; 2nd pixel brown hammer, 3rd pixel gold, 4th pixel edge of button
 	Global $ButtonPixel = _MultiPixelSearch(240, 563, 670, 650, 1, 1, Hex(0xF3F3F1, 6), $offColors, 30) ; first gray/white pixel of button
@@ -76,7 +91,7 @@ Func UpgradeWallGold()
 			Setlog("Color #1: " & _GetPixelColor($ButtonPixel[0], $ButtonPixel[1], True) & ", #2: " & _GetPixelColor($ButtonPixel[0] + 47, $ButtonPixel[1] + 37, True) & ", #3: " & _GetPixelColor($ButtonPixel[0] + 70, $ButtonPixel[1], True) & ", #4: " & _GetPixelColor($ButtonPixel[0] + 79, $ButtonPixel[1], True), $COLOR_PURPLE)
 		EndIf
 		Click($ButtonPixel[0] + 20, $ButtonPixel[1] + 20,1,0,"#0316") ; Click Upgrade Gold Button
-		If _Sleep(1000) Then Return
+		If _Sleep($iDelayUpgradeWallGold2) Then Return
 		_CaptureRegion()
 		If _ColorCheck(_GetPixelColor(685, 150), Hex(0xE1090E, 6), 20) Then ; wall upgrade window red x
 			If isNoUpgradeLoot(False) = True Then
@@ -84,7 +99,7 @@ Func UpgradeWallGold()
 				Return False
 			Endif
 			Click(440, 480,1,0,"#0317")
-			If _Sleep(500) Then Return
+			If _Sleep($iDelayUpgradeWallGold3) Then Return
 			SetLog(getLocaleString("logWallUpgradeComplete"), $COLOR_GREEN)
 			PushMsg("UpgradeWithGold")
 			$wallgoldmake = $wallgoldmake + 1
@@ -102,13 +117,13 @@ EndFunc   ;==>UpgradeWallGold
 Func UpgradeWallElixir()
 
 	;Click($WallxLOC, $WallyLOC)
-	If _Sleep(600) Then Return
+	If _Sleep($iDelayUpgradeWallElixir1) Then Return
 
 	Local $offColors[3][3] = [[0xBC5B31, 38, 32], [0xF84CF9, 72, 0], [0xF5F9F2, 79, 0]] ; 2nd pixel brown hammer, 3rd pixel gold, 4th pixel edge of button
 	Global $ButtonPixel = _MultiPixelSearch(240, 563, 670, 650, 1, 1, Hex(0xF4F7F2, 6), $offColors, 30) ; first gray/white pixel of button
 	If IsArray($ButtonPixel) Then
 		Click($ButtonPixel[0] + 20, $ButtonPixel[1] + 20,1,0,"#0322") ; Click Upgrade Elixir Button
-		If _Sleep(1000) Then Return
+		If _Sleep($iDelayUpgradeWallElixir2) Then Return
 		_CaptureRegion()
 		If _ColorCheck(_GetPixelColor(685, 150), Hex(0xE1090E, 6), 20) Then
 			If isNoUpgradeLoot(False) = True Then
@@ -116,7 +131,7 @@ Func UpgradeWallElixir()
 				Return False
 			Endif
 			Click(440, 480,1,0,"#0318")
-			If _Sleep(500) Then Return
+			If _Sleep($iDelayUpgradeWallElixir3) Then Return
 			SetLog(getLocaleString("logWallUpgradeComplete"), $COLOR_GREEN)
 			PushMsg("UpgradeWithElixir")
 			$wallelixirmake = $wallelixirmake + 1

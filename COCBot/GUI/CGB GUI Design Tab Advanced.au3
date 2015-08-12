@@ -18,12 +18,14 @@
 ;~ -------------------------------------------------------------
  $tabAttackAdv = GUICtrlCreateTabItem(getLocaleString("tabAttackAdv"))
 	Local $x = 30, $y = 150
-	$grpAtkOptions = GUICtrlCreateGroup(getLocaleString("grpAtkOptions"), $x - 20, $y - 20, 450, 100)
+	$grpAtkOptions = GUICtrlCreateGroup(getLocaleString("grpAtkOptions"), $x - 20, $y - 20, 450, 80)
 		$chkAttackNow = GUICtrlCreateCheckbox(getLocaleString("chkAttackNow"), $x, $y, -1, -1)
 			GUICtrlSetTip(-1, getLocaleString("tipChkAttackNow",1))
 			GUICtrlSetOnEvent(-1, "chkAttackNow")
+		$chkAttackTH = GUICtrlCreateCheckbox(getLocaleString("chkAttackTH"), $x + 200, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipChkAttackTH",1))
 		$y +=22
-		$lblAttackNow = GUICtrlCreateLabel(getLocaleString("lbAttackNow"), $x + 20, $y + 4, -1, -1, $SS_RIGHT)
+		$lblAttackNow = GUICtrlCreateLabel(getLocaleString("lbAttackNow"), $x + 15, $y + 4, -1, -1, $SS_RIGHT)
 			GUICtrlSetTip(-1, getLocaleString("tipLbAttackNow"))
 			GUICtrlSetState(-1, $GUI_DISABLE)
 		$cmbAttackNowDelay = GUICtrlCreateCombo("", $x + 50, $y + 1, 35, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
@@ -33,9 +35,6 @@
 		$lblAttackNowSec = GUICtrlCreateLabel(getLocaleString("lbAttackNowSec"), $x + 90, $y + 4, -1, -1)
 			GUICtrlSetTip(-1, getLocaleString("tipLbAttackNow"))
 			GUICtrlSetState(-1, $GUI_DISABLE)
-		$y +=22
-		$chkAttackTH = GUICtrlCreateCheckbox(getLocaleString("chkAttackTH"), $x, $y, -1, -1)
-			GUICtrlSetTip(-1, getLocaleString("tipChkAttackTH",1))
 		$chkSnipeWhileTrain = GUICtrlCreateCheckbox(getLocaleString("lbSnipeWhileTraining"), $x + 200, $y, -1, -1) ; Snipe While Train MOD by ChiefM3
 			   GUICtrlSetTip(-1, getLocaleString("tipLbSnipeWhileTraining"))
 ;		$y +=22
@@ -54,7 +53,7 @@
 ;			GUICtrlSetTip(-1, getLocaleString("tipLbliLSpellQ"))
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-	Local $x = 30, $y = 260
+	Local $x = 30, $y = 240
 	$grpAtkCombos = GUICtrlCreateGroup(getLocaleString("grpAtkCombos"), $x - 20, $y - 20, 225, 165)
 		$chkBullyMode = GUICtrlCreateCheckbox(getLocaleString("chkBullyMode"), $x, $y, -1, -1)
 			GUICtrlSetTip(-1, getLocaleString("tipChkBullyMode",1))
@@ -96,7 +95,7 @@
 			GUICtrlSetState(-1, $GUI_DISABLE)
     GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-	Local $x = 260, $y = 260
+	Local $x = 260, $y = 240
 	$grpDefenseFarming = GUICtrlCreateGroup(getLocaleString("grpDefenseFarming"), $x - 20, $y - 20, 220, 165)
 		$chkUnbreakable = GUICtrlCreateCheckbox(getLocaleString("chkUnbreakable"), $x, $y, -1, -1)
 			GUICtrlSetTip(-1, getLocaleString("tipChkUnbreakable"))
@@ -144,5 +143,34 @@
 			GUICtrlSetLimit(-1, 6)
 			GUICtrlSetState(-1, $GUI_DISABLE)
 		GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 170, $y, 16, 16)
+    GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+    Local $x = 30, $y = 410
+    $grpDetectTrappedTH = GUICtrlCreateGroup(getLocaleString("grpDetectTrappedTH"), $x - 20, $y - 20, 450, 120)
+		$chkMortar = GUICtrlCreateCheckbox(getLocaleString("chkMortar"), $x, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipChkMortar",1))
+			GUICtrlSetOnEvent(-1, "chkMortar")
+		$chkWiz = GUICtrlCreateCheckbox(getLocaleString("chkWiz"), $x + 150, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipChkWiz",1))
+			GUICtrlSetOnEvent(-1, "chkWiz")
+		$chkInferno = GUICtrlCreateCheckbox(getLocaleString("chkInferno"), $x + 300, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipChkInferno",1))
+			GUICtrlSetOnEvent(-1, "chkInferno")
+			GUICtrlSetState(-1, $GUI_CHECKED)
+		$y += 30
+		$chkTesla = GUICtrlCreateCheckbox(getLocaleString("chkTesla"), $x, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipChkTesla",1))
+			GUICtrlSetOnEvent(-1, "chkTesla")
+		$chkAir = GUICtrlCreateCheckbox(getLocaleString("chkAir"), $x + 150, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipChkAir",1))
+			GUICtrlSetOnEvent(-1, "chkAir")
+		$y += 30
+		$chkGrdTroops = GUICtrlCreateCheckbox(getLocaleString("chkGrdTroops"), $x, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipChkGrdTroops",1))
+			GUICtrlSetOnEvent(-1, "chkGrdTroops")
+			GUICtrlSetState(-1, $GUI_CHECKED)
+		$chkAirTroops = GUICtrlCreateCheckbox(getLocaleString("chkAirTroops"), $x + 150, $y, -1, -1)
+			GUICtrlSetTip(-1, getLocaleString("tipChkAirTroops",1))
+			GUICtrlSetOnEvent(-1, "chkAirTroops")
     GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUICtrlCreateTabItem("")

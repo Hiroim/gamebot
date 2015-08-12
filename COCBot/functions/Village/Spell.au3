@@ -6,7 +6,7 @@
 ; Parameters ....:
 ; Return values .: None
 ; Author ........: Code Monkey #247
-; Modified ......:
+; Modified ......: Sardo 2015-08
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -21,40 +21,40 @@ SetLog("Creating Spells...")
 			SaveConfig()
 			  Else
                Click($SFPos[0], $SFPos[1],1,0,"#0258")
-					 If _Sleep(600) Then Return
+					 If _Sleep($iDelayCreateSpell1) Then Return
 					  _CaptureRegion()
-					  If _Sleep(600) Then Return
+					  If _Sleep($iDelayCreateSpell1) Then Return
 			     If _ColorCheck(_GetPixelColor(555, 616), Hex(0xFFFFFF, 6), 20) Or _
 					_ColorCheck(_GetPixelColor(555, 616), Hex(0x838669, 6), 20)  Then
 						SetLog("Create Lighning Spell", $COLOR_BLUE)
 						Click(566,599,1,0,"#0259") ;click create spell
-						 If _Sleep(1000) Then Return
+						 If _Sleep($iDelayCreateSpell2) Then Return
 							     _CaptureRegion()
-								 If _Sleep(600) Then Return
+								 If _Sleep($iDelayCreateSpell1) Then Return
 						   If  _ColorCheck(_GetPixelColor(237, 354), Hex(0xFFFFFF, 6), 20) = False Then
 							  setlog("Not enoug Elixir to create Spell", $COLOR_RED)
 						       Elseif  _ColorCheck(_GetPixelColor(200, 346), Hex(0x1A1A1A, 6), 20) Then
 							   setlog("Spell Factory Full", $COLOR_RED)
 						     Else
 							  GemClick(252,354,1,0,"#0260")
-							  If _Sleep(600) Then Return
+							  If _Sleep($iDelayCreateSpell1) Then Return
 							  GemClick(252,354,1,0,"#0261")
-							  If _Sleep(600) Then Return
+							  If _Sleep($iDelayCreateSpell1) Then Return
 							  GemClick(252,354,1,0,"#0262")
-							  If _Sleep(600) Then Return
+							  If _Sleep($iDelayCreateSpell1) Then Return
 							  GemClick(252,354,1,0,"#0263")
-							  If _Sleep(600) Then Return
+							  If _Sleep($iDelayCreateSpell1) Then Return
 							  GemClick(252,354,1,0,"#0264")
-							  If _Sleep(600) Then Return
+							  If _Sleep($iDelayCreateSpell1) Then Return
 						   EndIf
 					     Else
 						   setlog("Spell Factory is not available, Skip Create", $COLOR_RED)
 
 			    EndIf
 	   EndIf
-        If _Sleep(250) Then Return
-		ClickP($aTopLeftClient,1,0,"#0265")
-		If _Sleep(250) Then Return
+        If _Sleep($iDelayCreateSpell3) Then Return
+		ClickP($aAway,1,0,"#0265")
+		If _Sleep($iDelayCreateSpell3) Then Return
  EndIf
 EndFunc
 

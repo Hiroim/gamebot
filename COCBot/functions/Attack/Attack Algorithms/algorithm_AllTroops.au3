@@ -27,27 +27,31 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 		EndIf
 	Next
 
-	If _Sleep(2000) Then Return
+	If _Sleep($iDelayalgorithm_AllTroops1) Then Return
 
 	If $iMatchMode = $TS Or ($chkATH = 1 And SearchTownHallLoc()) Then
-		Switch $AttackTHType
-			Case 0
-				algorithmTH()
-				;_CaptureRegion()
-				If _ColorCheck(_GetPixelColor($aWonOneStar[0],$aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) Then AttackTHNormal() ;if 'no' use another attack mode.
-			Case 1
-				AttackTHNormal();Good for Masters
-			Case 2
-				AttackTHXtreme();Good for Champ
-			Case 3
-				AttackTHGbarch()
-		EndSwitch
-		If $zoomedin = True Then
-			ZoomOut()
-			$zoomedin = False
-			$zCount = 0
-			$sCount = 0
-		EndIf
+		If $allTroops = True Then ; added
+			AttackTrappedTH() ; added
+    	Else ; added
+			Switch $AttackTHType
+				Case 0
+					algorithmTH()
+					_CaptureRegion()
+                    If _ColorCheck(_GetPixelColor($aWonOneStar[0],$aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) Then AttackTHNormal() ;if 'no star' use another attack mode.
+				Case 1
+					AttackTHNormal();Good for Masters
+				Case 2
+					AttackTHXtreme();Good for Champ
+				Case 3
+					AttackTHGbarch();Good for Masters+
+			EndSwitch
+            If $zoomedin = True Then
+                ZoomOut()
+                $zoomedin = False
+                $zCount = 0
+                $sCount = 0
+            EndIf
+		EndIf ; added
 	EndIf
 
 	;If $OptTrophyMode = 1 And SearchTownHallLoc() Then; Return ;Exit attacking if trophy hunting and not bullymode
@@ -55,11 +59,11 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 		For $i = 1 To 30
 			;_CaptureRegion()
 			If _ColorCheck(_GetPixelColor($aWonOneStar[0],$aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then ExitLoop ;exit if not 'no star'
-			_Sleep(1000)
+			_Sleep($iDelayalgorithm_AllTroops2)
 		Next
 
 		ClickP($aSurrenderButton, 1, 0, "#0030") ;Click Surrender
-		If _Sleep(3000) Then Return
+		If _Sleep($iDelayalgorithm_AllTroops3) Then Return
 		ClickP($aConfirmSurrender, 1, 0, "#0031") ;Click Confirm
 		Return
 	EndIf
@@ -136,7 +140,7 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 		$nbSides = 5
 	EndSwitch
 	If ($nbSides = 0) Then Return
-	If _Sleep(1000) Then Return
+	If _Sleep($iDelayalgorithm_AllTroops2) Then Return
 
 	If $nbSides = 5 Then
 		Local $listInfoDeploy[10][5] = [[$eGiant, $nbSides, 1, 1, 2] _
@@ -169,7 +173,7 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 
 	LaunchTroop2($listInfoDeploy, $CC, $King, $Queen)
 
-	If _Sleep(100) Then Return
+	If _Sleep($iDelayalgorithm_AllTroops4) Then Return
 	SetLog(getLocaleString("logDroopingLeft"), $COLOR_BLUE)
 	For $x = 0 To 1
 		PrepareAttack($iMatchMode, True) ;Check remaining quantities
@@ -180,7 +184,7 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 			;Else
 			;	 LauchTroop($i, $nbSides, 0, 1, 2)
 			;EndIf
-			If _Sleep(500) Then Return
+			If _Sleep($iDelayalgorithm_AllTroops5) Then Return
 		Next
 	Next
 

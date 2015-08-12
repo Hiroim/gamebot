@@ -32,15 +32,15 @@ Func DropTrophy()
 					If Number($TrophyCount) > Number($itxtMaxTrophyNeedCheck) Then
 						$itxtMaxTrophyNeedCheck = $itxtdropTrophy ; $itxtMinTrophy = 1650
 						SetLog(getLocaleString("logDropTrophiesTo") & $itxtdropTrophy, $COLOR_BLUE)
-						If _Sleep(2000) Then ExitLoop
+						If _Sleep($iDelayDropTrophy2) Then ExitLoop
 
 						ZoomOut()
 						PrepareSearch()
 
-						If _Sleep(2000) Then ExitLoop
+						If _Sleep($iDelayDropTrophy2) Then ExitLoop
 						$iCount = 0
 						While getGoldVillageSearch(48, 68) = "" ; Loops until gold is readable
-							If _Sleep(1000) Then ExitLoop (2)
+							If _Sleep($iDelayDropTrophy1) Then ExitLoop (2)
 							$iCount += 1
 							If $iCount >= 35 Then ExitLoop (2) ; or Return
 						WEnd
@@ -70,7 +70,7 @@ Func DropTrophy()
 						EndIf
 
 
-						If _Sleep(1500) Then Return
+						If _Sleep($iDelayDropTrophy3) Then Return
 
 						If $iChkTrophyHeroes = 1 Then
 							$King = -1
@@ -89,22 +89,22 @@ Func DropTrophy()
 							If $King <> -1 Then
 								SetLog(getLocaleString("logDeployKing"), $COLOR_BLUE)
 								Click(GetXPosOfArmySlot($King, 68), 595, 1, 0, "#0177") ;Select King
-								_Sleep(1000)
+								_Sleep($iDelayDropTrophy1)
 								Click($RandomEdge[$RandomXY][0], $RandomEdge[$RandomXY][1], 1, 0, "#0178") ;Drop King
-								If _Sleep(1000) Then ExitLoop
+								If _Sleep($iDelayDropTrophy1) Then ExitLoop
 								SetTrophyLoss()
 								ReturnHome(False, False) ;Return home no screenshot
-								If _Sleep(1000) Then ExitLoop
+								If _Sleep($iDelayDropTrophy1) Then ExitLoop
 							EndIf
 							If $King = -1 And $Queen <> -1 Then
 								SetLog(getLocaleString("logDeployQueen"), $COLOR_BLUE)
 								Click(GetXPosOfArmySlot($Queen, 68), 595, 1, 0, "#0179") ;Select Queen
-								_Sleep(1000)
+								_Sleep($iDelayDropTrophy1)
 								Click($RandomEdge[$RandomXY][0], $RandomEdge[$RandomXY][1], 1, 0, "#0180") ;Drop Queen
-								If _Sleep(1000) Then ExitLoop
+								If _Sleep($iDelayDropTrophy1) Then ExitLoop
 								SetTrophyLoss()
 								ReturnHome(False, False) ;Return home no screenshot
-								If _Sleep(1000) Then ExitLoop
+								If _Sleep($iDelayDropTrophy1) Then ExitLoop
 							EndIf
 						EndIf
 						If ($Queen = -1 And $King = -1) Or $iChkTrophyHeroes = 0 Then
@@ -147,9 +147,9 @@ Func DropTrophy()
 									SetLog(getLocaleString("logDontHaveLowTierTroops"), $COLOR_BLUE) ; preventing of deploying Tier 2/3 expensive troops
 							EndSelect
 							SetTrophyLoss()
-							If _Sleep(1000) Then ExitLoop
+							If _Sleep($iDelayDropTrophy1) Then ExitLoop
 							ReturnHome(False, False) ;Return home no screenshot
-							If _Sleep(1000) Then ExitLoop
+							If _Sleep($iDelayDropTrophy1) Then ExitLoop
 						EndIf
 
 					Else
@@ -170,15 +170,15 @@ Func DropTrophy()
 				If Number($TrophyCount) > Number($itxtMaxTrophyNeedCheck) Then
 					$itxtMaxTrophyNeedCheck = $itxtdropTrophy ; $itxtMinTrophy = 1650
 					SetLog(getLocaleString("logDropTrophiesTo") & $itxtdropTrophy, $COLOR_BLUE)
-					If _Sleep(2000) Then ExitLoop
+					If _Sleep($iDelayDropTrophy2) Then ExitLoop
 
 					ZoomOut()
 					PrepareSearch()
 
-					If _Sleep(2000) Then ExitLoop
+					If _Sleep($iDelayDropTrophy2) Then ExitLoop
 					$iCount = 0
 					While getGoldVillageSearch(48, 68) = "" ; Loops until gold is readable
-						If _Sleep(1000) Then ExitLoop (2)
+						If _Sleep($iDelayDropTrophy1) Then ExitLoop (2)
 						$iCount += 1
 						If $iCount >= 35 Then ExitLoop (2) ; or Return
 					WEnd
@@ -203,22 +203,22 @@ Func DropTrophy()
 						If $King <> -1 Then
 							SetLog(getLocaleString("logDeployKing"), $COLOR_BLUE)
 							Click(GetXPosOfArmySlot($King, 68), 595, 1, 0, "#0187") ;Select King
-							_Sleep(1000)
+							_Sleep($iDelayDropTrophy1)
 							Click($RandomEdge[$RandomXY][0], $RandomEdge[$RandomXY][1], 1, 0, "#0188") ;Drop King
-							If _Sleep(1000) Then ExitLoop
+							If _Sleep($iDelayDropTrophy1) Then ExitLoop
 							SetTrophyLoss()
 							ReturnHome(False, False) ;Return home no screenshot
-							If _Sleep(1000) Then ExitLoop
+							If _Sleep($iDelayDropTrophy1) Then ExitLoop
 						EndIf
 						If $King = -1 And $Queen <> -1 Then
 							SetLog(getLocaleString("logDeployQueen"), $COLOR_BLUE)
 							Click(GetXPosOfArmySlot($Queen, 68), 595, 1, 0, "#0189") ;Select Queen
-							_Sleep(1000)
+							_Sleep($iDelayDropTrophy1)
 							Click($RandomEdge[$RandomXY][0], $RandomEdge[$RandomXY][1], 1, 0, "#0190") ;Drop Queen
-							If _Sleep(1000) Then ExitLoop
+							If _Sleep($iDelayDropTrophy1) Then ExitLoop
 							SetTrophyLoss()
 							ReturnHome(False, False) ;Return home no screenshot
-							If _Sleep(1000) Then ExitLoop
+							If _Sleep($iDelayDropTrophy1) Then ExitLoop
 						EndIf
 					EndIf
 					If ($Queen = -1 And $King = -1) Or $iChkTrophyHeroes = 0 Then
@@ -261,9 +261,9 @@ Func DropTrophy()
 								SetLog("You don´t have Tier 1/2 Troops, exit of dropping Trophies", $COLOR_BLUE) ; preventing of deploying Tier 2/3 expensive troops
 						EndSelect
 						SetTrophyLoss()
-						If _Sleep(1000) Then ExitLoop
+						If _Sleep($iDelayDropTrophy1) Then ExitLoop
 						ReturnHome(False, False) ;Return home no screenshot
-						If _Sleep(1000) Then ExitLoop
+						If _Sleep($iDelayDropTrophy1) Then ExitLoop
 					EndIf
 
 				Else

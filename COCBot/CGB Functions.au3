@@ -17,6 +17,7 @@
 #include "functions\Config\readConfig.au3"
 #include "functions\Config\saveConfig.au3"
 #include "functions\Config\ScreenCoordinates.au3"
+#include "functions\Config\DelayTimes.au3"
 
 #include "functions\Attack\AttackReport.au3"
 #include "functions\Attack\CheckHeroesHealth.au3"
@@ -63,12 +64,16 @@
 #include "functions\Image Search\checkWall.au3"
 ;#include "functions\Image Search\checkDElixS.au3"
 #include "functions\Image Search\CheckTombs.au3"
+#include "functions\Image Search\checkDefense.au3"
 
 #include "functions\Main Screen\checkMainScreen.au3"
 #include "functions\Main Screen\checkObstacles.au3"
+#include "functions\Main Screen\CloseBlueStacks.au3"
 #include "functions\Main Screen\isGemOpen.au3"
 #include "functions\Main Screen\isNoUpgradeLoot.au3"
 #include "functions\Main Screen\isProblemAffect.au3"
+#include "functions\Main Screen\OpenBlueStacks.au3"
+#include "functions\Main Screen\RemoveGhostTrayIcons.au3"
 #include "functions\Main Screen\waitMainScreen.au3"
 #include "functions\Main Screen\ZoomOut.au3"
 
@@ -78,6 +83,7 @@
 #include "functions\Other\_ReduceMemory.au3"
 #include "functions\Other\_Sleep.au3"
 #include "functions\Other\_SleepStatus.au3"
+#include "functions\Other\_StatusUpdateTime.au3"
 #include "functions\Other\Click.au3"
 #include "functions\Other\CreateLogFile.au3"
 #include "functions\Other\debugCGBFunctions.au3"

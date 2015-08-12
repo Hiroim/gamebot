@@ -6,6 +6,7 @@
 ; Return values .: None
 ; Author ........: Code Monkey #18
 ; Modified ......: KnowJack (July 2015) Update for July CoC changes
+;				   Sardo 2015-08
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -47,15 +48,15 @@ EndFunc   ;==>CheckFullArmy
 Func CheckOverviewFullArmy($bWindowOpen = False)
 ;
 	If $bWindowOpen = True Then
-		ClickP($aTopLeftClient) ;Click Away
-		If _Sleep(100) Then Return
+		ClickP($aAway,1,0,"#0346") ;Click Away
+		If _Sleep($iDelayCheckFullArmy1) Then Return
 
-		Click($aArmyTrainButton[0], $aArmyTrainButton[1]) ;Click Army Camp
-		If _Sleep(200) Then Return
+		Click($aArmyTrainButton[0], $aArmyTrainButton[1],1,0,"#0347") ;Click Army Camp
+		If _Sleep($iDelayCheckFullArmy2) Then Return
 		Local $j = 0
 		While Not _ColorCheck(_GetPixelColor($btnpos[0][0], $btnpos[0][1], True), Hex(0xE8E8E0, 6), 20)
 			If $debugSetlog = 1 Then Setlog("OverView TabColor=" & _GetPixelColor($btnpos[0][0], $btnpos[0][1], True), $COLOR_PURPLE)
-			If _Sleep(100) Then Return ; wait for Train Window to be ready.
+			If _Sleep($iDelayCheckFullArmy1) Then Return ; wait for Train Window to be ready.
 			$j += 1
 			If $j > 15 Then ExitLoop
 		WEnd
@@ -64,10 +65,10 @@ Func CheckOverviewFullArmy($bWindowOpen = False)
 			Return
 		EndIf
 	EndIf
-	If _sleep(200) Then Return
+	If _sleep($iDelayCheckFullArmy2) Then Return
 	Local $Pixel = _CheckPixel($aIsCampFull, True) And _ColorCheck(_GetPixelColor(152, 158, True), Hex(0x40770A, 6), 20)
 	If Not $Pixel Then
-		If _sleep(200) Then Return
+		If _sleep($iDelayCheckFullArmy2) Then Return
 		$Pixel = _CheckPixel($aIsCampFull, True) And _ColorCheck(_GetPixelColor(152, 158, True), Hex(0x40770A, 6), 20)
 	EndIf
 	If $debugSetlog = 1 Then Setlog("Checking Overview for full army [!] " & $Pixel & ", " & _GetPixelColor(152, 158, True), $COLOR_PURPLE)
@@ -78,8 +79,8 @@ Func CheckOverviewFullArmy($bWindowOpen = False)
 	EndIf
 
 	If $bWindowOpen = True Then
-		ClickP($aTopLeftClient) ;Click Away
-		If _Sleep(500) Then Return
+		ClickP($aAway,1,0,"#0348") ;Click Away
+		If _Sleep($iDelayCheckFullArmy3) Then Return
 	EndIf
 
 EndFunc   ;==>CheckOverviewFullArmy

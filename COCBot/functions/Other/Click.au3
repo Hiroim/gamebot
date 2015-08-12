@@ -5,7 +5,7 @@
 ; Parameters ....: $x, $y are mandatory, $times and $speed are optional
 ; Return values .: None
 ; Author ........: (2014)
-; Modified ......: HungLe (may-2015)
+; Modified ......: HungLe (may-2015) Sardo 2015-08
 ; Remarks .......: This file is part of ClashGameBot. Copyright 2015
 ;                  ClashGameBot is distributed under the terms of the GNU GPL
 ; Related .......: checkMainscreen, isProblemAffect
@@ -21,8 +21,8 @@ Func Click($x, $y, $times = 1, $speed = 0, $debugtxt = "")
 	If $times <> 1 Then
 		For $i = 0 To ($times - 1)
 			If isProblemAffect(True) Then
-				checkMainScreen(False)
 				If $debugClick = 1 Then Setlog("VOIDED Click " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_RED, "Verdana", "7.5", 0)
+				checkMainScreen(False)
 				Return  ; if need to clear screen do not click
 			EndIf
 			ControlClick($Title, "", "", "left", "1", $x, $y)
@@ -30,8 +30,8 @@ Func Click($x, $y, $times = 1, $speed = 0, $debugtxt = "")
 		Next
 	Else
 		If isProblemAffect(True) Then
-			checkMainScreen(False)
 			If $debugClick = 1 Then Setlog("VOIDED Click " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_RED, "Verdana", "7.5", 0)
+			checkMainScreen(False)
 			Return  ; if need to clear screen do not click
 		EndIf
 		ControlClick($Title, "", "", "left", "1", $x, $y)
@@ -72,8 +72,8 @@ Func GemClick($x, $y, $times = 1, $speed = 0, $debugtxt = "")
 		For $i = 0 To ($times - 1)
 			If isGemOpen(True) Then Return False
 			If isProblemAffect(True) Then
-				checkMainScreen(False)
 				If $debugClick = 1 Then Setlog("VOIDED GemClick " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_RED, "Verdana", "7.5", 0)
+				checkMainScreen(False)
 				Return  ; if need to clear screen do not click
 			EndIf
 			ControlClick($Title, "", "", "left", "1", $x, $y)
@@ -83,8 +83,8 @@ Func GemClick($x, $y, $times = 1, $speed = 0, $debugtxt = "")
 	Else
 		If isGemOpen(True) Then Return False
 		If isProblemAffect(True) Then
-			checkMainScreen(False)
 			If $debugClick = 1 Then Setlog("VOIDED GemClick " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_RED, "Verdana", "7.5", 0)
+			checkMainScreen(False)
 			Return  ; if need to clear screen do not click
 		EndIf
 		ControlClick($Title, "", "", "left", "1", $x, $y)
@@ -101,13 +101,19 @@ Func _DecodeDebug($message)
 	Local $separator = " | "
 	Switch $message
 		; AWAY CLICKS
-		Case "#0112", "#0113", "#0115", "#0140", "#0141", "#0142", "#0143", "#0199", "#0328", "#0201", "#0204", "#0205", "#0206", "#0327", "#0207", "#0208", "#0209", "#0210", "#0211"
+		Case "#0112", "#0115", "#0140", "#0141", "#0142", "#0143", "#0199", "#0328", "#0201", "#0204", "#0205", "#0206", "#0327", "#0207", "#0208", "#0209", "#0210", "#0211"
 			Return $separator & "Away"
-		Case "#0214", "#0215", "#0216", "#0217", "#0218", "#0219", "#0220", "#0221", "#0235", "#0242", "#0267", "#0268", "#0291", "#0292", "#0295", "#0298", "#0300", "#0301", "#0302"
+		Case "#0214", "#0215", "#0216", "#0217", "#0218", "#0219", "#0220", "#0221", "#0235", "#0242", "#0268", "#0291", "#0292", "#0295", "#0298", "#0300", "#0301", "#0302"
 			Return $separator & "Away"
-		Case "#0303", "#0306", "#0308", "#0309", "#0310", "#0311", "#0312", "#0319", "#0333", "#0252", "#0257", "#0139", "#0125", "#0251", "#0333", "#0335"
+		Case "#0303", "#0306", "#0308", "#0309", "#0310", "#0311", "#0312", "#0319", "#0333", "#0257", "#0139", "#0125", "#0251", "#0335", "#0313", "#0314", "#0332", "#0329"
 			Return $separator & "Away"
-		Case "#0121", "#0124", "#0133", "#0157", "#0161", "#0165", "#0166", "#0167", "#0170", "#0171", "#0176", "#0224", "#0234", "#0265", "#0313", "#0314", "#0319", "#0332", "#0329"
+		Case "#0121", "#0124", "#0133", "#0157", "#0161", "#0165", "#0166", "#0167", "#0170", "#0171", "#0176", "#0224", "#0234", "#0265", "#0346", "#0348", "#0350", "#0351"
+			Return $separator & "Away"
+		Case "#0352", "#0353", "#0354", "#0355", "#0356", "#0357", "#0358", "#0359", "#0360", "#0361", "#0362", "#0363", "#0364", "#0365", "#0366", "#0367", "#0368", "#0369"
+			Return $separator & "Away"
+		Case "#0370", "#0371", "#0373", "#0374", "#0375", "#0376", "#0377", "#0378", "#0379", "#0380", "#0381", "#0382", "#0383", "#0384", "#0385", "#0386", "#0387", "#0388"
+			Return $separator & "Away"
+		Case "#0389", "#0390", "#0391", "#0392", "#0393", "#0394", "#0395"
 			Return $separator & "Away"
 			; ATTACK TH
 		Case "#0001"
@@ -132,8 +138,6 @@ Func _DecodeDebug($message)
 			Return $separator & "AtkTH - Arcer Top Left"
 		Case "#0155"
 			Return $separator & "Attack - Next Button"
-		Case "#0221"
-			Return $separator & "Open Profile Page"
 			;COLLECT
 		Case "#0331"
 			Return $separator & "Collect resources"
@@ -236,6 +240,13 @@ Func _DecodeDebug($message)
 			Return $separator & "Request - Click Send Request"
 		Case "#0334"
 			Return $separator & "Request - Click Train Button"
+			;RETURN HOME
+		Case "#0099"
+			Return $separator & "Return Home - End Battle"
+		Case "#0100"
+			Return $separator & "Return Home - Surrender, Confirm"
+		Case "#0101"
+			Return $separator & "Return Home - Return Home Button"
 
 
 		Case "#0000"

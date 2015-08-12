@@ -188,6 +188,14 @@ Func readConfig() ;Reads config and sets it to the variables
 		$OptTrophyMode = IniRead($config, "advanced", "TrophyMode", "0")
 		$THaddtiles = IniRead($config, "advanced", "THaddTiles", "0")
 		$AttackTHType = IniRead($config, "advanced", "AttackTHType", "0")
+		
+		$skipMortar = IniRead($config, "advanced", "skipMortar", "0")
+		$skipWiz = IniRead($config, "advanced", "skipWiz", "0")
+		$skipInferno = IniRead($config, "advanced", "skipInferno", "0")
+		$skipTesla = IniRead($config, "advanced", "skipTesla", "0")
+		$skipAir = IniRead($config, "advanced", "skipAir", "0")
+		$grdTroops = IniRead($config, "advanced", "grdTroops", "0")
+		$airTroops = IniRead($config, "advanced", "airTroops", "0")
 
 		$PushToken = IniRead($config, "advanced", "AccountToken", "")
 
@@ -379,7 +387,7 @@ Func readConfig() ;Reads config and sets it to the variables
 
 		;Laboratory
 		$ichkLab = IniRead($config, "upgrade", "upgradetroops", "0")
-		$iCmbLaboratory = IniRead($config, "upgrade", "upgradetroopname", "0")
+		$icmbLaboratory = IniRead($config, "upgrade", "upgradetroopname", "0")
 		$aLabPos[0] = Int(IniRead($building, "upgrade", "LabPosX", "0"))
 		$aLabPos[1] = Int(IniRead($building, "upgrade", "LabPosY", "0"))
 
@@ -406,7 +414,8 @@ Func readConfig() ;Reads config and sets it to the variables
 		$iChkTrophyHeroes = IniRead($config, "other", "chkTrophyHeroes", "0")
 		$iChkTrophyAtkDead = IniRead($config, "other", "chkTrophyAtkDead", "0")
 
-		$iWAOffset =  IniRead($config, "other", "WAOffset", "10")
+		$iWAOffsetX =  IniRead($config, "other", "WAOffsetX", "10")
+		$iWAOffsetY =  IniRead($config, "other", "WAOffsetY", "0")
 
 		;PushBullet Settings ---------------------------------------------
 		$PushToken = IniRead($config, "pushbullet", "AccountToken", "")
