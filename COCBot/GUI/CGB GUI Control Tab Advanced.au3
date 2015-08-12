@@ -97,69 +97,55 @@ EndFunc   ;==>chkSnipeMode
 Func chkMortar()
 	If GUICtrlRead($chkMortar) = $GUI_CHECKED Then
 		$skipMortar = 1
-		SetLog("$skipMortar: " & $skipMortar, $COLOR_BLUE)
 	Else
 		$skipMortar = 0
-		SetLog("$skipMortar: " & $skipMortar, $COLOR_RED)
 	EndIf
 EndFunc   ;==>chkMortar
 
 Func chkWiz()
 	If GUICtrlRead($chkWiz) = $GUI_CHECKED Then
 		$skipWiz = 1
-		SetLog("$skipWiz: " & $skipWiz, $COLOR_BLUE)
 	Else
 		$skipWiz = 0
-		SetLog("$skipWiz: " & $skipWiz, $COLOR_RED)
 	EndIf
 EndFunc   ;==>chkWiz
 
 Func chkInferno()
 	If GUICtrlRead($chkInferno) = $GUI_CHECKED Then
 		$skipInferno = 1
-		SetLog("$skipInferno: " & $skipInferno, $COLOR_BLUE)
 	Else
 		$skipInferno = 0
-		SetLog("$skipInferno: " & $skipInferno, $COLOR_RED)
 	EndIf
 EndFunc   ;==>chkInferno
 
 Func chkTesla()
 	If GUICtrlRead($chkTesla) = $GUI_CHECKED Then
 		$skipTesla = 1
-		SetLog("$skipTesla: " & $skipTesla, $COLOR_BLUE)
 	Else
 		$skipTesla = 0
-		SetLog("$skipTesla: " & $skipTesla, $COLOR_RED)
 	EndIf
 EndFunc   ;==>chkTesla
 
 Func chkAir()
 	If GUICtrlRead($chkAir) = $GUI_CHECKED Then
 		$skipAir = 1
-		SetLog("$skipAir: " & $skipAir, $COLOR_BLUE)
 	Else
 		$skipAir = 0
-		SetLog("$skipAir: " & $skipAir, $COLOR_RED)
 	EndIf
 EndFunc   ;==>chkAir
 
 Func chkGrdTroops()
 	If GUICtrlRead($chkGrdTroops) = $GUI_CHECKED Then
 		$grdTroops = 1
-		SetLog("$grdTroops: " & $grdTroops, $COLOR_BLUE)
 	Else
 		$grdTroops = 0
-		SetLog("$grdTroops: " & $grdTroops, $COLOR_RED)
 	EndIf
 EndFunc   ;==>chkGrdTroops
 
 Func chkAirTroops()
 	If GUICtrlRead($chkAirTroops) = $GUI_CHECKED Then
 		$airTroops = 1
-		SetLog("$airTroops: " & $airTroops, $COLOR_BLUE)
 	Else
 		$airTroops = 0
-		SetLog("$airTroops: " & $airTroops, $COLOR_RED)
 	EndIf
 EndFunc   ;==>chkAirTroops
