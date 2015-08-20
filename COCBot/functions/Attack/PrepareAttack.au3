@@ -15,9 +15,9 @@
 ; ===============================================================================================================================
 Func PrepareAttack($pMatchMode, $Remaining = False) ;Assigns troops
 	If $Remaining Then
-		SetLog("Checking remaining unused troops for: " & $sModeText[$pMatchMode], $COLOR_BLUE)
+		SetLog(getLocaleString("logCheckRemainUnused") & $sModeText[$pMatchMode] & getLocaleString("logCheckRemainUnused2"), $COLOR_BLUE)
 	Else
-		SetLog("Initiating attack for: " & $sModeText[$pMatchMode], $COLOR_RED)
+		SetLog(getLocaleString("logInitiatingAtkMode") & $sModeText[$pMatchMode] & getLocaleString("logInitiatingAtkMode2"), $COLOR_RED)
 	EndIf
 
 	_WinAPI_DeleteObject($hBitmapFirst)

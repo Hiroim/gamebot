@@ -94,6 +94,38 @@ Func chkSnipeMode()
 	EndIf
 EndFunc   ;==>chkSnipeMode
 
+Func chkTrappedTH()
+	If GUICtrlRead($chkTrappedTH) = $GUI_CHECKED Then
+		$OptTrappedTH = 1
+		GUICtrlSetState($chkMortar, $GUI_ENABLE)
+		GUICtrlSetState($chkWiz, $GUI_ENABLE)
+		GUICtrlSetState($chkInferno, $GUI_ENABLE)
+		GUICtrlSetState($chkTesla, $GUI_ENABLE)
+		GUICtrlSetState($chkAir, $GUI_ENABLE)
+		GUICtrlSetState($chkGrdTroops, $GUI_ENABLE)
+		GUICtrlSetState($chkAirTroops, $GUI_ENABLE)
+	Else
+		$OptTrappedTH = 0
+		GUICtrlSetState($chkMortar, $GUI_DISABLE)
+		GUICtrlSetState($chkWiz, $GUI_DISABLE)
+		GUICtrlSetState($chkInferno, $GUI_DISABLE)
+		GUICtrlSetState($chkTesla, $GUI_DISABLE)
+		GUICtrlSetState($chkAir, $GUI_DISABLE)
+		GUICtrlSetState($chkGrdTroops, $GUI_DISABLE)
+		GUICtrlSetState($chkAirTroops, $GUI_DISABLE)
+	EndIf
+EndFunc   ;==>chkTrappedTH
+
+Func chkSnipeWhileTrain()
+	If GUICtrlRead($chkSnipeWhileTrain) = $GUI_CHECKED Then
+		$iChkSnipeWhileTrain = 1
+		GUICtrlSetState($txtiSkipped, $GUI_ENABLE)
+	Else
+		$iChkSnipeWhileTrain = 0
+		GUICtrlSetState($txtiSkipped, $GUI_DISABLE)
+	EndIf
+EndFunc   ;==>chkSnipeWhileTrain
+
 Func chkMortar()
 	If GUICtrlRead($chkMortar) = $GUI_CHECKED Then
 		$skipMortar = 1

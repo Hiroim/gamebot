@@ -135,10 +135,10 @@ Local $x = 260, $y = 205
 	Local $x = 260, $y = 400
 	$grpVSDelay = GUICtrlCreateGroup(getLocaleString("grpVSDelay"), $x - 20, $y - 20, 220, 55)
 		$lblVSDelay = GUICtrlCreateLabel("0", $x, $y, 12, 15, $SS_RIGHT)
-			GUICtrlSetTip(-1, getLocaleString("tipVSDelay"))
+			GUICtrlSetTip(-1, getLocaleString("tipVSDelay",1))
 		$lbltxtVSDelay = GUICtrlCreateLabel(getLocaleString("lbltxtVSDelay"), $x + 15, $y, 45, -1)
 		$sldVSDelay = GUICtrlCreateSlider($x + 55, $y - 2, 130, 25, BITOR($TBS_TOOLTIPS, $TBS_AUTOTICKS)) ;,
-			GUICtrlSetTip(-1, getLocaleString("tipVSDelay"))
+			GUICtrlSetTip(-1, getLocaleString("tipVSDelay",1))
 			GUICtrlSetBkColor(-1, $COLOR_WHITE)
 			_GUICtrlSlider_SetTipSide(-1, $TBTS_BOTTOM)
 			_GUICtrlSlider_SetTicFreq(-1, 1)
@@ -175,6 +175,11 @@ Local $x = 260, $y = 205
 			GUICtrlSetImage(-1, $pIconLib, $eIcnLaboratory)
 			GUICtrlSetTip(-1, getLocaleString("tipLocateLaboratory"))
 			GUICtrlSetOnEvent(-1, "btnLab")
+		$btnResetBuilding = GUICtrlCreateButton("Reset.", $x + 380, $y, 40, 40, $BS_ICON)
+			GUICtrlSetImage(-1, $pIconLib, $eIcnBldgX)
+			$txtTip = "Click here it reset all building locations," & @CRLF & "like when you have changed base layout"
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetOnEvent(-1, "btnResetBuilding")
 		GUICtrlCreateGroup("", -99, -99, 1, 1)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUICtrlCreateTabItem("")

@@ -36,7 +36,7 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 			Switch $AttackTHType
 				Case 0
 					algorithmTH()
-					_CaptureRegion()
+				    ;_CaptureRegion()
                     If _ColorCheck(_GetPixelColor($aWonOneStar[0],$aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) Then AttackTHNormal() ;if 'no star' use another attack mode.
 				Case 1
 					AttackTHNormal();Good for Masters
@@ -44,6 +44,10 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 					AttackTHXtreme();Good for Champ
 				Case 3
 					AttackTHGbarch();Good for Masters+
+				Case 4
+					AttackTHSmartBarch();Good for Masters+
+				Case 5
+					AttackTHSmartBarch2();Good for Masters+
 			EndSwitch
             If $zoomedin = True Then
                 ZoomOut()

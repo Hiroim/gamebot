@@ -183,11 +183,11 @@ Func Train()
 			If $TroopName[$i] <> "Barb" And $TroopName[$i] <> "Arch" And $TroopName[$i] <> "Gobl" Then
 				If $debugSetlog = 1 And Number(Eval($TroopName[$i] & "Comp")) <> 0 Then SetLog("GUI ASSIGN to $Cur" & $TroopName[$i] & ":" & Eval($TroopName[$i] & "Comp") & " Units")
 				If $OptTrophyMode = 1 And $icmbTroopComp = 9 And Eval("Cur" & $TroopName[$i]) * -1 > Eval($TroopName[$i] & "Comp") * 1.20 Then ; 20% too many
-					SetLog("Too many " & $TroopName[$i] & ", train last.")
+					SetLog(getLocaleString("logTooMany") & $TroopName[$i] & getLocaleString("logTrainLast"))
 					Assign(("Cur" & $TroopName[$i]), 0)
 					Assign(("tooMany" & $TroopName[$i]), 1)
 				ElseIf $OptTrophyMode = 1 And $icmbTroopComp = 9 And (Eval("Cur" & $TroopName[$i]) * -1 < Eval($TroopName[$i] & "Comp") * .80) And Eval("Cur" & $TroopName[$i]) < 0 Then ; 20% too few
-					SetLog("Too few " & $TroopName[$i] & ", train first.")
+					SetLog(getLocaleString("logTooFew") & $TroopName[$i] & getLocaleString("logTrainLast"))
 					Assign(("Cur" & $TroopName[$i]), 0)
 					Assign(("tooFew" & $TroopName[$i]), 1)
 				Else
@@ -206,11 +206,11 @@ Func Train()
 		For $i = 0 To UBound($TroopDarkName) - 1
 			If $debugSetlog = 1 And Number(Eval($TroopDarkName[$i] & "Comp")) <> 0 Then SetLog("Need to train ASSIGN.... Cur" & $TroopDarkName[$i] & ":" & Eval($TroopDarkName[$i] & "Comp"), $COLOR_PURPLE)
 			If $OptTrophyMode = 1 And $icmbTroopComp = 9 And Eval("Cur" & $TroopDarkName[$i]) * -1 > Eval($TroopDarkName[$i] & "Comp") * 1.20 Then ; 20% too many
-				SetLog("Too many " & $TroopDarkName[$i] & ", train last.")
+				SetLog(getLocaleString("logTooMany") & $TroopDarkName[$i] & getLocaleString("logTrainLast"))
 				Assign(("Cur" & $TroopDarkName[$i]), 0)
 				Assign(("tooMany" & $TroopDarkName[$i]), 1)
 			ElseIf $OptTrophyMode = 1 And $icmbTroopComp = 9 And (Eval("Cur" & $TroopDarkName[$i]) * -1 < Eval($TroopDarkName[$i] & "Comp") * .80) And Eval("Cur" & $TroopDarkName[$i]) < 0 Then ; 20% too few
-				SetLog("Too few " & $TroopDarkName[$i] & ", train first.")
+				SetLog(getLocaleString("logTooFew") & $TroopDarkName[$i] & getLocaleString("logTrainLast"))
 				Assign(("Cur" & $TroopDarkName[$i]), 0)
 				Assign(("tooFew" & $TroopDarkName[$i]), 1)
 			Else
@@ -236,11 +236,11 @@ Func Train()
 			For $i = 0 To UBound($TroopName) - 1
 				If $TroopName[$i] = "Barb" Or $TroopName[$i] = "Arch" Or $TroopName[$i] = "Gobl" Then
 					If Eval("Cur" & $TroopName[$i]) * -1 > ($TotalCamp - $anotherTroops) * Eval($TroopName[$i] & "Comp") / 100 * .20 Then ;20% too many troops
-						SetLog("Too many " & $TroopName[$i] & ", train last.")
+						SetLog(getLocaleString("logTooMany") & $TroopName[$i] & getLocaleString("logTrainLast"))
 						Assign("Cur" & $TroopName[$i], 0)
 						Assign(("tooMany" & $TroopName[$i]), 1)
 					ElseIf (Eval("Cur" & $TroopName[$i]) > ($TotalCamp - $anotherTroops) * Eval($TroopName[$i] & "Comp") / 100 * .20) And Eval("Cur" & $TroopName[$i]) <> Round(($TotalCamp - $anotherTroops) * Eval($TroopName[$i] & "Comp") / 100) Then ;20% too few troops
-						SetLog("Too few " & $TroopName[$i] & ", train first.")
+						SetLog(getLocaleString("logTooFew") & $TroopName[$i] & getLocaleString("logTrainLast"))
 						Assign("Cur" & $TroopName[$i], 0)
 						Assign(("tooFew" & $TroopName[$i]), 1)
 					Else
@@ -757,7 +757,7 @@ Func IsTrainPage()
 		;If $DebugSetlog = 1 Then Setlog("**TrainPage OK**", $COLOR_PURPLE)
 		Return True
 	Else
-		SetLog("Cannot find train page, return home.", $COLOR_RED)
+		SetLog(getLocaleString("logCannotFindTrainPage"), $COLOR_RED)
 		Return False
 	EndIf
 EndFunc   ;==>IsTrainPage

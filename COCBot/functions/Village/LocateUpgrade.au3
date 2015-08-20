@@ -33,7 +33,7 @@ Func LocateUpgrades()
 			ZoomOut()
 			Collect()
 		EndIf
-		For $icount = 0 To 5
+		For $icount = 0 To 11
 			_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 10, "Lucida Sans Unicode", 500)
 			$MsgBox = _ExtMsgBox(0, getLocaleString("msgboxLocateUpgrade_controls"), getLocaleString("msgboxLocateUpgrade_title"), getLocaleString("msgboxLocateUpgrade_msg",1), 0, $frmBot)
 			Switch $MsgBox
@@ -62,6 +62,7 @@ Func LocateUpgrades()
 					Setlog(getLocaleString("logBadProgrammer"), $COLOR_PURPLE)
 			EndSwitch
 			ClickP($aAway, 1,0,"#0210") ;Click Away to close windows
+			If _Sleep(500) Then Return
 		Next
 		ExitLoop
 	WEnd
@@ -79,7 +80,7 @@ Func CheckUpgrades() ; Valdiate and determine the cost and type of the upgrade a
 		Setlog(getLocaleString("logUpgradeWeirdo"), $COLOR_RED)
 		Return False
 	EndIf
-	For $iz = 0 To 5
+	For $iz = 0 To 11
 		If $aUpgrades[$iz][0] <= 0 Or $aUpgrades[$iz][1] <= 0 Then
 			GUICtrlSetImage($picUpgradeStatus[$iz], $pIconLib, $eIcnRedLight) ; change indicator back to red showing location invalid
 			GUICtrlSetState($chkbxUpgrade[$iz], $GUI_UNCHECKED) ; Change upgrade selection box to unchecked
@@ -118,6 +119,7 @@ Func UpgradeValue($inum) ;function to find the value and type of the upgrade.
 	$aUpgrades[$inum][2] = 0 ; Clear previous upgrade value if run before
 	$aUpgrades[$inum][3] = "" ; Clear previous loot type if run before
 	ClickP($aAway, 1,0,"#0211") ;Click Away to close windows
+	If _Sleep(500) Then Return
 	SetLog("-$Upgrade #" & $inum + 1 & " Location =  " & "(" & $aUpgrades[$inum][0] & "," & $aUpgrades[$inum][1] & ")", $COLOR_TEAL) ;Debug
 	If _Sleep($iDelayUpgradeValue1) Then Return
 	Click($aUpgrades[$inum][0], $aUpgrades[$inum][1],1,0,"#0212") ;Select upgrade trained
@@ -166,6 +168,7 @@ Func UpgradeValue($inum) ;function to find the value and type of the upgrade.
 					$aUpgrades[$inum][2] = 0 ; Clear upgrade value as it is invalid
 					$aUpgrades[$inum][3] = "" ; Clear upgrade type as it  is invalid
 					ClickP($aAway, 2,0,"#0214") ;Click Away
+					If _Sleep(500) Then Return
 					Return False
 				EndIf
 				If _ColorCheck(_GetPixelColor(487, 479), Hex(0xF0E950, 6), 20) Then $aUpgrades[$inum][3] = "Gold" ;Check if Gold required and update type
@@ -182,6 +185,7 @@ Func UpgradeValue($inum) ;function to find the value and type of the upgrade.
 					$aUpgrades[$inum][2] = 0 ; Clear upgrade value as it is invalid
 					$aUpgrades[$inum][3] = "" ; Clear upgrade type as it  is invalid
 					ClickP($aAway, 2,0,"#0215") ;Click Away
+					If _Sleep(500) Then Return
 					Return False
 				EndIf
 				If _ColorCheck(_GetPixelColor(575, 498), Hex(0x000000, 6), 20) Then $aUpgrades[$inum][3] = "Dark" ; Check if DE required and update type
@@ -197,6 +201,7 @@ Func UpgradeValue($inum) ;function to find the value and type of the upgrade.
 				$aUpgrades[$inum][2] = 0 ; Clear upgrade value as it is invalid
 				$aUpgrades[$inum][3] = "" ; Clear upgrade type as it  is invalid
 				ClickP($aAway, 2,0,"#0217") ;Click Away
+				If _Sleep(500) Then Return
 				Return False
 
 		EndSelect
@@ -237,6 +242,7 @@ Func UpgradeValue($inum) ;function to find the value and type of the upgrade.
 			$aUpgrades[$inum][0] = -1 ; Clear upgrade location value as it is invalid
 			$aUpgrades[$inum][1] = -1 ; Clear upgrade location value as it  is invalid
 			ClickP($aAway, 2,0,"#0218") ;Click Away
+			If _Sleep(500) Then Return
 			Return False
 		EndIf
 		Setlog(getLocaleString("logUpgradeValue") & _NumberFormat($aUpgrades[$inum][2]) & " " & $aUpgrades[$inum][3], $COLOR_BLUE) ; debug & document cost of upgrade
@@ -245,10 +251,12 @@ Func UpgradeValue($inum) ;function to find the value and type of the upgrade.
 		$aUpgrades[$inum][0] = -1 ; Clear upgrade location value as it is invalid
 		$aUpgrades[$inum][1] = -1 ; Clear upgrade location value as it  is invalid
 		ClickP($aAway, 2,0,"#0219") ;Click Away
+		If _Sleep(500) Then Return
 		Return False
 
 	EndIf
 	ClickP($aAway, 2,0,"#0220") ;Click Away
+	If _Sleep(500) Then Return
 	Return True
 
 EndFunc   ;==>UpgradeValue

@@ -513,8 +513,8 @@ EndFunc   ;==>AttackTHXtreme
 
 Func AttackTHGbarch()
 	Setlog(getLocaleString("logAtkTHGBarch1"))
-	AttackTHGrid($eArch, 4, 1, 2000, 1, 4, 0) ; deploys 4 archers - take out possible bombs
-	AttackTHGrid($eArch, 5, Random(3, 4, 1), 1000, 1, 4, 0) ; deploys 15-20 archers
+	AttackTHGrid($eArch, 4, 1, 2000, 1, 8, 0) ; deploys 4 archers - take out possible bombs
+	AttackTHGrid($eArch, 3, Random(5, 6, 1), 1000, 1, 4, 0) ; deploys 15-18 archers
 	$count = 0
 	While $count < 30
 		If _Sleep($iDelayAttackTHGbarch1) Then Return
@@ -527,8 +527,8 @@ Func AttackTHGbarch()
 	WEnd
 
 	Setlog(getLocaleString("logAtkTHGBarch2"))
-	AttackTHGrid($eBarb, 4, Random(4, 5, 1), 1000, 2, 4, 0) ;deploys 16-20 barbarians
-	AttackTHGrid($eArch, 4, Random(4, 5, 1), 1000, 2, 4, 0) ;deploys 16-20 archers
+	AttackTHGrid($eBarb, 4, Random(4, 5, 1), 1000, 1, 6, 0) ;deploys 16-20 barbarians
+	AttackTHGrid($eArch, 4, Random(4, 5, 1), 1000, 3, 8, 0) ;deploys 16-20 archers
 	$count = 0
 	While $count < 30
 		If _Sleep($iDelayAttackTHGbarch1) Then Return
@@ -541,12 +541,12 @@ Func AttackTHGbarch()
 	WEnd
 
 	Setlog(getLocaleString("logAtkTHGBarch3"))
-	AttackTHGrid($eGiant, 2, 1, 1240, 1, 2, 0) ;deploys 2 giants in case of spring traps
-	AttackTHGrid($eGiant, 2, Random(3, 4, 1), 1500, 2, 2, 0) ;deploys 6-8 giants to take heat
-	AttackTHGrid($eBarb, 3, Random(4, 5, 1), 1000, 1, 5, 0) ; deploys up to 12-15 barbarians
-	AttackTHGrid($eBarb, 4, Random(4, 5, 1), 1500, 1, 5, 0) ; deploys up to 16-20 barbarians
-	AttackTHGrid($eArch, 3, 8, 1200, 3, 4, 0) ; deploys 24 archers
-	AttackTHGrid($eArch, 4, 7, 1000, 3, 4, 0) ; deploys 28 archers
+	AttackTHGrid($eGiant, 2, 1, 1240, 1, 3, 0) ;deploys 2 giants in case of spring traps
+	AttackTHGrid($eGiant, 2, Random(3, 4, 1), 1500, 2, 3, 0) ;deploys 6-8 giants to take heat
+	AttackTHGrid($eBarb, 3, Random(4, 5, 1), 1000, 2, 6, 0) ; deploys up to 12-15 barbarians
+	AttackTHGrid($eArch, 3, 8, 1200, 4, 8, 0) ; deploys 24 archers
+	AttackTHGrid($eBarb, 4, Random(4, 5, 1), 1500, 3, 6, 0) ; deploys up to 16-20 barbarians
+	AttackTHGrid($eArch, 4, 7, 1000, 5, 8, 0) ; deploys 28 archers
 	$count = 0
 	While $count < 25
 		If _Sleep($iDelayAttackTHGbarch1) Then Return
@@ -559,13 +559,13 @@ Func AttackTHGbarch()
 	WEnd
 
 	Setlog(getLocaleString("logAtkTHGBarch4"))
-	AttackTHGrid($eGiant, 2, 9, 1500, 3, 2, 1) ;deploys CC/Heroes & up to 18 giants (in case numbers are off)
-	AttackTHGrid($eBarb, 4, 8, 1200, 2, 5, 0) ; deploys up to 32 barbarians
-	AttackTHGrid($eArch, 3, 13, 1210, 4, 4, 0) ;deploys up to 39 archers
-	AttackTHGrid($eBarb, 3, 11, 1190, 2, 5, 0) ; deploys up to 33 barbarians
-	AttackTHGrid($eArch, 2, 20, 1200, 4, 4, 0) ;deploys up to 40 archers
-	AttackTHGrid($eBarb, 4, 9, 1500, 2, 5, 0) ; deploys up to 36 barbarians
-	AttackTHGrid($eArch, 2, 20, 1000, 4, 4, 0) ;deploys up to 40 archers
+	AttackTHGrid($eGiant, 2, 9, 1500, 3, 3, 1) ;deploys CC/Heroes & up to 18 giants (in case numbers are off)
+	AttackTHGrid($eBarb, 4, 8, 1200, 4, 6, 0) ; deploys up to 32 barbarians
+	AttackTHGrid($eArch, 3, 13, 1210, 6, 8, 0) ;deploys up to 39 archers
+	AttackTHGrid($eBarb, 3, 11, 1190, 5, 6, 0) ; deploys up to 33 barbarians
+	AttackTHGrid($eArch, 2, 20, 1200, 7, 8, 0) ;deploys up to 40 archers
+	AttackTHGrid($eBarb, 4, 9, 1500, 6, 6, 0) ; deploys up to 36 barbarians
+	AttackTHGrid($eArch, 2, 20, 1000, 8, 8, 0) ;deploys up to 40 archers
 	$count = 0
 	While $count < 25
 		If _Sleep($iDelayAttackTHGbarch1) Then Return
@@ -581,46 +581,55 @@ Func AttackTHGbarch()
 
 EndFunc   ;==>AttackTHGbarch
 
-Func AttackTrappedTH()
-;~ 	SetLog($thinfo)
-	Setlog(getLocaleString("logAtkTHTrapped"), $COLOR_BLUE)
-	AttackTHGrid($eArch,4,1,2000,1,4,0) ; deploys 4 archers to "reveal" teslas or bombs
-	AttackTHGrid($eGiant,2,1,850,1,2,0) ;releases 2 giants to trigger spring traps
-	AttackTHGrid($eGiant,2,3,1200,2,2,0) ;releases 6 giants
-	AttackTHGrid($eArch,3,8,950,3,4,0) ; deploys 24 archers
-	AttackTHGrid($eArch,3,8,950,3,4,0) ; deploys 24 archers
-
+Func AttackTHSmartBarch()
+	Setlog(getLocaleString("logAtkTHSmartBarch"))
+	AttackTHGrid($eArch, 4, 1, 2000, 1, 5, 0)
+	SetLog(getLocaleString("logAtkTHSmartBarch2"))
+	AttackTHGrid($eArch, 2, Random(4, 5, 1), 1000, 1, 5, 0) ; deploys 8-10 archers
+	AttackTHGrid($eArch, 2, Random(3, 4, 1), 1000, 2, 5, 0) ; deploys 6-8 archers
 	$count = 0
-	While $count < 30
-		_Sleep(200)
+	While $count < 25
+		If _Sleep($iDelayAttackTHGbarch1) Then Return
+		;_CaptureRegion()
 		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
 			SetLog(getLocaleString("logTHDestroyed"))
-			If _Sleep($iDelayAttackTHGbarch1) Then Return
 			Return ;exit if you get a star
 		EndIf
-	; while giants are distracting, loop through barb/arch until you get a star
-		AttackTHGrid($eGiant,2,2,1250,2,5,0) ; deploys 4 giant
-		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
-			SetLog(getLocaleString("logTHDestroyed"))
-			If _Sleep($iDelayAttackTHGbarch1) Then Return
-			Return ;exit if you get a star
-		EndIf
-		AttackTHGrid($eBarb,4,5,1020,1,5,1) ; deploys up to 20 barbarians and Heroes & CC
-		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
-			SetLog(getLocaleString("logTHDestroyed"))
-			If _Sleep($iDelayAttackTHGbarch1) Then Return
-			Return ;exit if you get a star
-		EndIf
-		AttackTHGrid($eArch,4,5,650,3,4,0) ; deploys 20 archers
-		_Sleep(Random(700,1350))
-		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
-			SetLog(getLocaleString("logTHDestroyed"))
-			If _Sleep($iDelayAttackTHGbarch1) Then Return
-			Return ;exit if you get a star
-		EndIf
-		$count+=1
+		$count += 1
 	WEnd
 
+	Setlog(getLocaleString("logAtkTHSmartBarch3"))
+	AttackTHGrid($eBarb, 4, Random(4, 5, 1), 1000, 2, 5, 0) ;deploys 16-20 barbarians
+	AttackTHGrid($eArch, 4, Random(4, 5, 1), 1000, 2, 5, 0) ;deploys 16-20 archers
+	$count = 0
+	While $count < 25
+		If _Sleep($iDelayAttackTHGbarch1) Then Return
+		;_CaptureRegion()
+		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
+			SetLog(getLocaleString("logTHDestroyed"))
+			Return ;exit if you get a star
+		EndIf
+		$count += 1
+	WEnd
+
+	Setlog(getLocaleString("logAtkTHSmartBarch4"))
+	AttackTHGrid($eBarb, 3, Random(4, 5, 1), 1000, 3, 5, 0) ; deploys up to 12-15 barbarians
+	AttackTHGrid($eArch, 3, Random(4, 5, 1), 1000, 3, 5, 0) ; deploys up to 12-15 archers
+	SetLog(getLocaleString("logAtkTHSmartBarchCC"))
+	AttackTHGrid($eBarb, 3, Random(4, 5, 1), 1000, 4, 5, 1) ; deploys up to 12-15 barbarians
+	AttackTHGrid($eArch, 3, Random(4, 5, 1), 1000, 4, 5, 0) ; deploys up to 12-15 archers
+	$count = 0
+	While $count < 25
+		If _Sleep($iDelayAttackTHGbarch1) Then Return
+		;_CaptureRegion()
+		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
+			SetLog(getLocaleString("logTHDestroyed"))
+			Return ;exit if you get a star
+		EndIf
+		$count += 1
+	WEnd
+
+	Setlog(getLocaleString("logAtkTHSmartBarch5"))
 	For $i = $eGole To $eLava ; Deploy Remaining troops
 		AttackTHGrid($i,5,2,2000,0,4,0)
 	Next
@@ -628,7 +637,7 @@ Func AttackTrappedTH()
 	;Check for one star
 	If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
 		SetLog(getLocaleString("logTHDestroyed"))
-		If _Sleep($iDelayAttackTHGbarch1) Then Return
+		If _Sleep($iDelayAttackTHSmartBarch1) Then Return
 		Return ;exit if you get a star
 	EndIf
 	;end check for one star
@@ -640,14 +649,212 @@ Func AttackTrappedTH()
 	;Check for one star
 	If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
 		SetLog(getLocaleString("logTHDestroyed"))
+		If _Sleep($iDelayAttackTHSmartBarch1) Then Return
+		Return ;exit if you get a star
+	EndIf
+	;end check for one star
+
+	AttackTHGrid($eBarb, 3, Random(6, 8, 1), 1000, 1, 5, 0) ; deploys up to 18-24 barbarians
+	AttackTHGrid($eArch, 3, Random(6, 8, 1), 1000, 1, 5, 0) ; deploys up to 18-24  archers
+	AttackTHGrid($eBarb, 3, Random(6, 8, 1), 1000, 2, 5, 0) ; deploys up to 18-24  barbarians
+	AttackTHGrid($eArch, 3, Random(6, 8, 1), 1000, 2, 5, 0) ; deploys up to 18-24  archers
+	AttackTHGrid($eBarb, 3, Random(6, 8, 1), 1000, 3, 5, 0) ; deploys up to 18-24  barbarians
+	AttackTHGrid($eArch, 3, Random(6, 8, 1), 1000, 3, 5, 0) ; deploys up to 18-24  archers
+	AttackTHGrid($eBarb, 3, Random(6, 8, 1), 1000, 4, 5, 0) ; deploys up to 18-24  barbarians
+	AttackTHGrid($eArch, 3, Random(6, 8, 1), 1000, 4, 5, 0) ; deploys up to 18-24  archers
+	AttackTHGrid($eBarb, 3, Random(6, 8, 1), 1000, 5, 5, 0) ; deploys up to 18-24  barbarians
+	AttackTHGrid($eArch, 3, Random(6, 8, 1), 1000, 5, 5, 0) ; deploys up to 18-24  archers
+
+	;Check for one star
+	If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
+		SetLog(getLocaleString("logTHDestroyed"))
+		If _Sleep($iDelayAttackTHSmartBarch1) Then Return
+		Return ;exit if you get a star
+	EndIf
+	SetLog(getLocaleString("logAtkTHSmartBarchLast"), $COLOR_GREEN)
+
+EndFunc   ;==>AttackTHSmartBarch
+
+Func AttackTHSmartBarch2()
+	Setlog(getLocaleString("logAtkTHSmartBarch"))
+	AttackTHGrid($eBarb, 4, 1, 2000, 1, 5, 0)
+	SetLog(getLocaleString("logAtkTHSmartBarch2"))
+	AttackTHGrid($eBarb, 2, Random(5, 6, 1), 1000, 1, 5, 0) ; deploys 10-12 barbarians
+	AttackTHGrid($eArch, 3, Random(3, 4, 1), 1000, 1, 5, 0) ; deploys 9-12 archers
+	$count = 0
+	While $count < 30
+		If _Sleep($iDelayAttackTHSmartBarch1) Then Return
+		;_CaptureRegion()
+		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
+			SetLog(getLocaleString("logTHDestroyed"))
+			Return ;exit if you get a star
+		EndIf
+		$count += 1
+	WEnd
+
+	Setlog(getLocaleString("logAtkTHSmartBarch3"))
+	AttackTHGrid($eBarb, 3, Random(6, 7, 1), 1000, 2, 5, 0) ;deploys 18-21 barbarians
+	AttackTHGrid($eArch, 4, Random(4, 5, 1), 1000, 2, 5, 0) ;deploys 16-20 archers
+	$count = 0
+	While $count < 30
+		If _Sleep($iDelayAttackTHSmartBarch1) Then Return
+		;_CaptureRegion()
+		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
+			SetLog(getLocaleString("logTHDestroyed"))
+			Return ;exit if you get a star
+		EndIf
+		$count += 1
+	WEnd
+
+	Setlog(getLocaleString("logAtkTHSmartBarch4"))
+	AttackTHGrid($eBarb, 3, Random(4, 5, 1), 1000, 3, 5, 0) ; deploys up to 12-15 barbarians
+	AttackTHGrid($eArch, 3, Random(4, 5, 1), 1000, 3, 5, 0) ; deploys up to 12-15 archers
+	SetLog(getLocaleString("logAtkTHSmartBarchCC"))
+	AttackTHGrid($eBarb, 3, Random(4, 5, 1), 1000, 4, 5, 1) ; deploys up to 12-15 barbarians
+	AttackTHGrid($eArch, 3, Random(4, 5, 1), 1000, 4, 5, 0) ; deploys up to 12-15 archers
+	$count = 0
+	While $count < 25
+		If _Sleep($iDelayAttackTHSmartBarch1) Then Return
+		;_CaptureRegion()
+		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
+			SetLog(getLocaleString("logTHDestroyed"))
+			Return ;exit if you get a star
+		EndIf
+		$count += 1
+	WEnd
+
+	Setlog(getLocaleString("logAtkTHSmartBarch5"))
+	For $i = $eGole To $eLava ; Deploy Remaining troops
+		AttackTHGrid($i,5,2,2000,0,4,0)
+	Next
+
+	;Check for one star
+	If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
+		SetLog(getLocaleString("logTHDestroyed"))
+		If _Sleep($iDelayAttackTHSmartBarch1) Then Return
+		Return ;exit if you get a star
+	EndIf
+	;end check for one star
+
+	For $i = $eGiant To $eValk ; Deploy Remaining troops
+		AttackTHGrid($i,6,5,2000,0,4,0)
+	Next
+
+	;Check for one star
+	If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
+		SetLog(getLocaleString("logTHDestroyed"))
+		If _Sleep($iDelayAttackTHSmartBarch1) Then Return
+		Return ;exit if you get a star
+	EndIf
+	;end check for one star
+
+	AttackTHGrid($eBarb, 3, Random(6, 8, 1), 1000, 1, 5, 0) ; deploys up to 18-24 barbarians
+	AttackTHGrid($eArch, 3, Random(6, 8, 1), 1000, 1, 5, 0) ; deploys up to 18-24  archers
+	AttackTHGrid($eBarb, 3, Random(6, 8, 1), 1000, 2, 5, 0) ; deploys up to 18-24  barbarians
+	AttackTHGrid($eArch, 3, Random(6, 8, 1), 1000, 2, 5, 0) ; deploys up to 18-24  archers
+	AttackTHGrid($eBarb, 3, Random(6, 8, 1), 1000, 3, 5, 0) ; deploys up to 18-24  barbarians
+	AttackTHGrid($eArch, 3, Random(6, 8, 1), 1000, 3, 5, 0) ; deploys up to 18-24  archers
+	AttackTHGrid($eBarb, 3, Random(6, 8, 1), 1000, 4, 5, 0) ; deploys up to 18-24  barbarians
+	AttackTHGrid($eArch, 3, Random(6, 8, 1), 1000, 4, 5, 0) ; deploys up to 18-24  archers
+	AttackTHGrid($eBarb, 3, Random(6, 8, 1), 1000, 5, 5, 0) ; deploys up to 18-24  barbarians
+	AttackTHGrid($eArch, 3, Random(6, 8, 1), 1000, 5, 5, 0) ; deploys up to 18-24  archers
+
+	;Check for one star
+	If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
+		SetLog(getLocaleString("logTHDestroyed"))
+		If _Sleep($iDelayAttackTHSmartBarch1) Then Return
+		Return ;exit if you get a star
+	EndIf
+	SetLog(getLocaleString("logAtkTHSmartBarchLast"), $COLOR_GREEN)
+
+EndFunc   ;==>AttackTHSmartBarch2
+
+Func AttackTrappedTH()
+;~ 	SetLog($thinfo)
+	Setlog(getLocaleString("logAtkTHTrapped"), $COLOR_BLUE)
+	AttackTHGrid($eBarb,4,1,2000,1,4,0) ; deploys 4 barbarians to "reveal" teslas or bombs
+	AttackTHGrid($eGiant,2,1,850,1,4,0) ;releases 2 giants to trigger spring traps
+	AttackTHGrid($eBarb, 3, Random(4, 5, 1), 1000, 1, 5, 0) ; deploys up to 12-15 barbarians
+	AttackTHGrid($eArch, 3, Random(4, 5, 1), 1000, 1, 5, 0) ; deploys up to 12-15 archers
+	AttackTHGrid($eBarb, 3, Random(4, 5, 1), 1000, 2, 5, 0) ; deploys up to 12-15 barbarians
+	AttackTHGrid($eArch, 3, Random(4, 5, 1), 1000, 2, 5, 0) ; deploys up to 12-15 archers
+	$count = 0
+	While $count < 25
+		If _Sleep($iDelayAttackTHSmartBarch1) Then Return
+		;_CaptureRegion()
+		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
+			SetLog(getLocaleString("logTHDestroyed"))
+			Return ;exit if you get a star
+		EndIf
+		$count += 1
+	WEnd
+
+	AttackTHGrid($eGiant, 4, Random(2, 3, 1), 1350, 3, 4, 0) ; deploys up to 8-12 giants
+	AttackTHGrid($eBarb, 3, Random(4, 5, 1), 1000, 4, 5, 1) ; deploys up to 12-15 barbarians and Heroes & CC
+	AttackTHGrid($eArch, 3, Random(4, 5, 1), 1000, 3, 5, 0) ; deploys up to 12-15 archers
+	AttackTHGrid($eBarb, 3, Random(4, 5, 1), 1000, 5, 5, 0) ; deploys up to 12-15 barbarians
+	AttackTHGrid($eArch, 3, Random(4, 5, 1), 1000, 4, 5, 0) ; deploys up to 12-15 archers
+	$count = 0
+	While $count < 25
+		If _Sleep($iDelayAttackTHSmartBarch1) Then Return
+		;_CaptureRegion()
+		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
+			SetLog(getLocaleString("logTHDestroyed"))
+			Return ;exit if you get a star
+		EndIf
+		$count += 1
+	WEnd
+
+	AttackTHGrid($eGiant, 4, Random(2, 3, 1), 1350, 3, 4, 0) ; deploys up to 8-12 giants
+	AttackTHGrid($eBarb, 4, Random(3, 4, 1), 1000, 4, 5, 0) ; deploys up to 12-16 barbarians
+	AttackTHGrid($eArch, 4, Random(3, 4, 1), 1000, 3, 5, 0) ; deploys up to 12-16 archers
+	AttackTHGrid($eBarb, 4, Random(3, 4, 1), 1000, 5, 5, 0) ; deploys up to 12-16 barbarians
+	AttackTHGrid($eArch, 4, Random(3, 4, 1), 1000, 4, 5, 0) ; deploys up to 12-16 archers
+	$count = 0
+	While $count < 25
+		If _Sleep($iDelayAttackTHSmartBarch1) Then Return
+		;_CaptureRegion()
+		If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
+			SetLog(getLocaleString("logTHDestroyed"))
+			Return ;exit if you get a star
+		EndIf
+		$count += 1
+	WEnd
+
+	For $i = $eGole To $eLava ; Deploy Remaining troops
+		AttackTHGrid($i,1,3,2000,0,4,0)
+	Next
+
+	;Check for one star
+	If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
+		SetLog(getLocaleString("logTHDestroyed"))
 		If _Sleep($iDelayAttackTHGbarch1) Then Return
 		Return ;exit if you get a star
 	EndIf
 	;end check for one star
 
-	For $i = $eBarb To $eArch ; Deploy Remaining Barb,archers
-		AttackTHGrid($i,5,15,2000,0,4,0)
+	For $i = $eGiant To $eValk ; Deploy Remaining troops
+		AttackTHGrid($i,3,5,2000,0,4,0)
 	Next
+
+	;Check for one star
+	If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then
+		SetLog(getLocaleString("logTHDestroyed"))
+		If _Sleep($iDelayAttackTHGbarch1) Then Return
+		Return ;exit if you get a star
+	EndIf
+	;end check for one star
+
+	AttackTHGrid($eBarb, 3, Random(6, 8, 1), 1000, 1, 5, 0) ; deploys up to 18-24 barbarians
+	AttackTHGrid($eArch, 3, Random(6, 8, 1), 1000, 1, 5, 0) ; deploys up to 18-24  archers
+	AttackTHGrid($eBarb, 3, Random(6, 8, 1), 1000, 2, 5, 0) ; deploys up to 18-24  barbarians
+	AttackTHGrid($eArch, 3, Random(6, 8, 1), 1000, 2, 5, 0) ; deploys up to 18-24  archers
+	AttackTHGrid($eBarb, 3, Random(6, 8, 1), 1000, 3, 5, 0) ; deploys up to 18-24  barbarians
+	AttackTHGrid($eArch, 3, Random(6, 8, 1), 1000, 3, 5, 0) ; deploys up to 18-24  archers
+	AttackTHGrid($eBarb, 3, Random(6, 8, 1), 1000, 4, 5, 0) ; deploys up to 18-24  barbarians
+	AttackTHGrid($eArch, 3, Random(6, 8, 1), 1000, 4, 5, 0) ; deploys up to 18-24  archers
+	AttackTHGrid($eBarb, 3, Random(6, 8, 1), 1000, 5, 5, 0) ; deploys up to 18-24  barbarians
+	AttackTHGrid($eArch, 3, Random(6, 8, 1), 1000, 5, 5, 0) ; deploys up to 18-24  archers
 
 	;Check for one star
 	If _ColorCheck(_GetPixelColor($aWonOneStar[0], $aWonOneStar[1], True), Hex($aWonOneStar[2], 6), $aWonOneStar[3]) = True Then

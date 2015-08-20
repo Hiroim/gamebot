@@ -355,6 +355,13 @@ Func saveConfig() ;Saves the controls settings to the config
 		IniWrite($config, "advanced", "townhall", 0)
 	EndIf
 
+	If GUICtrlRead($chkSnipeWhileTrain) = $GUI_CHECKED Then ; Snipe While Train MOD by ChiefM3
+		IniWrite($config, "advanced", "chkSnipeWhileTrain", 1)
+	Else
+		IniWrite($config, "advanced", "chkSnipeWhileTrain", 0)
+	EndIf
+	IniWrite($config, "advanced", "iSkippedSWT", GUICtrlRead($txtiSkipped))
+
 	;	If GUICtrlRead($chkLightSpell) = $GUI_CHECKED Then
 	;		IniWrite($config, "advanced", "hitDElightning", 1)
 	;	Else
@@ -384,11 +391,16 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWrite($config, "advanced", "THaddTiles", GUICtrlRead($txtTHaddtiles))
 	IniWrite($config, "advanced", "AttackTHType", _GUICtrlComboBox_GetCurSel($cmbAttackTHType))
 	
+	If GUICtrlRead($chkTrappedTH) = $GUI_CHECKED Then
+		IniWrite($config, "advanced", "DetectTrappedTH", 1)
+	Else
+		IniWrite($config, "advanced", "DetectTrappedTH", 0)
+	EndIf
 	If GUICtrlRead($chkMortar) = $GUI_CHECKED Then
 		IniWrite($config, "advanced", "skipMortar", 1)
 	Else
 		IniWrite($config, "advanced", "skipMortar", 0)
-	EndIf	
+	EndIf
 	If GUICtrlRead($chkWiz) = $GUI_CHECKED Then
 		IniWrite($config, "advanced", "skipWiz", 1)
 	Else
@@ -827,7 +839,7 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWrite($building, "upgrade", "LabPosY", $aLabPos[1])
 	;
 
-	For $iz = 0 To 5 ; Save Upgrades data
+	For $iz = 0 To 11 ; Save Upgrades data
 		IniWrite($building, "upgrade", "xupgrade" & $iz, $aUpgrades[$iz][0])
 		IniWrite($building, "upgrade", "yupgrade" & $iz, $aUpgrades[$iz][1])
 		IniWrite($building, "upgrade", "upgradevalue" & $iz, $aUpgrades[$iz][2])
@@ -850,9 +862,25 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWrite($building, "other", "xCCPos", $aCCPos[0])
 	IniWrite($building, "other", "yCCPos", $aCCPos[1])
 
+	IniWrite($building, "other", "xKingPos", $KingPos[0])
+	IniWrite($building, "other", "yKingPos", $KingPos[1])
+
+	IniWrite($building, "other", "xQueenPos", $QueenPos[0])
+	IniWrite($building, "other", "yQueenPos", $QueenPos[1])
 	IniWrite($building, "other", "xArmy", $ArmyPos[0])
 	IniWrite($building, "other", "yArmy", $ArmyPos[1])
 
+	If GUICtrlRead($chkUpgradeKing) = $GUI_CHECKED Then ;==>upgradeking
+	    IniWrite($building, "other", "UpKing", 1)
+	Else
+	    IniWrite($building, "other", "UpKing", 0)
+	EndIf
+
+	If GUICtrlRead($chkUpgradeQueen) = $GUI_CHECKED Then ;==>upgradequeen
+	    IniWrite($building, "other", "UpQueen", 1)
+	Else
+	    IniWrite($building, "other", "UpQueen", 0)
+	EndIf
 	;IniWrite($building, "other", "barrackNum", $barrackNum)
 	;IniWrite($building, "other", "barrackDarkNum", $barrackDarkNum)
 
@@ -1088,10 +1116,4 @@ Func saveConfig() ;Saves the controls settings to the config
 	Else
 		IniWrite($config, "General", "ChkVersion", 0)
 	EndIf
-	If GUICtrlRead($chkSnipeWhileTrain) = $GUI_CHECKED Then ; Snipe While Train MOD by ChiefM3
-		IniWrite($config, "advanced", "chkSnipeWhileTrain", 1)
-		Else
-		IniWrite($config, "advanced", "chkSnipeWhileTrain", 0)
-	 EndIf
-
 EndFunc   ;==>saveConfig

@@ -28,12 +28,14 @@ Func Laboratory()
 		Return False ; Nothing selected to upgrade
 	EndIf
 	If $aLabPos[0] = 0 Or $aLabPos[1] = 0 Then
-		SetLog(getLocaleString("LogLabNotFound"), $COLOR_RED)
-		LocateLab() ; Lab location unknown, so find it.
-		If $aLabPos[0] = 0 Or $aLabPos[1] = 0 Then
-			SetLog(getLocaleString("LogLabLocateProblem"), $COLOR_RED)
-			Return False
-		EndIf
+		;SetLog(getLocaleString("LogLabNotFound"), $COLOR_RED)
+		;LocateLab() ; Lab location unknown, so find it.
+		;If $aLabPos[0] = 0 Or $aLabPos[1] = 0 Then
+		;	SetLog(getLocaleString("LogLabLocateProblem"), $COLOR_RED)
+		;	Return False
+		;EndIf
+		SetLog("Bad Lab location", $COLOR_ORANGE)
+		Return False
 	EndIf
 	SetLog(getLocaleString("logLabUpgrade"), $COLOR_BLUE)
 
@@ -86,8 +88,10 @@ Func Laboratory()
 		Next
 		$iFirstTimeLab = 1
 	EndIf
+	$LabNeedsDE = 0
+	$LabNeedsElix = 0
 	; check for upgrade in process
-	If _ColorCheck(_GetPixelColor(625, 280, True), Hex(0x60AC10, 6), 20) Or _ColorCheck(_GetPixelColor(660, 280, True), Hex(0x60AC10, 6), 20) Then
+	If _ColorCheck(_GetPixelColor(625, 280, True), Hex(0x488408, 6), 20) Or _ColorCheck(_GetPixelColor(660, 280, True), Hex(0x488408, 6), 20) Then
 		SetLog(getLocaleString("logUpgradeInProgressFindResearchBtn"), $COLOR_MAROON)
 		If _Sleep($iDelayLaboratory2) Then Return
 		If $debugSetlog <> 1 Then
@@ -133,6 +137,7 @@ Func Laboratory()
 	Switch $icmbLaboratory ;Change messaging based on troop number
 		Case 1 To 15  ; regular elixir
 			If $iAvailElixir < ($aUpgradeValue[$icmbLaboratory] + $itxtUpgrMinElixir) Then
+				$LabNeedsElix = 1
 				SetLog(getLocaleString("logInsufficientE") &$aLabTroops[$icmbLaboratory][3]& getLocaleString("logLabRequires") &  $aUpgradeValue[$iCmbLaboratory] & " + " & $itxtUpgrMinElixir & getLocaleString("logLabRequires2"), $COLOR_BLUE)
 				ClickP($aAway, 2, $iDelayLaboratory4,"#0355")
 				Return False
@@ -145,6 +150,7 @@ Func Laboratory()
 
 		Case 16 To 24  ; Dark Elixir
 			If $iAvailDark  <  $aUpgradeValue[$icmbLaboratory] + $itxtUpgrMinDark Then
+				$LabNeedsDE = 1
 				SetLog(getLocaleString("logInsufficientDE") & $aLabTroops[$icmbLaboratory][3] & getLocaleString("logLabRequires") &  $aUpgradeValue[$iCmbLaboratory] & " + " & $itxtUpgrMinDark & getLocaleString("logLabRequires2"), $COLOR_BLUE)
 				ClickP($aAway, 2, $iDelayLaboratory4,"#0357")
 				Return False
@@ -210,7 +216,7 @@ Func LabUpgrade()
 			If _Sleep($iDelayLabUpgrade1) Then Return
 
 			If isGemOpen(True) = False Then ; check for gem window
-				If Not(_ColorCheck(_GetPixelColor(625, 270, True), Hex(0x60AC10, 6), 20)) Or Not(_ColorCheck(_GetPixelColor(660, 270, True), Hex(0x60AC10, 6), 20)) Then
+				If _ColorCheck(_GetPixelColor(625, 280, True), Hex(0x488408, 6), 20) Or _ColorCheck(_GetPixelColor(660, 280, True), Hex(0x488408, 6), 20) Then
 					SetLog(getLocaleString("logLabGemCheck") & $aLabTroops[$icmbLaboratory][3] & getLocaleString("logLabGemCheck2"), $COLOR_RED)
 					ClickP($aAway, 2, $iDelayLabUpgrade3,"#0360")
 					Return False

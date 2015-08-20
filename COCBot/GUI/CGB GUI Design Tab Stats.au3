@@ -142,7 +142,7 @@ Local $x = 30, $y = 150
 
 	$x = 30
 	$y = 290
-	$grpStatsMisc = GUICtrlCreateGroup(getLocaleString("grpStatsMisc"), $x - 20, $y - 20, 450, 60)
+	$grpStatsMisc = GUICtrlCreateGroup(getLocaleString("grpStatsMisc"), $x - 20, $y - 20, 450, 77)
 		$y -= 2
 		GUICtrlCreateIcon ($pIconLib, $eIcnTH1, $x - 10, $y + 7, 24, 24)
 		GUICtrlCreateIcon ($pIconLib, $eIcnTH10, $x + 16, $y + 7, 24, 24)
@@ -153,6 +153,9 @@ Local $x = 30, $y = 150
         $lblvillagesskipped = GUICtrlCreateLabel(getLocaleString("lblvillagesskipped"), $x + 45, $y + 2, -1, 17)
         $lblresultvillagesskipped = GUICtrlCreateLabel("0", $x + 65, $y + 2, 60, 17, $SS_RIGHT)
 			GUICtrlSetTip(-1, getLocaleString("tipresultvillagesskipped"))
+		$y += 17
+        $lbloutofsync = GUICtrlCreateLabel("Out Of Sync :", $x + 45, $y + 2, -1, 17) ; another stats next post
+        $lblresultoutofsync = GUICtrlCreateLabel("0", $x + 65, $y + 2, 60, 17, $SS_RIGHT) ; another stats next post
 		$x = 185
 		$y = 290
 		GUICtrlCreateIcon ($pIconLib, $eIcnTrophy, $x, $y, 16, 16)
@@ -174,6 +177,4 @@ Local $x = 30, $y = 150
 		$lblwallbyelixir = GUICtrlCreateLabel(getLocaleString("lblwallbyelixir"), $x + 20, $y + 2, -1, 17)
 		$lblWallelixirmake =  GUICtrlCreateLabel("0", $x + 55, $y + 2, 60, 17, $SS_RIGHT)
 			GUICtrlSetTip(-1, getLocaleString("tipWallelixirmake"))
-        ;$lbloutofsync = GUICtrlCreateLabel("Out Of Sync :", 260, 263, 100, 17) ; another stats next post
-        ;$lblresultoutofsync = GUICtrlCreateLabel("0", 380, 263, 60, 17, $SS_RIGHT) ; another stats next post
 	GUICtrlCreateGroup("", -99, -99, 1, 1)

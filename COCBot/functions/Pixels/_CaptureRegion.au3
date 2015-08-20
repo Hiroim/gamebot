@@ -90,7 +90,7 @@ Func _CaptureRegionScreenshot($iLeft = 0, $iTop = 0, $iRight = 860, $iBottom = 7
 	If $ReturnBMP Then Return $hBitmapScreenshot
 EndFunc   ;==>_CaptureRegionScreenshot
 
-Func _CaptureTH($iLeft = $THx-125, $iTop = $THy-90, $iRight = $THx+125, $iBottom = $THy+90, $ReturnBMP = False)
+Func _CaptureTH($iLeft = $THx-95, $iTop = $THy-85, $iRight = $THx+95, $iBottom = $THy+85, $ReturnBMP = False)
 	_GDIPlus_BitmapDispose($hBitmap)
 	_WinAPI_DeleteObject($hHBitmap)
 

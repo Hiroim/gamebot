@@ -23,9 +23,16 @@ Func readConfig() ;Reads config and sets it to the variables
 		$aCCPos[0] = IniRead($building, "other", "xCCPos", "0")
 		$aCCPos[1] = IniRead($building, "other", "yCCPos", "0")
 
+		$KingPos[0] = IniRead($building, "other", "xKingPos", "0")
+		$KingPos[1] = IniRead($building, "other", "yKingPos", "0")
+
+		$QueenPos[0] = IniRead($building, "other", "xQueenPos", "0")
+		$QueenPos[1] = IniRead($building, "other", "yQueenPos", "0")
 		$barrackPos[0] = IniRead($building, "other", "xBarrack", "0")
 		$barrackPos[1] = IniRead($building, "other", "yBarrack", "0")
 
+		$ichkUpgradeQueen = IniRead($building, "other", "UpQueen", "0")
+		$ichkUpgradeKing = IniRead($building, "other", "UpKing", "0")
 		$ArmyPos[0] = IniRead($building, "other", "xArmy", "0")
 		$ArmyPos[1] = IniRead($building, "other", "yArmy", "0")
 
@@ -37,7 +44,7 @@ Func readConfig() ;Reads config and sets it to the variables
 
 		$listResourceLocation = IniRead($building, "other", "listResource", "")
 
-		For $iz = 0 to 5 ; SReads Upgrade building data
+		For $iz = 0 to 11 ; SReads Upgrade building data
 			$aUpgrades[$iz][0] = IniRead($building, "upgrade", "xupgrade"&$iz, "-1")
 			$aUpgrades[$iz][1] = IniRead($building, "upgrade", "yupgrade"&$iz, "-1")
 			$aUpgrades[$iz][2] = IniRead($building, "upgrade", "upgradevalue"&$iz, "-1")
@@ -175,6 +182,7 @@ Func readConfig() ;Reads config and sets it to the variables
 		$iAttackNowDelay = IniRead($config, "advanced", "attacknowdelay", "3")
 
 		$iChkSnipeWhileTrain = IniRead($config, "advanced", "chkSnipeWhileTrain", "0")
+		$iSkippedSWT = IniRead($config, "advanced", "iSkippedSWT", "15")
 
 		$chkATH = IniRead($config, "advanced", "townhall", "0")
 ;		$iChkLightSpell = IniRead($config, "advanced", "hitDElightning", "0")
@@ -188,7 +196,8 @@ Func readConfig() ;Reads config and sets it to the variables
 		$OptTrophyMode = IniRead($config, "advanced", "TrophyMode", "0")
 		$THaddtiles = IniRead($config, "advanced", "THaddTiles", "0")
 		$AttackTHType = IniRead($config, "advanced", "AttackTHType", "0")
-		
+
+		$OptTrappedTH = IniRead($config, "advanced", "DetectTrappedTH", "0")
 		$skipMortar = IniRead($config, "advanced", "skipMortar", "0")
 		$skipWiz = IniRead($config, "advanced", "skipWiz", "0")
 		$skipInferno = IniRead($config, "advanced", "skipInferno", "0")
@@ -415,7 +424,7 @@ Func readConfig() ;Reads config and sets it to the variables
 		$iChkTrophyAtkDead = IniRead($config, "other", "chkTrophyAtkDead", "0")
 
 		$iWAOffsetX =  IniRead($config, "other", "WAOffsetX", "10")
-		$iWAOffsetY =  IniRead($config, "other", "WAOffsetY", "0")
+		$iWAOffsetY =  IniRead($config, "other", "WAOffsetY", "10")
 
 		;PushBullet Settings ---------------------------------------------
 		$PushToken = IniRead($config, "pushbullet", "AccountToken", "")
@@ -464,9 +473,9 @@ Func readConfig() ;Reads config and sets it to the variables
 		$iPlannedDropCCHoursEnable 		= IniRead($config, "planned", "DropCCEnable", "0")
 
 		;Share Attack Settings----------------------------------------
-		$iShareminGold = IniRead($config, "shareattack", "minGold", "200000")
-		$iShareminElixir = IniRead($config, "shareattack", "minElixir", "200000")
-		$iSharemindark = IniRead($config, "shareattack", "minDark", "100")
+		$iShareminGold = IniRead($config, "shareattack", "minGold", "300000")
+		$iShareminElixir = IniRead($config, "shareattack", "minElixir", "300000")
+		$iSharemindark = IniRead($config, "shareattack", "minDark", "0")
 		$iShareAttack = IniRead($config, "shareattack", "ShareAttack", "0")
 		$sShareMessage = StringReplace(IniRead($config, "shareattack", "Message", "Nice|Good|Thanks|Wowwww"), "|", @CRLF)
 

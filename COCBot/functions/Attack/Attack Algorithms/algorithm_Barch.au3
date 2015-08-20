@@ -19,15 +19,15 @@ Func Barch() ;Attack Algorithm for Barch
 		Local $Barb = -1, $Arch = -1, $CC = -1
 		Global $King = -1, $Queen = -1
 		For $i = 0 To UBound($atkTroops) - 1
-			If $atkTroops[$i][0] = "Barbarian" Then
+			If $atkTroops[$i][0] = $eBarb Then
 				$Barb = $i
-			ElseIf $atkTroops[$i][0] = "Archer" Then
+			ElseIf $atkTroops[$i][0] = $eArch Then
 				$Arch = $i
-			ElseIf $atkTroops[$i][0] = "Clan Castle" Then
+			ElseIf $atkTroops[$i][0] = $eCastle Then
 				$CC = $i
-			ElseIf $atkTroops[$i][0] = "King" Then
+			ElseIf $atkTroops[$i][0] = $eKing Then
 				$King = $i
-			ElseIf $atkTroops[$i][0] = "Queen" Then
+			ElseIf $atkTroops[$i][0] = $eQueen Then
 				$Queen = $i
 			EndIf
 		Next

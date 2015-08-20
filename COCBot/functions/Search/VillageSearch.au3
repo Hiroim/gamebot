@@ -19,6 +19,8 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 	If $debugDeadBaseImage = 1 Then
 		If DirGetSize(@ScriptDir & "\SkippedZombies\") = -1 Then DirCreate(@ScriptDir & "\SkippedZombies\")
 		If DirGetSize(@ScriptDir & "\Zombies\") = -1 Then DirCreate(@ScriptDir & "\Zombies\")
+		If DirGetSize(@ScriptDir & "\THOutside\") = -1 Then DirCreate(@ScriptDir & "\THOutside\")
+		If DirGetSize(@ScriptDir & "\THOutside\skipped\") = -1 Then DirCreate(@ScriptDir & "\THOutside\skipped")
 	EndIf
 
 	If $Is_ClientSyncError = False Then
@@ -89,12 +91,14 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 
 		If $OptBullyMode = 1 Then SetLog(getLocaleString("logTHBully") & $ATBullyMode & getLocaleString("logTHBully2") & $YourTHText)
 
-		If $chkATH = 1 Then $chkATHText = "AttackTH"
-		If $chkATH = 1 And $AttackTHType = 0 Then $AttackTHTypeText = ", Barch"
-		If $chkATH = 1 And $AttackTHType = 1 Then $AttackTHTypeText = ", Attack1:Normal"
-		If $chkATH = 1 And $AttackTHType = 2 Then $AttackTHTypeText = ", Attack2:Extreme"
-		If $chkATH = 1 And $AttackTHType = 3 Then $AttackTHTypeText = ", Attack3:GBarch"
-		If $OptTrophyMode = 1 Then $OptTrophyModeText = "THSnipe Combo, " & $THaddtiles & " Tile(s), "
+		If $chkATH = 1 Then $chkATHText = getLocaleString("txtAttackTH")
+		If $chkATH = 1 And $AttackTHType = 0 Then $AttackTHTypeText = getLocaleString("txtBarch")
+		If $chkATH = 1 And $AttackTHType = 1 Then $AttackTHTypeText = getLocaleString("txtAttack1")
+		If $chkATH = 1 And $AttackTHType = 2 Then $AttackTHTypeText = getLocaleString("txtAttack2")
+		If $chkATH = 1 And $AttackTHType = 3 Then $AttackTHTypeText = getLocaleString("txtAttack3")
+		If $chkATH = 1 And $AttackTHType = 4 Then $AttackTHTypeText = getLocaleString("txtAttack4")
+		If $chkATH = 1 And $AttackTHType = 5 Then $AttackTHTypeText = getLocaleString("txtAttack5")
+		If $OptTrophyMode = 1 Then $OptTrophyModeText = getLocaleString("txtOptTrophyMode") & $THaddtiles & getLocaleString("txtOptTrophyModeTiles")
 		If $OptTrophyMode = 1 Or $chkATH = 1 Then SetLog($OptTrophyModeText & $chkATHText & $AttackTHTypeText)
 	EndIf
 
@@ -113,6 +117,17 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 	EndIf
 
 	While 1
+
+		; break every x searches when Snipe While Train mode is active
+		If $isSnipeWhileTrain Then
+			If $iSkipped >= GUICtrlRead($txtiSkipped) Then
+				ClickP($aSurrenderButton, 1, 0, "#0099") ;Click Surrender
+				$Restart = True
+				$Is_ClientSyncError = False
+				Return
+			EndIf
+		EndIf
+
 		If $iVSDelay > 0 Then
 			If _Sleep(1000 * $iVSDelay) Then Return
 		EndIf
@@ -198,19 +213,30 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 				If $skipBase = False Then
 					SetLog(_PadStringCenter(getLocaleString("logTHOFound"), 50, "~"), $COLOR_GREEN)
 					$iMatchMode = $TS
+					If $debugDeadBaseImage = 1 and $OptTrappedTH = 1 Then
+						_CaptureRegion()
+						_GDIPlus_ImageSaveToFile($hBitmap, @ScriptDir & "\THOutside\" & $Date & " at " & $Time & ".png")
+						_WinAPI_DeleteObject($hBitmap)
+					EndIf
+					If $debugDeadBaseImage = 1 and $OptTrappedTH = 1 Then
+						_CaptureTH()
+						_GDIPlus_ImageSaveToFile($hBitmap, @ScriptDir & "\THOutside\" & $Date & " at " & $Time & "_CaptureTH.png")
+						_WinAPI_DeleteObject($hBitmap)
+					EndIf
 					ExitLoop
 				Else
                 	SetLog(getLocaleString("logTrapFound"), $COLOR_RED)
+					If $debugDeadBaseImage = 1 and $OptTrappedTH = 1 Then
+						_CaptureRegion()
+						_GDIPlus_ImageSaveToFile($hBitmap, @ScriptDir & "\THOutside\skipped\" & $Date & " at " & $Time & ".png")
+						_WinAPI_DeleteObject($hBitmap)
+					EndIf
+					If $debugDeadBaseImage = 1 and $OptTrappedTH = 1 Then
+						_CaptureTH()
+						_GDIPlus_ImageSaveToFile($hBitmap, @ScriptDir & "\THOutside\skipped\" & $Date & " at " & $Time & "_CaptureTH.png")
+						_WinAPI_DeleteObject($hBitmap)
+					EndIf
                 EndIf
-			EndIf
-		EndIf
-
-		; break every 10 searches when Snipe While Train mode is active
-		If $isSnipeWhileTrain Then
-			If $iSkipped > 8 Then
-				Click(62, 519) ; Click End Battle
-				$Restart = True ; To Prevent Initiation of Attack
-				ExitLoop
 			EndIf
 		EndIf
 

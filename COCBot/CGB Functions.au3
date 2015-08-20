@@ -50,7 +50,7 @@
 #include "functions\Attack\Troops\DropOnEdge.au3"
 #include "functions\Attack\Troops\DropOnEdges.au3"
 #include "functions\Attack\Troops\IdentifyTroopKind.au3"
-#include "functions\Attack\Troops\LauchTroop.au3"
+#include "functions\Attack\Troops\LaunchTroop.au3"
 #include "functions\Attack\Troops\NameOfTroop.au3"
 #include "functions\Attack\Troops\OldDropTroop.au3"
 #include "functions\Attack\Troops\ReadTroopQuantity.au3"
@@ -64,6 +64,7 @@
 #include "functions\Image Search\checkWall.au3"
 ;#include "functions\Image Search\checkDElixS.au3"
 #include "functions\Image Search\CheckTombs.au3"
+#include "functions\Image Search\ClearObstacles.au3"
 #include "functions\Image Search\checkDefense.au3"
 
 #include "functions\Main Screen\checkMainScreen.au3"
@@ -117,6 +118,7 @@
 #include "functions\Pixels\_MultiPixelSearch.au3"
 #include "functions\Pixels\boolPixelSearch.au3"
 #include "functions\Pixels\isInsideDiamond.au3"
+#include "functions\Pixels\isInsideBigDiamond.au3"
 
 #include "functions\Read Text\BuildingInfo.au3"
 #include "functions\Read Text\getChar.au3"
@@ -174,5 +176,6 @@
 #include "functions\Village\Laboratory.au3"
 #include "functions\Village\ReplayShare.au3"
 #include "functions\Village\BarracksStatus.au3"
-
+#include "functions\Village\LocateHeroes.au3"
+#include "functions\Village\UpgradeHeroes.au3"
 

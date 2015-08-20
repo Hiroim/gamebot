@@ -20,14 +20,14 @@
 
 Func SnipeWhileTrain()
 
-	If GUICtrlRead($chkSnipeWhileTrain) = $GUI_CHECKED Then
+	If $iChkSnipeWhileTrain = 1 Then
 
-		; Attempt only when 30% army full to prevent failure of TH snipe
-		If ($CurCamp <= ($TotalCamp * 30 / 100)) Then
+		; Attempt only when 40% army full to prevent failure of TH snipe
+		If ($CurCamp <= ($TotalCamp * 40 / 100)) Then
 			Return False
 		EndIf
 
-		If Not($fullArmy) And Not($CurCamp >= StringLeft(($TotalCamp * $fulltroop * 90/100),3)) Then
+		If $fullArmy = False And Not($CurCamp >= StringLeft(($TotalCamp * $fulltroop * 90/100),3)) Then
 			; Swap variables to pure TH snipe mode
 			$tempSnipeWhileTrain[0] = $iChkMeetTrophy[$DB]
 			$tempSnipeWhileTrain[1] = $iChkMeetTrophy[$LB]
@@ -37,20 +37,28 @@ Func SnipeWhileTrain()
 			$tempSnipeWhileTrain[5] = $iChkMeetOne[$DB]
 			$tempSnipeWhileTrain[6] = $OptTrophyMode
 			$tempSnipeWhileTrain[7] = $THaddtiles
+            $tempSnipeWhileTrain[8] = $iMinGold[$DB]
+            $tempSnipeWhileTrain[9] = $iMinGold[$LB]
+            $tempSnipeWhileTrain[10] = $iCmbMeetGE[$DB]
+            $tempSnipeWhileTrain[11] = $iCmbMeetGE[$LB]
 			;change valuse to snipe while train
 			$iChkMeetTrophy[$DB] = 1
 			$iChkMeetTrophy[$LB] = 1
-			$iMinTrophy[$DB] = 1000
-			$iMinTrophy[$LB] = 1000
+			$iMinTrophy[$DB] = 99
+			$iMinTrophy[$LB] = 99
 			$iChkMeetOne[$LB] = 0
 			$iChkMeetOne[$DB] = 0
 			$OptTrophyMode = 1
 			$THaddtiles = 0
+            $iMinGold[$DB] = "999999"
+            $iMinGold[$LB] = "999999"
+            $iCmbMeetGE[$DB] = "0"
+            $iCmbMeetGE[$LB] = "0"
 
 			;used to revert values
 			$DidntRevert = 1
 
-			; go to search for 20 times
+			; go to search for 10 times
 			SetLog(getLocaleString("logTryTHSnipeWhileTraining"), $COLOR_RED)
 			$isSnipeWhileTrain = True
 			$Is_ClientSyncError = False
@@ -70,14 +78,20 @@ EndFunc   ;==>SnipeWhileTrain
 Func SWHTrainRevertNormal()
 	If $DidntRevert = 1 Then
 		; revert settings back to normal
-		$iChkMeetTrophy[$DB] = $tempSnipeWhileTrain[0]
-		$iChkMeetTrophy[$LB] = $tempSnipeWhileTrain[1]
-		$iMinTrophy[$DB] = $tempSnipeWhileTrain[2]
-		$iMinTrophy[$LB] = $tempSnipeWhileTrain[3]
-		$iChkMeetOne[$LB] = $tempSnipeWhileTrain[4]
-		$iChkMeetOne[$DB] = $tempSnipeWhileTrain[5]
-		$OptTrophyMode = $tempSnipeWhileTrain[6]
-		$THaddtiles = $tempSnipeWhileTrain[7]
+        $iChkMeetTrophy[$DB] = $tempSnipeWhileTrain[0]
+        $iChkMeetTrophy[$LB] = $tempSnipeWhileTrain[1]
+        $iMinTrophy[$DB]     = $tempSnipeWhileTrain[2]
+        $iMinTrophy[$LB]     = $tempSnipeWhileTrain[3]
+        $iChkMeetOne[$LB]    = $tempSnipeWhileTrain[4]
+        $iChkMeetOne[$DB]    = $tempSnipeWhileTrain[5]
+        $OptTrophyMode       = $tempSnipeWhileTrain[6]
+        $THaddtiles          = $tempSnipeWhileTrain[7]
+        $iMinGold[$DB]       = $tempSnipeWhileTrain[8]
+        $iMinGold[$LB]       = $tempSnipeWhileTrain[9]
+        $iCmbMeetGE[$DB]     = $tempSnipeWhileTrain[10]
+        $iCmbMeetGE[$LB]     = $tempSnipeWhileTrain[11]
+        $Is_ClientSyncError = False
 	EndIf
 	$DidntRevert = 0
+    $isSnipeWhileTrain = False
 EndFunc   ;==>SWHTrainRevertNormal

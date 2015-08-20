@@ -375,6 +375,8 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 	Else
 		GUICtrlSetState($chkSnipeWhileTrain, $GUI_UNCHECKED)
 	EndIf
+	chkSnipeWhileTrain()
+	GUICtrlSetData($txtiSkipped, $iSkippedSWT)
 
 	;	If $iChkLightSpell = 1 Then
 	;		GUICtrlSetState($chkLightSpell, $GUI_CHECKED)
@@ -408,6 +410,13 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 	_GUICtrlComboBox_SetCurSel($cmbAttackTHType, $AttackTHType)
 	chkSnipeMode()
 	
+	If $OptTrappedTH = 1 Then
+		GUICtrlSetState($chkTrappedTH, $GUI_CHECKED)
+	ElseIf $OptTrappedTH = 0 Then
+		GUICtrlSetState($chkTrappedTH, $GUI_UNCHECKED)
+	EndIf
+	chkTrappedTH()
+
 	If $skipMortar = 1 Then
 		GUICtrlSetState($chkMortar, $GUI_CHECKED)
 	ElseIf $skipMortar = 0 Then
@@ -994,7 +1003,7 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 		GUICtrlSetState($chkSaveWallBldr, $GUI_UNCHECKED)
 	EndIf
 
-	For $iz = 0 To 5 ; Apply the buildings upgrade varaible to GUI
+	For $iz = 0 To 11 ; Apply the buildings upgrade varaible to GUI
 		GUICtrlSetImage($picUpgradeStatus[$iz], $pIconLib, $ipicUpgradeStatus[$iz]) ; Set GUI status pic
 		If $aUpgrades[$iz][2] > 0 Then
 			GUICtrlSetData($txtUpgradeValue[$iz], _NumberFormat($aUpgrades[$iz][2])) ; Set GUI loot value to match $aUpgrades variable
@@ -1216,4 +1225,16 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 		GUICtrlSetState($chkVersion, $GUI_UNCHECKED)
 	EndIf
 
+	;Heroes
+	If $ichkUpgradeKing = 1 Then ;==>upgradeking
+        GUICtrlSetState($chkUpgradeKing, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkUpgradeKing, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkUpgradeQueen = 1 Then ;==>upgradequeen
+        GUICtrlSetState($chkUpgradeQueen, $GUI_CHECKED)
+	Else
+        GUICtrlSetState($chkUpgradeQueen, $GUI_UNCHECKED)
+	EndIf
 EndFunc   ;==>applyConfig

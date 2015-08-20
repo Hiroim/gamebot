@@ -20,3 +20,9 @@ EndFunc   ;==>btnLoots
 Func btnLogs()
 	Run("Explorer.exe " & $sProfilePath & "\" & $sCurrProfile & "\Logs")
 EndFunc   ;==>btnLogs
+
+Func UpOOS()
+	;OOS state
+	$OOSCounter +=1
+	GUICtrlSetData($lblresultoutofsync , _NumberFormat($OOSCounter) )
+EndFunc

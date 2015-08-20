@@ -26,6 +26,7 @@ Global Const $iDelayAttackTHGrid6 = 500
 Global Const $iDelayAttackTHNormal1 = 1000
 Global Const $iDelayAttackTHXtreme1 = 1000
 Global Const $iDelayAttackTHGbarch1 = 1000
+Global Const $iDelayAttackTHSmartBarch1 = 1000
 Global Const $iDelayALLDropheroes1 = 1000
 Global Const $iDelayALLDropheroes2 = 100
 Global Const $iDelayCastSpell1 = 10

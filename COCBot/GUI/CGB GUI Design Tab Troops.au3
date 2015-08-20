@@ -36,7 +36,7 @@ $tabTroops = GUICtrlCreateTabItem(getLocaleString("tabTroops"))
 		$lblBarrack2 = GUICtrlCreateLabel("2:", $x - 5, $y + 26, -1, -1)
 		$cmbBarrack2 = GUICtrlCreateCombo("", $x + 10, $y + 21, 75, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			GUICtrlSetTip(-1, getLocaleString("tipCmbBarrack2"))
-			GUICtrlSetData(-1, getLocaleString("cmbBarrack"), getLocaleString("cmbBarrackDefault2"))
+			GUICtrlSetData(-1, getLocaleString("cmbBarrack"), getLocaleString("cmbBarrackDefault1"))
 			GUICtrlSetState(-1, $GUI_DISABLE)
 		$y -= 2
 		$lblBarrack3 = GUICtrlCreateLabel("3:", $x + 100, $y + 5, -1, -1)

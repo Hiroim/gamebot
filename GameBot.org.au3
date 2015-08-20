@@ -23,10 +23,10 @@
 #pragma compile(FileVersion, 4.1.1)
 #pragma compile(LegalCopyright, © http://gamebot.org)
 
-$sBotVersion = "v4.1.1"
-$sBotTitle = "Clash Game Bot " & $sBotVersion
-Global $sBotDll = @ScriptDir & "\CGBPlugin.dll"
 Global $StartupLanguage = IniRead(@ScriptDir & "\COCBot\GUI\localization\lang.ini", "config", "language", "English")
+$sBotVersion = "v4.1.1"
+$sBotTitle = "Clash Game Bot" & getLocaleString("txtLang") & $sBotVersion
+Global $sBotDll = @ScriptDir & "\CGBPlugin.dll"
 
 If _Singleton($sBotTitle, 1) = 0 Then
 	MsgBox(0, getLocaleString("msgboxWarningTitle"), getLocaleString("msgboxRun"))
@@ -93,9 +93,9 @@ WEnd
 Func runBot() ;Bot that runs everything in order
 	$TotalTrainedTroops = 0
 	While 1
-		SWHTrainRevertNormal()
 		$Restart = False
 		$fullArmy = False
+		SWHTrainRevertNormal()
 		$CommandStop = -1
 		If _Sleep($iDelayRunBot1) Then Return
 		checkMainScreen()
@@ -167,10 +167,20 @@ Func runBot() ;Bot that runs everything in order
 				If _Sleep($iDelayRunBot3) Then Return
 				checkMainScreen(False)  ; required here due to many possible exits
 				If $Restart = True Then ContinueLoop
-			UpgradeBuilding()
+			If $FreeBuilder > $iSaveWallBldr Then
+				UpgradeHeroes()
+                    If _Sleep($iDelayRunBot3) Then Return
+                    checkMainScreen(False)  ; required here due to many possible exits
+                    If $Restart = True Then ContinueLoop
+				UpgradeBuilding()
+                    If _Sleep($iDelayRunBot3) Then Return
+                    checkMainScreen(False)  ; required here due to many possible exits
+                    If $Restart = True Then ContinueLoop
+			EndIf
+			UpgradeWall()
 				If _Sleep($iDelayRunBot3) Then Return
 				If $Restart = True Then ContinueLoop
-			UpgradeWall()
+			ClearObstacles()
 				If _Sleep($iDelayRunBot3) Then Return
 				If $Restart = True Then ContinueLoop
 			Idle()
@@ -194,6 +204,7 @@ Func runBot() ;Bot that runs everything in order
 			PushMsg("OutOfSync")
 			checkMainScreen(False)
 			If $Restart = True Then ContinueLoop
+			UpOOS()
 			AttackMain()
 			If $OutOfGold = 1  Then
 				Setlog(getLocaleString("logReturnHaltAttack"), $COLOR_RED)
@@ -285,6 +296,11 @@ Func AttackMain() ;Main control for attack functions
 		ProfileReport()
 		If _Sleep($iDelayAttackMain1) Then Return
 		checkMainScreen(False)
+		If $Restart = True Then Return
+	Else
+		RequestCC()
+		If _Sleep($iDelayRunBot1) Then Return
+		checkMainScreen(False) ; required here due to many possible exits
 		If $Restart = True Then Return
 	EndIf
 	PrepareSearch()

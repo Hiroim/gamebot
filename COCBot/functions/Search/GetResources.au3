@@ -93,7 +93,7 @@ Func GetResources() ;Reads resources
 			$THLoc = getLocaleString("txtTHIn")
 		ElseIf $searchTH <> "-" Then
 			$THLoc = getLocaleString("txtTHOut")
-			If $OptTrophyMode = 1 Then
+			If $OptTrophyMode = 1 And $OptTrappedTH = 1 Then
               $searchDef = checkDefense()
             EndIf
 		Else
@@ -106,7 +106,7 @@ Func GetResources() ;Reads resources
 
 	$SearchCount += 1 ; Counter for number of searches
 	SetLog(StringFormat("%3s", $SearchCount) & getLocaleString("logG") & StringFormat("%7s", $searchGold) & getLocaleString("logE") & StringFormat("%7s", $searchElixir) & getLocaleString("logDE") & StringFormat("%5s", $searchDark) & getLocaleString("logT") & StringFormat("%2s", $searchTrophy) & $THString, $COLOR_BLACK, "Lucida Console", 7.5)
-	If $OptTrophyMode = 1 Then
+	If $OptTrophyMode = 1 And $OptTrappedTH = 1 Then
     	If $THLoc = getLocaleString("txtTHOut") Then
     		SetLog($searchDef)
    		 EndIf
