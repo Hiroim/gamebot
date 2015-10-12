@@ -25,7 +25,13 @@ If you set $grdTroops to 1, it will ignore air defense. If you set $airTroops to
 
 Global $trapTH[5][20]
 
-Global $trapTHtxt[5][20]=[["L3M Inferno","L3M Inferno","L3S Inferno","L2M Inferno","L2M Inferno","L2S Inferno","L1M Inferno","L1M Inferno","L1S Inferno","","","","","","","","","","",""],["L8a Tesla","L8b Tesla","L7a Tesla","L7b Tesla","L7c Tesla","L6a Tesla","L6b Tesla","L6c Tesla","","","","","","","","","","","",""],["L8 Mortar","L7 Mortar","L6 Mortar","L5 Mortar","","","","","","","","","","","","","","","",""],["L8 Wiz Tower","L7 Wiz Tower","L6 Wiz Tower","L5 Wiz Tower","L4 Wiz Tower","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","",""]]
+Global $trapTHtxt[5][20]=[
+        ["L3Ma Inferno","L3Mb Inferno","L3s Inferno","L2Ma Inferno","L2Mb Inferno","L2s Inferno","L1Ma Inferno","L1Mb Inferno","L1s Inferno","","","","","","","","","","",""],
+        ["L8 Wiz Tower","L7 Wiz Tower","L6 Wiz Tower","L5 Wiz Tower","L4 Wiz Tower","","","","","","","","","","","","","","",""],
+        ["L8 Mortar","L7 Mortar","L6 Mortar","L5 Mortar","","","","","","","","","","","","","","","",""],
+        ["L8a Tesla","L8b Tesla","L7a Tesla","L7b Tesla","L7c Tesla","L6a Tesla","L6b Tesla","L6c Tesla","","","","","","","","","","","",""],
+        ["","","","","","","","","","","","","","","","","","","",""]
+    ]
 
 ;Inferno Towers
 $trapTH[0][0] = @ScriptDir & "\images\Defense\infe3ma.png"
@@ -38,20 +44,12 @@ $trapTH[0][6] = @ScriptDir & "\images\Defense\infe1ma.png"
 $trapTH[0][7] = @ScriptDir & "\images\Defense\infe1mb.png"
 $trapTH[0][8] = @ScriptDir & "\images\Defense\infe1s.png"
 
-;Hidden Teslas
-$trapTH[1][0] = @ScriptDir & "\images\Defense\tesl8a.png"
-$trapTH[1][1] = @ScriptDir & "\images\Defense\tesl8b.png"
-$trapTH[1][2] = @ScriptDir & "\images\Defense\tesl7a.png"
-$trapTH[1][3] = @ScriptDir & "\images\Defense\tesl7b.png"
-$trapTH[1][4] = @ScriptDir & "\images\Defense\tesl7c.png"
-$trapTH[1][5] = @ScriptDir & "\images\Defense\tesl6a.png"
-$trapTH[1][6] = @ScriptDir & "\images\Defense\tesl6b.png"
-$trapTH[1][7] = @ScriptDir & "\images\Defense\tesl6c.png"
-;$trapTH[1][8] = @ScriptDir & "\images\Defense\tesl5.png"
-;$trapTH[1][9] = @ScriptDir & "\images\Defense\tesl4.png"
-;$trapTH[1][5] = @ScriptDir & "\images\Defense\tesl3.png"
-;$trapTH[1][6] = @ScriptDir & "\images\Defense\tesla2.png"
-;$trapTH[1][7] = @ScriptDir & "\images\Defense\tesla1.png"
+;Wizard Towers
+$trapTH[1][0] = @ScriptDir & "\images\Defense\wiz8.png"
+$trapTH[1][1] = @ScriptDir & "\images\Defense\wiz7.png"
+$trapTH[1][2] = @ScriptDir & "\images\Defense\wiz6.png"
+$trapTH[1][3] = @ScriptDir & "\images\Defense\wiz5.png"
+$trapTH[1][4] = @ScriptDir & "\images\Defense\wiz4.png"
 
 ;Mortars
 $trapTH[2][0] = @ScriptDir & "\images\Defense\mort8.png"
@@ -59,12 +57,20 @@ $trapTH[2][1] = @ScriptDir & "\images\Defense\mort7.png"
 $trapTH[2][2] = @ScriptDir & "\images\Defense\mort6.png"
 $trapTH[2][3] = @ScriptDir & "\images\Defense\mort5.png"
 
-;Wizard Towers
-$trapTH[3][0] = @ScriptDir & "\images\Defense\wiz8.png"
-$trapTH[3][1] = @ScriptDir & "\images\Defense\wiz7.png"
-$trapTH[3][2] = @ScriptDir & "\images\Defense\wiz6.png"
-$trapTH[3][3] = @ScriptDir & "\images\Defense\wiz5.png"
-$trapTH[3][4] = @ScriptDir & "\images\Defense\wiz4.png"
+;Hidden Teslas
+$trapTH[3][0] = @ScriptDir & "\images\Defense\tesl8a.png"
+$trapTH[3][1] = @ScriptDir & "\images\Defense\tesl8b.png"
+$trapTH[3][2] = @ScriptDir & "\images\Defense\tesl7a.png"
+$trapTH[3][3] = @ScriptDir & "\images\Defense\tesl7b.png"
+$trapTH[3][4] = @ScriptDir & "\images\Defense\tesl7c.png"
+$trapTH[3][5] = @ScriptDir & "\images\Defense\tesl6a.png"
+$trapTH[3][6] = @ScriptDir & "\images\Defense\tesl6b.png"
+$trapTH[3][7] = @ScriptDir & "\images\Defense\tesl6c.png"
+;$trapTH[3][8] = @ScriptDir & "\images\Defense\tesl5.png"
+;$trapTH[3][9] = @ScriptDir & "\images\Defense\tesl4.png"
+;$trapTH[3][5] = @ScriptDir & "\images\Defense\tesl3.png"
+;$trapTH[3][6] = @ScriptDir & "\images\Defense\tesla2.png"
+;$trapTH[3][7] = @ScriptDir & "\images\Defense\tesla1.png"
 
 ;Air Defense
 ;$trapTH[4][0] = @ScriptDir & "\images\Defense\aird2_mt1.png"
@@ -76,7 +82,13 @@ $trapTH[3][4] = @ScriptDir & "\images\Defense\wiz4.png"
 Func checkDefense()
 
 
-	Local $defSimilarity[5][20]=[[0.92,0.92,0.91,0.92,0.92,0.91,0.92,0.92,0.92,0,0,0,0,0,0,0,0,0,0,0],[0.94,.92,0.90,0.90,0.90,0.91,0.91,0.96,0,0,0,0,0,0,0,0,0,0,0,0],[0.91,0.905,0.935,0.92,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0.94,0.94,0.95,0.94,0.94,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
+	Local $defSimilarity[5][20]=[
+	        [0.92,0.92,0.91,0.92,0.92,0.91,0.92,0.92,0.92,0,0,0,0,0,0,0,0,0,0,0],
+	        [0.94,0.94,0.95,0.94,0.94,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	        [0.91,0.905,0.935,0.92,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	        [0.94,.92,0.90,0.90,0.90,0.91,0.91,0.96,0,0,0,0,0,0,0,0,0,0,0,0],
+	        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        ]
 
 	$allTroops = False
 	$skipBase = False
@@ -89,8 +101,8 @@ Func checkDefense()
 		For $i = 0 To 9
 			If FileExists($trapTH[$t][$i]) Then
 
-				;$DefLocation = _ImageSearch($trapTH[$t][$i], 1, $Defx, $Defy, $defTolerance[$t][$i]) ; Getting Defense Location
-				;Setlog("Trying with " &$DefText[$t]& " image "&$i)
+				$DefLocation = _ImageSearch($trapTH[$t][$i], 1, $Defx, $Defy, $defTolerance[$t][$i]) ; Getting Defense Location
+				Setlog("Trying with " &$DefText[$t]& " image "&$i)
 
 				$sendHBitmap = _GDIPlus_BitmapCreateHBITMAPFromBitmap($hBitmap)
 				$res = DllCall($LibDir & "\ImageSearch.dll", "str", "searchTile", "handle", $sendHBitmap, "str", $trapTH[$t][$i], "float", $defSimilarity[$t][$i])
@@ -121,10 +133,10 @@ Func checkDefense()
                         Else
                             $skipBase = False
                         EndIf
-                    ElseIf $skipTesla = 1 AND $DefText[$t] = getLocaleString("defTxtTesla") Then
-                        If ($Defx > 58 AND $Defx < 192) AND ($Defy > 45 AND $Defy < 135) Then
+                    ElseIf $skipWiz = 1 AND $DefText[$t] = getLocaleString("defTxtWizTower") Then
+                        If ($Defx > 53 AND $Defx < 197) AND ($Defy > 42 AND $Defy < 138) Then
                             $skipBase = True
-                            Return getLocaleString("logTeslaFound")
+                            Return getLocaleString("logWizTowerFound")
                         Else
                             $skipBase = False
                         EndIf
@@ -135,10 +147,10 @@ Func checkDefense()
                         Else
                             $skipBase = False
                         EndIf
-                    ElseIf $skipWiz = 1 AND $DefText[$t] = getLocaleString("defTxtWizTower") Then
-                        If ($Defx > 53 AND $Defx < 197) AND ($Defy > 42 AND $Defy < 138) Then
+                    ElseIf $skipTesla = 1 AND $DefText[$t] = getLocaleString("defTxtTesla") Then
+                        If ($Defx > 58 AND $Defx < 192) AND ($Defy > 45 AND $Defy < 135) Then
                             $skipBase = True
-                            Return getLocaleString("logWizTowerFound")
+                            Return getLocaleString("logTeslaFound")
                         Else
                             $skipBase = False
                         EndIf

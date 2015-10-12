@@ -154,7 +154,7 @@ Local $x = 30, $y = 150
         $lblresultvillagesskipped = GUICtrlCreateLabel("0", $x + 65, $y + 2, 60, 17, $SS_RIGHT)
 			GUICtrlSetTip(-1, getLocaleString("tipresultvillagesskipped"))
 		$y += 17
-        $lbloutofsync = GUICtrlCreateLabel("Out Of Sync :", $x + 45, $y + 2, -1, 17) ; another stats next post
+        $lbloutofsync = GUICtrlCreateLabel("Out Of Sync:", $x + 45, $y + 2, -1, 17) ; another stats next post
         $lblresultoutofsync = GUICtrlCreateLabel("0", $x + 65, $y + 2, 60, 17, $SS_RIGHT) ; another stats next post
 		$x = 185
 		$y = 290

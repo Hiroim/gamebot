@@ -229,8 +229,9 @@ Func Idle() ;Sequence that runs until Full Army
 		If $CommandStop = -1 Then SetLog(getLocaleString("logArmyWait"), $COLOR_GREEN)
 		Local $hTimer = TimerInit()
 		Local $iReHere = 0
-		While $iReHere < 7
+		While $iReHere < 15
 			$iReHere += 1
+			;SetLog("$iReHere: " & $iReHere, $COLOR_ORANGE)
 			DonateCC(True)
 			If _Sleep($iDelayIdle2) Then ExitLoop
 			If $Restart = True Then ExitLoop

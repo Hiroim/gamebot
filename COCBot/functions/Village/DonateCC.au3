@@ -58,7 +58,7 @@ Func DonateCC($Check = False)
 		$DonatePixel = _MultiPixelSearch(202, $y, 203, 670, 1, 1, Hex(0x262926, 6), $offColors, 20)
 		If IsArray($DonatePixel) Then
 			$Donate = False
-			If $DonateTroop Then
+			If $DonateTroop Or $DonateAllTroop Then
 				Local $ClanString = ""
 				$ClanString = getChatString(30, $DonatePixel[1] - 44, "coc-latinA")
 				If $ClanString = "" Then
@@ -287,37 +287,69 @@ Func DonateCC($Check = False)
 						Next
 						ClickP($aAway, 1, 0, "#0170")
 					Case $iChkDonateAllBarbarians = 1
-						DonateTroopType($eBarb)
+						If CheckBlacklist($eBarb, $aBlkBarbarians, $aBlacklist, $ClanString) Then
+							DonateTroopType($eBarb)
+						EndIf
 					Case $iChkDonateAllArchers = 1
-						DonateTroopType($eArch)
+						If CheckBlacklist($eArch, $aBlkArchers, $aBlackList, $ClanString) Then
+							DonateTroopType($eArch)
+						EndIf
 					Case $iChkDonateAllGiants = 1
-						DonateTroopType($eGiant)
+						If CheckBlacklist($eGiant, $aBlkGiants, $aBlacklist, $ClanString) Then
+							DonateTroopType($eGiant)
+						EndIf
 					Case $iChkDonateAllGoblins = 1
-						DonateTroopType($eGobl)
+						If CheckBlacklist($eGobl, $aBlkGoblins, $aBlacklist, $ClanString) Then
+							DonateTroopType($eGobl)
+						EndIf
 					Case $iChkDonateAllWallBreakers = 1
-						DonateTroopType($eWall)
+						If CheckBlacklist($eWall, $aBlkWallBreakers, $aBlacklist, $ClanString) Then
+							DonateTroopType($eWall)
+						EndIf
 					Case $iChkDonateAllBalloons = 1
-						DonateTroopType($eBall)
+						If CheckBlacklist($eBall, $aBlkBalloons, $aBlacklist, $ClanString) Then
+							DonateTroopType($eBall)
+						EndIf
 					Case $iChkDonateAllWizards = 1
-						DonateTroopType($eWiza)
+						If CheckBlacklist($eWiza, $aBlkWizards, $aBlacklist, $ClanString) Then
+							DonateTroopType($eWiza)
+						EndIf
 					Case $iChkDonateAllHealers = 1
-						DonateTroopType($eHeal)
+						If CheckBlacklist($eHeal, $aBlkHealers, $aBlacklist, $ClanString) Then
+							DonateTroopType($eHeal)
+						EndIf
 					Case $iChkDonateAllDragons = 1
-						DonateTroopType($eDrag)
+						If CheckBlacklist($eDrag, $aBlkDragons, $aBlacklist, $ClanString) Then
+							DonateTroopType($eDrag)
+						EndIf
 					Case $iChkDonateAllPekkas = 1
-						DonateTroopType($ePekk)
+						If CheckBlacklist($ePekk, $aBlkPekkas, $aBlacklist, $ClanString) Then
+							DonateTroopType($ePekk)
+						EndIf
 					Case $iChkDonateAllMinions = 1
-						DonateTroopType($eMini)
+						If CheckBlacklist($eMini, $aBlkMinions, $aBlacklist, $ClanString) Then
+							DonateTroopType($eMini)
+						EndIf
 					Case $iChkDonateAllHogRiders = 1
-						DonateTroopType($eHogs)
+						If CheckBlacklist($eHogs, $aBlkHogRiders, $aBlacklist, $ClanString) Then
+							DonateTroopType($eHogs)
+						EndIf
 					Case $iChkDonateAllValkyries = 1
-						DonateTroopType($eValk)
+						If CheckBlacklist($eValk, $aBlkValkyries, $aBlacklist, $ClanString) Then
+							DonateTroopType($eValk)
+						EndIf
 					Case $iChkDonateAllGolems = 1
-						DonateTroopType($eGole)
+						If CheckBlacklist($eGole, $aBlkGolems, $aBlacklist, $ClanString) Then
+							DonateTroopType($eGole)
+						EndIf
 					Case $iChkDonateAllWitches = 1
-						DonateTroopType($eWitc)
+						If CheckBlacklist($eWitc, $aBlkWitches, $aBlacklist, $ClanString) Then
+							DonateTroopType($eWitc)
+						EndIf
 					Case $iChkDonateAllLavaHounds = 1
-						DonateTroopType($eLava)
+						If CheckBlacklist($eLava, $aBlkLavaHounds, $aBlacklist, $ClanString) Then
+							DonateTroopType($eLava)
+						EndIf
 				EndSelect
 			EndIf
 
@@ -377,6 +409,25 @@ Func CheckDonateTroop($Type, $aDonTroop, $aBlkTroop, $aBlackList, $ClanString)
 
 	Return False
 EndFunc   ;==>CheckDonateTroop
+
+Func CheckBlacklist($Type, $aBlkTroop, $aBlackList, $ClanString)
+
+	For $i = 1 To UBound($aBlackList) - 1
+		If CheckDonateString($aBlackList[$i], $ClanString) Then
+			SetLog(getLocaleString("logGeneralBLkeyword") & $aBlackList[$i], $COLOR_RED)
+			Return False
+		EndIf
+	Next
+
+	For $i = 1 To UBound($aBlkTroop) - 1
+		If CheckDonateString($aBlkTroop[$i], $ClanString) Then
+			SetLog(NameOfTroop($Type) & getLocaleString("logBLkeyword") & $aBlkTroop[$i], $COLOR_RED)
+			Return False
+		EndIf
+	Next
+
+	Return True
+EndFunc   ;==>CheckBlacklist
 
 Func CheckDonateString($String, $ClanString) ;Checks if exact
 	Local $Contains = StringMid($String, 1, 1) & StringMid($String, StringLen($String), 1)

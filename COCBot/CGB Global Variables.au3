@@ -632,3 +632,12 @@ Global $ObsFolder = 0
 ;Lab
 Global $LabNeedsDE = 0
 Global $LabNeedsElix = 0
+
+Global $CTHx
+Global $CTHy
+Global $z
+Global $ct
+Global $ci
+Global $debugTH
+Global $atkTHADV
+Global $ToleranceTH

@@ -329,7 +329,7 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 
 	; TH Detection Check Once Conditions
 	If $OptBullyMode = 0 And $OptTrophyMode = 0 And $iChkMeetTH[$iMatchMode] = 0 And $iChkMeetTHO[$iMatchMode] = 0 And $chkATH = 1 Then
-		$searchTH = checkTownhallADV()
+		$searchTH = checkTownhall()
 		If SearchTownHallLoc() = False And $searchTH <> "-" Then
 			SetLog(getLocaleString("logTHLocIn"))
 		ElseIf $searchTH <> "-" Then
