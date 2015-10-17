@@ -25,12 +25,11 @@ If you set $grdTroops to 1, it will ignore air defense. If you set $airTroops to
 
 Global $trapTH[5][20]
 
-Global $trapTHtxt[5][20]=[
-        ["L3Ma Inferno","L3Mb Inferno","L3s Inferno","L2Ma Inferno","L2Mb Inferno","L2s Inferno","L1Ma Inferno","L1Mb Inferno","L1s Inferno","","","","","","","","","","",""],
-        ["L8 Wiz Tower","L7 Wiz Tower","L6 Wiz Tower","L5 Wiz Tower","L4 Wiz Tower","","","","","","","","","","","","","","",""],
-        ["L8 Mortar","L7 Mortar","L6 Mortar","L5 Mortar","","","","","","","","","","","","","","","",""],
-        ["L8a Tesla","L8b Tesla","L7a Tesla","L7b Tesla","L7c Tesla","L6a Tesla","L6b Tesla","L6c Tesla","","","","","","","","","","","",""],
-        ["","","","","","","","","","","","","","","","","","","",""]
+Global $trapTHtxt[5][20]=[["L3Ma Inferno","L3Mb Inferno","L3s Inferno","L2Ma Inferno","L2Mb Inferno","L2s Inferno","L1Ma Inferno","L1Mb Inferno","L1s Inferno","","","","","","","","","","",""] _
+        , ["L8 Wiz Tower","L7 Wiz Tower","L6 Wiz Tower","L5 Wiz Tower","L4 Wiz Tower","","","","","","","","","","","","","","",""] _
+        , ["L8 Mortar","L7 Mortar","L6 Mortar","L5 Mortar","","","","","","","","","","","","","","","",""] _
+        , ["L8a Tesla","L8b Tesla","L7a Tesla","L7b Tesla","L7c Tesla","L6a Tesla","L6b Tesla","L6c Tesla","","","","","","","","","","","",""] _
+        , ["","","","","","","","","","","","","","","","","","","",""] _
     ]
 
 ;Inferno Towers
@@ -82,12 +81,11 @@ $trapTH[3][7] = @ScriptDir & "\images\Defense\tesl6c.png"
 Func checkDefense()
 
 
-	Local $defSimilarity[5][20]=[
-	        [0.92,0.92,0.91,0.92,0.92,0.91,0.92,0.92,0.92,0,0,0,0,0,0,0,0,0,0,0],
-	        [0.94,0.94,0.95,0.94,0.94,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	        [0.91,0.905,0.935,0.92,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	        [0.94,.92,0.90,0.90,0.90,0.91,0.91,0.96,0,0,0,0,0,0,0,0,0,0,0,0],
-	        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+	Local $defSimilarity[5][20]=[[0.92,0.92,0.91,0.92,0.92,0.91,0.92,0.92,0.92,0,0,0,0,0,0,0,0,0,0,0] _
+	        , [0.94,0.94,0.95,0.94,0.94,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] _
+	        , [0.91,0.905,0.935,0.92,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] _
+	        , [0.94,.92,0.90,0.90,0.90,0.91,0.91,0.96,0,0,0,0,0,0,0,0,0,0,0,0] _
+	        , [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] _
         ]
 
 	$allTroops = False
