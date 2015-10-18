@@ -99,8 +99,8 @@ Func checkDefense()
 		For $i = 0 To 9
 			If FileExists($trapTH[$t][$i]) Then
 
-				$DefLocation = _ImageSearch($trapTH[$t][$i], 1, $Defx, $Defy, $defTolerance[$t][$i]) ; Getting Defense Location
-				Setlog("Trying with " &$DefText[$t]& " image "&$i)
+				;$DefLocation = _ImageSearch($trapTH[$t][$i], 1, $Defx, $Defy, $defTolerance[$t][$i]) ; Getting Defense Location
+				;Setlog("Trying with " &$DefText[$t]& " image "&$i)
 
 				$sendHBitmap = _GDIPlus_BitmapCreateHBITMAPFromBitmap($hBitmap)
 				$res = DllCall($LibDir & "\ImageSearch.dll", "str", "searchTile", "handle", $sendHBitmap, "str", $trapTH[$t][$i], "float", $defSimilarity[$t][$i])
